@@ -1,0 +1,19 @@
+#_moss section, p, div {
+  width: 450px;
+  margin: auto;
+  padding-bottom: 15px;
+}
+
+#_moss p a.selected {
+  text-shadow: .6px 0px 0px black;
+}
+
+#_moss p a {
+  color: black;
+}
+
+h3 {
+  text-align: center;
+  margin: auto;
+  padding-bottom: 20px;
+}
