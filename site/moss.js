@@ -219,7 +219,7 @@ function Moss(data) {
           $span.prepend(' ');
           $paragraph.prepend('(');
           $paragraph.append(')');
-          var $linkIcon = $('<a href="#"><img src="external-link.svg" alt="link" class="external-link"></a>');
+          var $linkIcon = $('<a href="#"><img src="external-link.png" alt="link" class="external-link"></a>');
           $linkIcon.on('click', function(e) {
             e.preventDefault();
             display($('#_moss_'+idFrom(icOf(line))));
