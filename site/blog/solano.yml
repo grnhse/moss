@@ -1,0 +1,29 @@
+system:
+  queue:
+    - branch: "*"
+      queue: small
+worker_limit: 1
+ruby_version: ruby-2.1.6
+bundler_version: 1.11.2
+hooks:
+  pre_setup: |
+    set -ex
+    bundle install --path vendor/bundle
+  post_build: |
+    script/deploy.sh
+test_pattern:
+  - 'none'
+tests:
+  - './script/cibuild.sh'
+skip_package:
+  - ruby
+environment:
+  'NOKOGIRI_USE_SYSTEM_LIBRARIES': 'true'
+  TZ: UTC
+cache:
+  key_paths:
+    - Gemfile
+    - Gemfile.lock
+  save_paths:
+    - path: vendor/bundle
+      overwrite: true

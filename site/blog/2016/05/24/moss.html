@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Moss, a natural language explanation tree generator</title>
+  <meta name="description" content="This post presents a Javascript framework called Moss, a natural language explanation tree generator. Moss produces interactive webpages from natural languag...">
+
+  <link rel="stylesheet" href="/css/normalize.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="https://tech.greenhouse.io/2016/05/24/moss.html">
+  <link rel="alternate" type="application/rss+xml" title="In the Weeds - A blog by the Greenhouse Engineering Team" href="https://tech.greenhouse.io/feed.xml" />
+  <script src="/javascripts/jquery-2.1.4.js" type="text/javascript"></script>
+
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+
+  <meta content="In the Weeds - A blog by the Greenhouse Engineering Team" property="og:site_name">
+  
+    <meta content="Moss, a natural language explanation tree generator" property="og:title">
+  
+
+  
+    <meta content="article" property="og:type">
+  
+
+  
+    <meta content="a blog by the Greenhouse Engineering team" property="og:description">
+  
+
+  
+    <meta property="og:url" content="https://tech.greenhouse.io/2016/05/24/moss.html">
+  
+
+  
+    <meta content="2016-05-24T12:10:38-04:00" property="article:published_time">
+  
+
+  <meta content="http://cdn2.hubspot.net/hub/372554/img/logoNavSmall.png" property="og:image">
+
+  
+    
+      <meta content="moss" property="article:tag">
+    
+      <meta content="code-documentation" property="article:tag">
+    
+  
+</head>
+
+
+  <body>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-67233801-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<header class="site-header">
+
+  <div class="wrapper">
+
+    <div>
+      <a href="/">
+        <img class="header-icon" src="/images/dandelion.png" alt="dandelion">
+      </a>
+    </div>
+    <a class="site-title" href="/">IN THE WEEDS</a>
+    <p class="site-subheader">A BLOG BY THE GREENHOUSE<br>
+    ENGINEERING TEAM</p>
+
+  </div>
+
+</header>
+
+<hr class="divider">
+
+
+
+    <div class="page-content">
+      <div class="wrapper">
+  <div class="post">
+
+    
+
+    <header class="post-header">
+      <h2 class="post-title">Moss, a natural language explanation tree generator</h2>
+      <p class="post-meta">May 24, 2016 • <a href="https://www.twitter.com/akrulwich@greenhouse.io" target="_blank">Allen Krulwich</a></p>
+    </header>
+
+
+    <article class="post-content">
+      <p>This post presents a Javascript framework called <a href="https://github.com/grnhse/moss">Moss</a>, a natural language explanation tree generator. Moss produces interactive webpages from natural language plaintext explanations.</p>
+
+<p>A data file of plaintext explanation might look like this:</p>
+
+<pre><code>New York City is composed of five boroughs. New York City contains the Bronx.
+
+New York City contains the Bronx. The Bronx contains Bedford Park.
+
+The Bronx contains Bedford Park, a neighborhood in the northwest Bronx.
+</code></pre>
+
+<p>Which would produce this:</p>
+
+<iframe style="display:block; margin:auto;" width="500px" height="200px" src="/javascripts/moss/example_1/index.html" frameborder="0"></iframe>
+
+<p>Pages begin with the first paragraph of the file displayed. Clauses mentioned in the first paragraph that correspond to the first clauses of later paragraphs become links. Clicking a link displays the paragraph  of that clause below the current paragraph.</p>
+
+<p>A paragraph can have multiple child paragraphs, producing a tree:</p>
+
+<pre><code>New York City is composed of five boroughs. New York City contains the Bronx.
+
+New York City contains the Bronx. The Bronx contains Bedford Park. The Bronx contains Woodlawn.
+
+The Bronx contains Bedford Park. Bedford Park is a neighborhood in the northwest Bronx.
+
+The Bronx contains Woodlawn. Woodlawn is a neighborhood in the north Bronx.
+</code></pre>
+
+<iframe style="display:block; margin:auto;" width="500px" height="220px" src="/javascripts/moss/example_2/index.html" frameborder="0"></iframe>
+
+<p>Only one explanation path can be displayed at a time, so opening a different child of an earlier paragraph will collapse the current path.</p>
+
+<p>Suppose I wanted to make a tangential reference from one paragraph from another. For this, I would use an object reference. Consider the following example:</p>
+
+<pre><code>New York City is composed of five boroughs. New York City contains the Bronx.
+
+New York City contains the Bronx. The Bronx contains Bedford Park. The Bronx contains Woodlawn.
+
+The Bronx contains Bedford Park, similar to how the Bronx contains Woodlawn.
+
+The Bronx contains Woodlawn, similar to how the Bronx contains Bedford Park.
+</code></pre>
+
+<iframe style="display:block; margin:auto;" width="500px" height="370px" src="/javascripts/moss/example_3/index.html" frameborder="0"></iframe>
+
+<p>If a paragraph references the first clause of another paragraph, an object link is created. Clicking an object link appends to the page a derivation paragraph, a copy of the referenced paragraph that is provided inline so that you can read it without navigating to another part of the tree. The first clause of the paragraph becomes a link, and clicking it will display the parent of that paragraph below. Clicking these links will take you from the referenced paragraph all the way up to the root of the tree, giving you the full context of the reference.</p>
+
+<p>Derivation paragraphs are wrapped in parentheses and are not considered part of the current path. Clicking an earlier link and moving to a different explanation path clears derivation paragraphs from view.</p>
+
+<h3 id="use-cases">Use cases</h3>
+
+<p>When might you use Moss?</p>
+
+<p>You might use Moss to reduce the number of documents in an organization. An organization keeps track of many explanations, and they often span multiple documents. It might not always be clear to everyone what is in which document or which documents exist. Moss allows you to make a single tree of paragraphs that contains the equivalent of many documents. Rather than having an index or table of contents, you would just have introductory paragraphs, outlining the scope of the domain to the reader and allowing them browse to their area of interest without knowing in advance where something is stored. It is also easier to add new information to a tree than a document because the surface area for additions is greater.</p>
+
+<p>You might use Moss for storing explanations that are very large. If you had a tree of one million paragraphs, each with four child nodes, no paragraph would be at a path of greater than 10 paragraphs. This means that I could find what I’m looking for in just 10 clicks, as opposed to having to skim through every item of a list. Even if you grouped things by topic and sequentially scanned the topics, nothing is going to beat a binary search style approach for fast lookup at scale.</p>
+
+<h3 id="uses-in-software-development">Uses in software development</h3>
+
+<p>You might use Moss to represent the same explanation at multiple levels of abstraction. When documenting a program you could write an explanation starting with a brief description the desired program behavior and then use links to descend into greater and greater detail until every implementation detail has been subsumed. Every class or variable would be the leaf node of a path representing the train of thought which led to the creation of that entity, and URLs to that path could be checked into source code. The tree could even begin before the desired program behavior, starting instead with the original business and product reasons which gave rise to the feature in the first place. With an explanation tree, the full context of every decision is always visible, and so choices which defeat the purpose of a feature or initiative can be more easily identified by any team member.</p>
+
+<p>Every pull request that changes code changes some part of the existing explanation of the code base – with Moss running in your <code>/docs</code> directory you can see the ‘diffs’ to the explanation that were introduced by each PR.</p>
+
+<h3 id="design-goals">Design Goals</h3>
+
+<p>Moss is an attempt to couple metadata about explanatory text with the explanatory text itself. There are no titles, no documents, no categories, no classifications, no markup language, no tags, no hypertext references, only sentences which contain natural language references to other sentences. All metadata must be expressed as regular data, in natural language. Instead of tagging something ‘x’, you would write in a sentence that it is x. The document header is the subject of the first sentence. URLs cannot be decoupled from the independent clauses of the paragraphs they address. There are no redirects – if you want one clause to redirect to another, you would have to provide a sentence explaining why the old one is somehow equivalent to the new one, and that sentence would itself be the redirect.</p>
+
+<p>Moss couples the location of a paragraph with its context. You can’t just add whatever you want, the place at which you add something is itself the first sentence of the thing you are adding. This forces writers to demonstrate how what they are saying is germane to the existing explanation, and to decide precisely who should see when and what existing information it should displace.</p>
+
+<p>A Moss URL should represent the state of an explanation. When I give someone a Moss URL, they have a pointer to a particular location in the tree. I know that they can scroll up and get context, or browse down and see details, or burrow into object links to get background information on a reference.</p>
+
+<p>The Moss UI is an attempt to mimic the interface presented to the listener by a human explainer. Follow-up questions that you could ask of a person should be presented as links in the interface. Conversely, Moss attempts to not gratuitously linkify keywords that do not correspond to valid follow-up questions. Moss never presents you with a link that leaves the page, because following a reference in a real explanation continues the current explanation.</p>
+
+<p>Moss is not interested in understanding the content of the explanation, only in the references between parts of the explanation which it renders as links.</p>
+
+<p>It is called Moss because the idea is that you might want to cover something with a thin layer of explanation.</p>
+
+<p>Please let us know if you have any questions or suggestions. We welcome contributors and bug reports on the Github repository.</p>
+
+<hr />
+
+<p>Thanks to Aaron Gibralter for reading an early draft of this post.</p>
+
+
+      
+      
+        
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+          
+        
+      
+
+      <p id="post-meta">Posted with </p>
+    </article>
+
+  </div>
+
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES * * */
+        var disqus_shortname = 'greenhouseengineeeringblog';
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+</div>
+
+    </div>
+
+    <hr class="divider">
+
+<footer class="site-footer">
+
+  <div class="wrapper">
+
+    <!--<h2 class="footer-heading">In the Weeds - A blog by the Greenhouse Engineering Team</h2>-->
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col  footer-col-1">
+        <ul class="contact-list">
+          <li>Greenhouse Engineering</li>
+          <li><a href="http://www.greenhouse.io/">Greenhouse.io</a></li>
+          <li><a href="http://grnh.se/xt6m8g">We're Hiring!</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col  footer-col-2">
+        <a href="http://www.greenhouse.io/">
+        <img class="logo" src="/images/logoWhite.png" alt="white greenhouse logo">
+        </a>
+      </div>
+
+      <div class="footer-col  footer-col-3">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/grnhse">
+              <span class="icon  icon--github">
+                <svg viewBox="0 0 16 16">
+                  <path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/>
+                </svg>
+              </span>
+
+              <span class="username">grnhse</span>
+            </a>
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/greenhouse">
+              <span class="icon  icon--twitter">
+                <svg viewBox="0 0 16 16">
+                  <path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809
+                  c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/>
+                </svg>
+              </span>
+
+              <span class="username">greenhouse</span>
+            </a>
+          </li>
+          
+        </ul>
+      </div>
+
+      <!--<div class="footer-col  footer-col-3">-->
+        <!--<p class="text">a blog by the Greenhouse Engineering team</p>-->
+      <!--</div>-->
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>
+
