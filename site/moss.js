@@ -2,7 +2,6 @@ function Moss(data) {
   var lines = data.trim().split(/[\n]+/).map(trim);
 
   var $moss = $('#_moss');
-  $moss.prepend($('<h3></h3>').text(subjectOf(lines[0])));
 
   var icLines = {};
   var displayIds = {};
@@ -458,6 +457,14 @@ function Moss(data) {
   $(window).on('hashchange', init);
 
   var $derivation = $('<div id="#_derivation"></div>').appendTo($moss);
+  $moss.prepend($('<h3></h3>').text(subjectOf(lines[0])));
 
   init();
+
+  // var sections = $('section').toArray();
+  // window.setInterval(function() {
+  //   var $section = $(sections.shift());
+  //   display($section);
+  //   sections.push($section);
+  // }, 2000);
 }
