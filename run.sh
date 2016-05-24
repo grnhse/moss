@@ -1,4 +1,4 @@
 #!/bin/bash
 moss/make.sh
 moss/watch.sh &
-ruby -run -ehttpd moss/site -p8000
+ruby -run -ehttpd moss/site -p80
