@@ -356,15 +356,15 @@ function Moss(data) {
   }
 
   function punctuationOf(clause) {
-    return clause.slice(-1);
+    return clause.match(/.*([.,:?!]\)?)/)[1];
   }
 
   function withoutPunctuation(clause) {
-    return clause.trim().slice(0, -1);
+    return clause.trim().match(/(.*)[.,:?!]\)?/)[1];
   }
 
   function clausesWithPunctuationOf(string) {
-    return string.match(/[^.,;:!?]+(([.,:;!?])(?!($|\s)))*[^.,;:]+[.,:;?]/g);
+    return string.match(/[^.,;:!?]+(([.,:;!?])(?!($|\s)))*[^.,;:]+[.,:;?]\)?/g);
   }
 
   function idFrom(string) {
