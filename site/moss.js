@@ -1,5 +1,5 @@
 function Moss(data) {
-  var lines = data.trim().split(/[\n]+/).map(trim);
+  var lines = data.trim().split('\n\n').map(trim).map(removeNewlines);
 
   var $moss = $('#_moss');
 
@@ -408,6 +408,10 @@ function Moss(data) {
 
   function trim(line) {
     return line.trim();
+  }
+
+  function removeNewlines(string) {
+    return string.replace('\n', ' ');
   }
 
   function subjectOf(string) {
