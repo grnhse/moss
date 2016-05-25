@@ -18,6 +18,9 @@ function Moss(data) {
   lines.forEach(function(line) {
     displayIds[idFrom(icOf(line))] = idFrom(firstClauseOf(line));
     $(icParentIds[icOf(line)]).append(renderSection(line));
+    if ($(icParentIds[icOf(line)]).length === 0) {
+      console.log('No parent for: ' + line);
+    }
   });
 
   function renderSection(line) {
