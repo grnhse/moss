@@ -107,14 +107,6 @@ function Moss(data) {
           icParentIds[clause.toLowerCase()] = '#_moss_' + idFrom(icOf(line));
           icParents[clause.toLowerCase()] = line;
 
-          if (match.indexOf('and also') === 0) {
-            $span.append(' and also ');
-            var match = match.slice(' and also '.length - 1);
-          } else if (match.indexOf('and') === 0) {
-            $span.append(' and ');
-            var match = match.slice(' and '.length - 1);
-          }
-
           icParentMatchText[icOf(clause)] = match;
 
           var $link = $('<a href="#"></a>').text(match).addClass(idFrom(clause));
