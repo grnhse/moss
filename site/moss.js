@@ -71,28 +71,6 @@ function Moss(data) {
         },
 
         subjectTest: function(substring) {
-          var substringWithoutAlso = substring.replace('also ', '');
-          var substringWithReiteration = substringWithoutAlso.replace(/and(.*)/,
-            function(afterAnd) {
-              for (var i = afterAnd.split(' ').length; i > 0; i--) {
-                var prefix = afterAnd.split(' ').slice(1, i).join(' ');
-                if (ngramPrefixes[prefix]) {
-                  return ngramPrefixes[prefix] + ' ' + prefix +
-                    afterAnd.slice(afterAnd.indexOf(prefix) + prefix.length);
-                }
-              }
-            }
-          );
-
-          if (icLines.hasOwnProperty(substringWithReiteration.toLowerCase())) {
-            clauseBuffer = '';
-            return substringWithReiteration;
-          }
-
-          if (icLines.hasOwnProperty(substringWithoutAlso.toLowerCase())) {
-            return substringWithoutAlso;
-          }
-
           if (icLines.hasOwnProperty(substring.toLowerCase())) {
             return substring;
           }
