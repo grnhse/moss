@@ -332,11 +332,11 @@ function Moss(data) {
   }
 
   function punctuationOf(clause) {
-    return clause.match(/.*([.,:?!]\)?)/)[1];
+    return clause.match(/.*([.,:?!][)'"]?)/)[1];
   }
 
   function withoutPunctuation(clause) {
-    return clause.trim().match(/(.*)[.,:?!]\)?/)[1];
+    return clause.trim().match(/(.*)[.,:?!][)'"]?/)[1];
   }
 
   function clausesWithPunctuationOf(string) {
@@ -345,7 +345,7 @@ function Moss(data) {
 
   function idFrom(string) {
     return string ? string.replace(/[ ]/g, '_').
-      replace(/['".]/g, '') : '';
+      replace(/['").]/g, '') : '';
   }
 
   function firstPunctuationOf(string) {
