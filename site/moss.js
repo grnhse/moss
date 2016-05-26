@@ -32,13 +32,6 @@ function Moss(data) {
     var ngramPrefixes = {};
     var clauseBuffer = '';
 
-    if (firstPunctuationOf(line) === ':') {
-      var $p = $('<p></p>').text(beforeColonOf(line)+':');
-      $p.appendTo($section);
-      var $div = $('<div></div>').html(afterColonOf(line));
-      return $section.append($div)
-    }
-
     handleLine(line,
       {
         icHandler: function(clause) {
@@ -49,7 +42,7 @@ function Moss(data) {
             display($section);
           })
 
-          $span.append(' ', $link);
+          $span.append($link, ' ');
         },
 
         beforeEachClause: function(clause) {
