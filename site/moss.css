@@ -18,6 +18,14 @@
   text-shadow: .6px 0px 0px black;
 }
 
+#_moss .external-link {
+  display: none;
+}
+
+#_moss p:hover .external-link {
+  display: inline;
+}
+
 h3 {
   text-align: center;
   margin: auto;
