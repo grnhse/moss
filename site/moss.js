@@ -41,6 +41,17 @@ function Moss(data) {
 
     handleLine(line,
       {
+        icHandler: function(clause) {
+          var $link = $('<a href="#"></a>').text(clause).addClass(idFrom(clause));
+
+          $link.on('click', function(e){
+            e.preventDefault();
+            display($section);
+          })
+
+          $span.append(' ', $link);
+        },
+
         beforeEachClause: function(clause) {
           $span = $('<span></span>').appendTo($paragraph);
           clauseBuffer = '';
@@ -154,8 +165,6 @@ function Moss(data) {
     handleLine(line,
       {
         icHandler: function (clause){
-          $span = $('<span></span>');
-
           if (icParents[icOf(line)]) {
             var $link = $('<a href="#"></a>').text(clause);
             $link.addClass(idFrom(icOf(icLines[icOf(line)])));
@@ -243,6 +252,7 @@ function Moss(data) {
     var matchers = Array.prototype.slice.call(arguments, 3) || [];
     clausesWithPunctuationOf(line).forEach(function(clause, index) {
       if (handlers.icHandler && index === 0) {
+        handlers.beforeEachClause(clause);
         handlers.icHandler(clause);
       } else {
         (handlers.beforeEachClause||function(){}).call({}, clause);
