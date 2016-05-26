@@ -346,7 +346,7 @@ function Moss(data) {
   }
 
   function clausesWithPunctuationOf(string) {
-    return string.match(/[^.,;:!?]+(([.,:;!?])(?!($|\s)))*[^.,;:]+[.,:;?]\)?/g);
+    return string.match(/[^.,;:!?]+(([.,:;!?])(?!($|\s)))*[^.,;:]+[.,:;!?]\)?/g);
   }
 
   function idFrom(string) {
