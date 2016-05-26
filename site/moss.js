@@ -420,6 +420,9 @@ function Moss(data) {
     $section.show();
     window.location.hash = displayIds[$section.attr('id').slice('_moss_'.length)];
 
+    $('a').removeClass('current-first-link');
+    $section.find('a').first().addClass('current-first-link');
+
     unboldLinks();
     boldLinksTo($section);
 
