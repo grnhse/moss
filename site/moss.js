@@ -43,7 +43,7 @@ function Moss(data) {
       {
         handleFirstSentence: function(sentence) {
           if (sentenceLines.hasOwnProperty(sentence) && sentenceLines[sentence] !== line) {
-            var $link = $('<a href="#"></a>').text(sentence).addClass(idFrom(firstClauseOf(sentence)));
+            var $link = $('<a href="#"></a>').text(sentence).addClass(idFrom(firstClauseOf(sentence).toLowerCase()));
 
             $link.on('click', function(e){
               e.preventDefault();
@@ -62,7 +62,7 @@ function Moss(data) {
           icParents[clause.toLowerCase()] = line;
           icParentMatchText[icOf(clause)] = clause;
 
-          var $link = $('<a href="#"></a>').text(clause).addClass(idFrom(clause));
+          var $link = $('<a href="#"></a>').text(clause).addClass(idFrom(clause.toLowerCase()));
 
           $link.on('click', function(e){
             e.preventDefault();
@@ -520,7 +520,7 @@ function Moss(data) {
       var $paragraph = $section.siblings('p');
 
       $paragraph.find('a').filter(function(index, element){
-        return element.innerText === icParentMatchText[icOf($section.text())];
+        return icOf(element.innerText) === icOf($section.text());
       }).addClass('selected');
 
       boldLinksTo($section.parent());
