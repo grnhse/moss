@@ -2,6 +2,7 @@
 Moss is a small Javascript framework for converting natural language plaintext explanations into interactive explanation tree webpages.
 
 Blog post: http://docjoku.int.greenhouse.io/blog/2016/05/24/moss.html
+
 Demo: http://docjoku.int.greenhouse.io/
 
 ### What does it do? ###
