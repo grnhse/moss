@@ -7,9 +7,16 @@ function Moss(data) {
   var displayIds = {};
   var icParentMatchText = {};
   var icParents = {};
+  var sentenceLines = {};
+  var firstSentenceLines = {};
 
   lines.forEach(function(line){
     icLines[icOf(line)] = line;
+    sentencesWithPunctuationOf(line).forEach(function(sentence) {
+      sentenceLines[sentence.trim()] = sentenceLines[sentence.trim()] || line;
+    });
+
+    firstSentenceLines[sentencesWithPunctuationOf(line)[0]] = line;
   });
 
   var icParentIds = {};
@@ -34,7 +41,27 @@ function Moss(data) {
 
     handleLine(line,
       {
-        icHandler: function(clause) {
+        handleFirstSentence: function(sentence) {
+          if (sentenceLines.hasOwnProperty(sentence) && sentenceLines[sentence] !== line) {
+            var $link = $('<a href="#"></a>').text(sentence).addClass(idFrom(firstClauseOf(sentence)));
+
+            $link.on('click', function(e){
+              e.preventDefault();
+              display($section);
+            })
+
+            $span.append($link, ' ');
+            return true;
+          } else {
+            return false;
+          }
+        },
+
+        handleFirstClause: function(clause) {
+          icParentIds[clause.toLowerCase().trim()] = '#_moss_' + idFrom(icOf(line));
+          icParents[clause.toLowerCase()] = line;
+          icParentMatchText[icOf(clause)] = clause;
+
           var $link = $('<a href="#"></a>').text(clause).addClass(idFrom(clause));
 
           $link.on('click', function(e){
@@ -43,6 +70,38 @@ function Moss(data) {
           })
 
           $span.append($link, ' ');
+        },
+
+        beforeEachSentence: function(sentence) {
+          $span = $('<span></span>').appendTo($paragraph);
+          clauseBuffer = '';
+        },
+
+        handleSentence: function(sentence) {
+          if (firstSentenceLines.hasOwnProperty(sentence.trim())) {
+            icParentIds[firstClauseOf(sentence).toLowerCase().trim()] = '#_moss_' + idFrom(icOf(line));
+            icParents[firstClauseOf(sentence).toLowerCase()] = line;
+            icParentMatchText[icOf(firstClauseOf(sentence))] = sentence;
+
+            var $link = $('<a href="#"></a>').text(sentence).addClass(idFrom(firstClauseOf(sentence)));
+
+            $link.on('click', function(e){
+              e.preventDefault();
+              var targetId = idFrom(firstClauseOf(sentence).trim().toLowerCase());
+              var $target = $('#_moss_' + targetId);
+              if ($target.is(':visible')) {
+                $derivation.empty();
+                display($target.parent());
+              } else {
+                display($target);
+              }
+            });
+
+            $span.append($link, ' ');
+            return true;
+          } else {
+            return false;
+          }
         },
 
         beforeEachClause: function(clause) {
@@ -243,14 +302,27 @@ function Moss(data) {
 
   function handleLine(line, handlers, searchOptions) {
     var matchers = Array.prototype.slice.call(arguments, 3) || [];
-    clausesWithPunctuationOf(line).forEach(function(clause, index) {
-      if (handlers.icHandler && index === 0) {
-        handlers.beforeEachClause(clause);
-        handlers.icHandler(clause);
+    sentencesWithPunctuationOf(line).forEach(function(sentence, sentenceIndex) {
+      if (sentenceIndex === 0 && (handlers.handleFirstSentence || handlers.handleFirstClause)) {
+        (handlers.beforeEachSentence||function(){}).call({});
+        var result = (handlers.handleFirstSentence||function(){}).call({}, sentence);
+        if (!result) {
+          (handlers.handleFirstClause||function(){}).call({}, firstClauseWithPunctuationOf(sentence));
+          clausesWithPunctuationOf(sentence).slice(1).forEach(function(clause, clauseIndex) {
+            (handlers.beforeEachClause||function(){}).call({}, clause);
+            forEachSuffixPrefix.apply({}, [withoutPunctuation(clause), searchOptions].concat(matchers));
+            (handlers.afterEachClause||function(){}).call({}, clause);
+          });
+        }
       } else {
-        (handlers.beforeEachClause||function(){}).call({}, clause);
-        forEachSuffixPrefix.apply({}, [withoutPunctuation(clause), searchOptions].concat(matchers));
-        (handlers.afterEachClause||function(){}).call({}, clause);
+        var handled = (handlers.handleSentence||function(){}).call({}, sentence);
+        if (!handled) {
+          clausesWithPunctuationOf(sentence).forEach(function(clause, clauseIndex) {
+            (handlers.beforeEachClause||function(){}).call({}, clause);
+            forEachSuffixPrefix.apply({}, [withoutPunctuation(clause), searchOptions].concat(matchers));
+            (handlers.afterEachClause||function(){}).call({}, clause);
+          });
+        }
       }
     });
     (handlers.onFinish||function(){}).call({});
@@ -345,6 +417,10 @@ function Moss(data) {
     return clause.trim().match(/(.*)[.,:?!][)'"]?/)[1];
   }
 
+  function sentencesWithPunctuationOf(string) {
+    return string.match(/[^.!?]+(([.!?])(?!($|\s)))*[^.?!]+[.!?]\)?/g);
+  }
+
   function clausesWithPunctuationOf(string) {
     return string.match(/[^.,;:!?]+(([.,:;!?])(?!($|\s)))*[^.,;:]+[.,:;!?]\)?/g);
   }
@@ -366,12 +442,20 @@ function Moss(data) {
     return string.match(/.*?:\s(.*)/)[1];
   }
 
+  function sentencesWithoutPunctuationOf(string) {
+    return string.split(/[.?!]($|\s)/);
+  }
+
   function clausesOf(string) {
     return string.split(/[,.;:?!]($|\s)/);
   }
 
   function firstClauseOf(string) {
     return clausesOf(string)[0];
+  }
+
+  function firstClauseWithPunctuationOf(sentence) {
+    return clausesWithPunctuationOf(sentence)[0];
   }
 
   function icOf(line) {
