@@ -43,7 +43,7 @@ Make changes by adding to the text files in `/content`. Files in `/content` shou
 - The substring of a parent which matches a child cannot be reused to match further children.
 - Once we match a child to a parent, we stop looking for other parent matches for that child.
 
-#### Topic links ####
+#### Primary links ####
 - The webpage initialized with the first paragraph displayed.
 - Some clauses of the paragraph will be linkified automatically.
 - When a line has a child, the clause of the parent which matches the child's ic will be linkified.
@@ -53,7 +53,7 @@ Make changes by adding to the text files in `/content`. Files in `/content` shou
 - The bolded links show which is the open path.
 - Every path has a fragment id which is the ic of the last displayed paragraph.
 
-#### Object links ####
+#### Secondary links ####
 - The clauses of a line can contain object references.
 - An object reference is a reference to another line's ic.
 - Object references are rendered as links.
