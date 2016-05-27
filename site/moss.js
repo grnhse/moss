@@ -2,7 +2,6 @@ function Moss(data) {
   var lines = data.trim().split('\n\n').filter(notAComment).map(trim).map(removeNewlines);
 
   var $moss = $('#_moss');
-
   var icLines = {};
   var displayIds = {};
   var icParents = {};
