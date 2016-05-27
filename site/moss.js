@@ -5,7 +5,6 @@ function Moss(data) {
 
   var icLines = {};
   var displayIds = {};
-  var icParentMatchText = {};
   var icParents = {};
   var sentenceLines = {};
   var firstSentenceLines = {};
@@ -59,8 +58,7 @@ function Moss(data) {
 
         handleFirstClause: function(clause) {
           icParentIds[clause.toLowerCase().trim()] = '#_moss_' + idFrom(icOf(line));
-          icParents[clause.toLowerCase()] = line;
-          icParentMatchText[icOf(clause)] = clause;
+          icParents[clause.toLowerCase().trim()] = line;
 
           var $link = $('<a href="#"></a>').text(clause).addClass(idFrom(clause.toLowerCase()));
 
@@ -80,8 +78,7 @@ function Moss(data) {
         handleSentence: function(sentence) {
           if (firstSentenceLines.hasOwnProperty(sentence.trim())) {
             icParentIds[firstClauseOf(sentence).toLowerCase().trim()] = '#_moss_' + idFrom(icOf(line));
-            icParents[firstClauseOf(sentence).toLowerCase()] = line;
-            icParentMatchText[icOf(firstClauseOf(sentence))] = sentence;
+            icParents[firstClauseOf(sentence).toLowerCase().trim()] = line;
 
             var $link = $('<a href="#"></a>').text(sentence).addClass(idFrom(firstClauseOf(sentence)));
 
@@ -148,10 +145,8 @@ function Moss(data) {
         },
 
         subjectSuccess: function(match, clause) {
-          icParentIds[clause.toLowerCase()] = '#_moss_' + idFrom(icOf(line));
-          icParents[clause.toLowerCase()] = line;
-
-          icParentMatchText[icOf(clause)] = match;
+          icParentIds[clause.toLowerCase().trim()] = '#_moss_' + idFrom(icOf(line));
+          icParents[clause.toLowerCase().trim()] = line;
 
           var $link = $('<a href="#"></a>').text(match).addClass(idFrom(clause));
 
@@ -212,11 +207,11 @@ function Moss(data) {
 
     $derivation.find('a').
       filter('.' + idFrom(icOf(line))).
-      off('click').removeAttr('href');
+      off('click').removeAttr('href').addClass('delinkified');
 
     handleLine(line,
       {
-        icHandler: function (clause){
+        handleFirstClause: function (clause){
           if (icParents[icOf(line)]) {
             var $link = $('<a href="#"></a>').text(clause);
             $link.addClass(idFrom(icOf(icLines[icOf(line)])));
@@ -229,7 +224,7 @@ function Moss(data) {
             $link.on('click', function(e) {
               e.preventDefault();
               $derivation.append(renderDerivation(icParents[icOf(line)]));
-              $(e.target).removeAttr('href');
+              $(e.target).removeAttr('href').addClass('delinkified');
             });
 
             $span.prepend(' ');
@@ -239,6 +234,7 @@ function Moss(data) {
           }
 
           $paragraph.append($span);
+          return true;
         },
 
         beforeEachClause: function (clause) {
@@ -307,6 +303,7 @@ function Moss(data) {
         (handlers.beforeEachSentence||function(){}).call({});
         var result = (handlers.handleFirstSentence||function(){}).call({}, sentence);
         if (!result) {
+          (handlers.beforeEachClause||function(){}).call({}, firstClauseWithPunctuationOf(sentence));
           (handlers.handleFirstClause||function(){}).call({}, firstClauseWithPunctuationOf(sentence));
           clausesWithPunctuationOf(sentence).slice(1).forEach(function(clause, clauseIndex) {
             (handlers.beforeEachClause||function(){}).call({}, clause);

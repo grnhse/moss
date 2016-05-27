@@ -17,6 +17,10 @@
   text-decoration: none;
 }
 
+#_moss p a.delinkified:hover {
+  text-decoration: none;
+}
+
 #_moss p a.selected {
   text-decoration: underline;
   text-shadow: .6px 0px 0px black;
