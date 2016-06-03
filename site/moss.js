@@ -423,7 +423,8 @@ function Moss(data) {
 
   function idFrom(string) {
     return string ? string.replace(/[ ]/g, '_').
-      replace(/['").]/g, '') : '';
+      replace(/['").]/g, '').
+      replace('&', 'and') : '';
   }
 
   function firstPunctuationOf(string) {
