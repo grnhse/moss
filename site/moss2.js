@@ -1,16 +1,29 @@
 function Moss(dataString) {
   var icBlocks = IcBlocks(dataString);
-  var parsedBlocks = dataString.split(/\n\n+(?=.)/).map(parseBlock);
+  var icTreeNodes = dataString.split(/\n\n+(?=.)/).reduce(function(icTreeNodes, blockString){
+    icTreeNodes[icOf(blockString)] = parseBlock(blockString);
+    return icTreeNodes;
+  }, {});
+  var tree = assembleTree(icTreeNodes[icOf(dataString)], icTreeNodes);
+  debugger;
 
   function parseBlock(block) {
-    return block.split(/\n(?=.)/).map(parseLine);
+    return {
+      type: 'block',
+      lines: block.split(/\n(?=.)/).map(parseLine.bind({}, icOf(block))),
+      children: [],
+      text: block
+    };
   }
 
-  function parseLine(line) {
-    return line.match(/([^.?!;:,]+[.?!;:,])/g).map(parseClause);
+  function parseLine(ic, line) {
+    var lineNode = {type: 'line', text: line};
+    lineNode.clauses = line.match(/([^.?!;:,]+[.?!;:,])/g).map(parseClause.bind({}, ic));
+    return lineNode;
   }
 
-  function parseClause(clause) {
+  function parseClause(ic, clause) {
+    var clauseNode = {type: 'clause', text: clause};
     var tokens = [];
     var terminalPunctuation = clause.match(/[.!?)'":;,]+$/)[0];
     var words = clause.slice(0, -terminalPunctuation.length).split(' ');
@@ -20,7 +33,11 @@ function Moss(dataString) {
       for (var i = words.length; i > 0; i--) {
         var substring = words.slice(0, i).join(' ');
         if (icBlocks.hasOwnProperty(substring.toLowerCase())) {
-          tokens.push(LinkToken(substring));
+          if (substring.toLowerCase() === ic) {
+            tokens.push(IcToken(substring));
+          } else {
+            tokens.push(LinkToken(substring));
+          }
           words = words.slice(i);
           return;
         }
@@ -34,19 +51,44 @@ function Moss(dataString) {
 
     tokens.push(PunctuationToken(terminalPunctuation));
 
-    return tokens;
+    clauseNode.tokens = tokens;
+    return clauseNode;
+  }
+
+  function assembleTree(parentNode, icTreeNodes) {
+    var lineNodeArray = parentNode.lines;
+    var clauseNodeArray = [].concat.apply([], lineNodeArray.map(function(lineNode){return lineNode.clauses}));
+    var tokens = [].concat.apply([], clauseNodeArray.map(function(clauseNode){return clauseNode.tokens}));
+    var linkTokens = tokens.filter(function(token){return token.type === 'link'});
+
+    linkTokens.forEach(function(linkToken){
+      if (icTreeNodes.hasOwnProperty(linkToken.value.toLowerCase())) {
+        parentNode.children.push(icTreeNodes[linkToken.value.toLowerCase()]);
+        delete icTreeNodes[linkToken.value.toLowerCase()];
+      }
+    });
+
+    parentNode.children.forEach(function(childNode){
+      assembleTree(childNode, icTreeNodes);
+    });
+
+    return parentNode;
   }
 
   function WordToken(string) {
-    return string;
+    return { type: 'word', value: string };
   }
 
   function LinkToken(string) {
-    return string.toUpperCase();
+    return { type: 'link', value: string };
   }
 
   function PunctuationToken(string) {
-    return string;
+    return { type: 'punctuation', value: string };
+  }
+
+  function IcToken(string) {
+    return { type: 'ic', value: string };
   }
 
   function IcBlocks(dataString) {
