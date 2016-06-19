@@ -1,10 +1,13 @@
 function Moss(dataString) {
-  var icBlocks = IcBlocks(dataString);
-  var icTreeNodes = dataString.split(/\n\n+(?=.)/).reduce(function(icTreeNodes, blockString){
-    icTreeNodes[icOf(blockString)] = parseBlock(blockString);
-    return icTreeNodes;
-  }, {});
+  var ics = {};
+  var icTreeNodes = {};
+  dataString.split(/\n\n+(?=.)/).forEach(function(block) {
+    ics[icOf(block)] = true;
+    icTreeNodes[icOf(block)] = parseBlock(block);
+  });
+
   var tree = assembleTree(icTreeNodes[icOf(dataString)], icTreeNodes);
+
   debugger;
 
   function parseBlock(block) {
@@ -18,7 +21,11 @@ function Moss(dataString) {
 
   function parseLine(ic, line) {
     var lineNode = {type: 'line', text: line};
-    lineNode.clauses = line.match(/([^.?!;:,]+[.?!;:,])/g).map(parseClause.bind({}, ic));
+    lineNode.clauses = [];
+    var clauseStrings = line.match(/([^.?!;:,]+[.?!;:,])/g);
+    lineNode.clauses.push({type: 'clause', text: clauseStrings[0], tokens: [IcToken(clauseStrings[0])]});
+    lineNode.clauses.concat(clauseStrings.slice(1).map(parseClause.bind({}, ic)));
+    if (!lineNode.clauses) { throw "Invalid line: " + line; }
     return lineNode;
   }
 
@@ -29,15 +36,11 @@ function Moss(dataString) {
     var words = clause.slice(0, -terminalPunctuation.length).split(' ');
 
     while (words.length > 0) {
-      (function(tokens){
+      (function(tokens) {
       for (var i = words.length; i > 0; i--) {
         var substring = words.slice(0, i).join(' ');
-        if (icBlocks.hasOwnProperty(substring.toLowerCase())) {
-          if (substring.toLowerCase() === ic) {
-            tokens.push(IcToken(substring));
-          } else {
-            tokens.push(LinkToken(substring));
-          }
+        if (ics.hasOwnProperty(substring.toLowerCase())) {
+          tokens.push(LinkToken(substring));
           words = words.slice(i);
           return;
         }
@@ -56,10 +59,10 @@ function Moss(dataString) {
   }
 
   function assembleTree(parentNode, icTreeNodes) {
-    var lineNodeArray = parentNode.lines;
-    var clauseNodeArray = [].concat.apply([], lineNodeArray.map(function(lineNode){return lineNode.clauses}));
+    var clauseNodeArray = [].concat.apply([], parentNode.lines.map(function(lineNode){return lineNode.clauses}));
     var tokens = [].concat.apply([], clauseNodeArray.map(function(clauseNode){return clauseNode.tokens}));
     var linkTokens = tokens.filter(function(token){return token.type === 'link'});
+    debugger;
 
     linkTokens.forEach(function(linkToken){
       if (icTreeNodes.hasOwnProperty(linkToken.value.toLowerCase())) {
@@ -93,9 +96,6 @@ function Moss(dataString) {
 
   function IcBlocks(dataString) {
     var icBlocks = {};
-    dataString.split(/\n\n+/).forEach(function(block){
-      icBlocks[icOf(block)] = block;
-    });
     return icBlocks;
   }
 
