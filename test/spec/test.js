@@ -7,7 +7,6 @@
     });
     it('should build a single-node AST', function() {
       var AST = Moss('Hello world.');
-      console.log(AST);
       expect(AST.text).toBe('Hello world.');
       expect(AST.constructor).toBe(BlockNode);
       expect(AST.children).toEqual([]);
