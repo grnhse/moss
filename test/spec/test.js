@@ -1,11 +1,9 @@
 (function () {
   'use strict';
 
-  describe('Give it some context', function () {
-    describe('maybe a bit more context here', function () {
-      it('should run here few assertions', function () {
-        expect(true).toBe(true);
-      });
+  describe('Moss', function () {
+    it('should create an AST', function () {
+      expect(!!Moss).toBe(true);
     });
   });
 })();
