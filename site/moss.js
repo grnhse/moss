@@ -4,13 +4,15 @@ function Moss(dataString) {
 
   // Get a set of the ics to check substrings against
   // (Must be finished before next pass can start)
-  dataString.split(/\n\n+(?=.)/).forEach(function(block) {
-    ics[icOf(block)] = icOf(block);
-  });
+  var ics = dataString.split(/\n\n+(?=.)/).reduce(function(ics, block) {
+    ics[icOf(block)] = true;
+    return ics;
+  }, {});
 
   // Create flat set of block nodes
-  dataString.split(/\n\n+(?=.)/).forEach(function(block) {
+  var icBlockNodes = dataString.split(/\n\n+(?=.)/).forEach(function(icBlockNodes, block) {
     icBlockNodes[icOf(block)] = new BlockNode(block, ics);
+    return icBlockNodes;
   });
 
   // Assemble block nodes into tree
@@ -20,7 +22,7 @@ function Moss(dataString) {
 
 function BlockNode(block, ics) {
   this.text = block;
-  this.lines = block.trim().split('\n').map(function(block) { return new LineNode(block, ics);});
+  this.lines = block.trim().split('\n').map(function(line) { return new LineNode(line, ics);});
   this.children = [];
 }
 
@@ -29,7 +31,8 @@ function LineNode(line, ics) {
   var lineNode = this;
   lineNode.tokens = [];
   // Split the line into an array of clauses that include their terminal punctuation
-  line.match(/ ?([^,.:;?!)'"]+[,.:;?!)'"]+)/g).forEach(function(clauseWithPunctuation) {
+  var clauseRegex = / ?([^,.:;?!)'"]+[,.:;?!)'"]+)/g;
+  line.match(clauseRegex).forEach(function(clauseWithPunctuation) {
     var punctuation = clauseWithPunctuation.match(/[,.:;?!)'"]+/);
     var clause = clauseWithPunctuation.slice(0, -punctuation.length);
     var words = clause.split(' ');
@@ -53,8 +56,8 @@ function LineNode(line, ics) {
   });
 }
 
-function assembleTree(parentNode, icBlockNodes, ics) {
-  parentNode.lines.forEach(function(lineNode, lineIndex) {
+function assembleTree(rootNode, icBlockNodes, ics) {
+  rootNode.lines.forEach(function(lineNode, lineIndex) {
     // Take the link tokens of the block node. For each link node:
     lineNode.tokens.filter(function(token){return token.constructor === LinkToken}).forEach(function(linkToken, tokenIndex) {
       // if the link node is an ic, make its type ic
@@ -62,7 +65,7 @@ function assembleTree(parentNode, icBlockNodes, ics) {
         linkToken.type = 'ic';
       } else if (icBlockNodes.hasOwnProperty(linkToken.ic)) {
         // if there is still a block node under that ic, make it the exclusive child and delete its key
-        parentNode.children.push(icBlockNodes[linkToken.ic]);
+        rootNode.children.push(icBlockNodes[linkToken.ic]);
         delete icBlockNodes[linkToken.ic];
         linkToken.type = 'primary'
       } else {
@@ -73,11 +76,11 @@ function assembleTree(parentNode, icBlockNodes, ics) {
   });
 
   // Do the same for the children added in the last pass
-  parentNode.children.forEach(function(childNode) {
+  rootNode.children.forEach(function(childNode) {
     assembleTree(childNode, icBlockNodes);
   });
 
-  return parentNode;
+  return rootNode;
 }
 
 function TextToken(text) {
