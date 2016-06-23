@@ -10,10 +10,10 @@ function Moss(dataString) {
   }, {});
 
   // Create flat set of block nodes
-  var icBlockNodes = dataString.split(/\n\n+(?=.)/).forEach(function(icBlockNodes, block) {
+  var icBlockNodes = dataString.split(/\n\n+(?=.)/).reduce(function(icBlockNodes, block, collection) {
     icBlockNodes[icOf(block)] = new BlockNode(block, ics);
     return icBlockNodes;
-  });
+  }, {});
 
   // Assemble block nodes into tree
   var ast = assembleTree(icBlockNodes[icOf(dataString)], icBlockNodes, ics);
@@ -21,19 +21,20 @@ function Moss(dataString) {
 }
 
 function BlockNode(block, ics) {
-  this.text = block;
-  this.lines = block.trim().split('\n').map(function(line) { return new LineNode(line, ics);});
+  this.text = block.trim();
+  this.ic = icOf(block);
+  this.lines = block.trim().split('\n').map(function(line) { return new Line(line, ics);});
   this.children = [];
 }
 
-function LineNode(line, ics) {
+function Line(line, ics) {
   this.text = line;
   var lineNode = this;
   lineNode.tokens = [];
   // Split the line into an array of clauses that include their terminal punctuation
   var clauseRegex = / ?([^,.:;?!)'"]+[,.:;?!)'"]+)/g;
   line.match(clauseRegex).forEach(function(clauseWithPunctuation) {
-    var punctuation = clauseWithPunctuation.match(/[,.:;?!)'"]+/);
+    var punctuation = clauseWithPunctuation.match(/[,.:;?!)'"]+/)[0];
     var clause = clauseWithPunctuation.slice(0, -punctuation.length);
     var words = clause.split(' ');
     // Loop over words of clause removing matches from front
@@ -53,6 +54,7 @@ function LineNode(line, ics) {
         lineNode.tokens.push(new TextToken(word));
       }
     }
+    lineNode.tokens.push(new PunctuationToken(punctuation));
   });
 }
 
@@ -63,10 +65,10 @@ function assembleTree(rootNode, icBlockNodes, ics) {
       // if the link node is an ic, make its type ic
       if (lineIndex === 0 && tokenIndex === 0) {
         linkToken.type = 'ic';
-      } else if (icBlockNodes.hasOwnProperty(linkToken.ic)) {
+      } else if (icBlockNodes.hasOwnProperty(linkToken.target)) {
         // if there is still a block node under that ic, make it the exclusive child and delete its key
-        rootNode.children.push(icBlockNodes[linkToken.ic]);
-        delete icBlockNodes[linkToken.ic];
+        rootNode.children.push(icBlockNodes[linkToken.target]);
+        delete icBlockNodes[linkToken.target];
         linkToken.type = 'primary'
       } else {
         // otherwise make it a secondary non-exclusive link
@@ -89,7 +91,11 @@ function TextToken(text) {
 
 function LinkToken(text) {
   this.text = text;
-  this.ic = text.toLowerCase();
+  this.target = text.toLowerCase();
+}
+
+function PunctuationToken(text) {
+  this.text = text;
 }
 
 function icOf(string) {
