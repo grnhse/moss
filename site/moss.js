@@ -1,4 +1,84 @@
 function Moss(dataString) {
+  var AST = getAST(dataString);
+  var container = document.getElementById('_moss');
+  var rootElement = render(AST);
+  rootElement.style.display = 'block';
+  container.appendChild(rootElement);
+}
+
+function render(BlockNode) {
+  var section = document.createElement('section');
+  section.style.display = 'none';
+  var paragraph = document.createElement('p');
+  section.appendChild(paragraph);
+
+  // Render tokens of each line
+  BlockNode.lines.forEach(function(line) {
+    line.tokens.forEach(function(token) {
+      if (token.constructor === TextToken) {
+        paragraph.appendChild(new Span(token));
+        paragraph.appendChild(document.createTextNode(' '));
+      } else if (token.constructor === LinkToken) {
+        if (token.type === 'primary') {
+          paragraph.appendChild(new PrimaryLink(token));
+        } else if (token.type === 'secondary') {
+          paragraph.appendChild(new SecondaryLink(token));
+        } else if (token.type === 'ic') {
+          paragraph.appendChild(new IcLink(token));
+        }
+      } else if (token.constructor === PunctuationToken) {
+        paragraph.appendChild(Span(token));
+        paragraph.appendChild(document.createTextNode(' '));
+      }
+    });
+  });
+
+  // call renderRecursive on children
+  BlockNode.children.forEach(function(childBlockNode) {
+    var childElement = render(childBlockNode);
+    section.appendChild(childElement);
+  });
+
+  return section;
+}
+
+function Span(token) {
+  var textNode = document.createTextNode(token.text);
+  return document.createElement('span').appendChild(textNode);
+}
+
+function Link(token) {
+  var link = document.createElement('a');
+  link.appendChild(document.createTextNode(token.text));
+  link.href = '#';
+  return link;
+}
+
+function PrimaryLink(token) {
+  var link = Link(token);
+  link.addEventListener('click', function(e) {
+
+  });
+  return link;
+}
+
+function SecondaryLink(token) {
+  var link = Link(token);
+  link.addEventListener('click', function(e) {
+
+  });
+  return link;
+}
+
+function IcLink(token) {
+  var link = Link(token);
+  link.addEventListener('click', function(e) {
+
+  });
+  return link;
+}
+
+function getAST(dataString) {
   var icBlockNodes = {};
   var ics = {};
 
@@ -15,9 +95,8 @@ function Moss(dataString) {
     return icBlockNodes;
   }, {});
 
-  // Assemble block nodes into tree
-  var ast = assembleTree(icBlockNodes[icOf(dataString)], icBlockNodes, ics);
-  return ast;
+  // Assemble block nodes into tree and return root node
+  return assembleTree(icBlockNodes[icOf(dataString)], icBlockNodes, ics);
 }
 
 function BlockNode(block, ics) {
@@ -100,4 +179,8 @@ function PunctuationToken(text) {
 
 function icOf(string) {
   return string.split(/[,.;:?!]/)[0].toLowerCase();
+}
+
+function idFrom(text) {
+  return ic.replace(/[ ]/g, '_').replace(/['")]/g, '');
 }
