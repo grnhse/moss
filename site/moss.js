@@ -103,7 +103,7 @@ function icOf(string) {
 }
 
 function idFor(text) {
-  return text.replace(/[ ]/g, '_').replace(/['")]/g, '');
+  return text.replace(/[ ]/g, '_').replace(/['")]/g, '').replace(/[&]/g, 'and');
 }
 
 function capitalize(text) {
