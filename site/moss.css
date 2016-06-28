@@ -17,7 +17,7 @@
   text-decoration: none;
 }
 
-#_moss p a.delinkified:hover {
+#_moss p a:not([href]):hover {
   text-decoration: none;
 }
 

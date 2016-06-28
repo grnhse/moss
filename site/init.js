@@ -1,1 +1,150 @@
-$.get('data.txt', function(data){ Moss(data); });
+$.get('data.txt', function(dataString) {
+  // Generate AST
+  var AST = Moss(dataString);
+  // User is responsible for creating #_moss element
+  var container = document.getElementById('_moss');
+  // Render recursively the AST and take root element
+  var rootElement = renderTree(AST, container);
+  // Append root element to container element
+  container.appendChild(rootElement);
+
+  // If page has hash id of a particular node, display the path to that node
+  if (window.location.hash && document.getElementById(window.location.hash.slice(1))) {
+    display(document.getElementById(window.location.hash.slice(1)));
+  } else {
+    // Otherwise, just display the root
+    display(rootElement);
+  }
+});
+
+function renderTree(BlockNode) {
+  // Every blockNode becomes a section element with one p child and n other section children
+  var section = document.createElement('section');
+  section.id = BlockNode.id;
+  var paragraph = document.createElement('p');
+  section.appendChild(paragraph);
+
+  // For each line, for each token of that line,
+  BlockNode.lines.forEach(function(line) {
+    line.tokens.forEach(function(token) {
+      if (token.constructor === TextToken) {
+        paragraph.appendChild(document.createTextNode(' ')); // todo: token classes should manage preceeding spaces
+        paragraph.appendChild(new SpanElement(token));
+      } else if (token.constructor === LinkToken) {
+        paragraph.appendChild(document.createTextNode(' '));
+        if (token.type === 'primary') {
+          paragraph.appendChild(new PrimaryLinkElement(token));
+        } else if (token.type === 'secondary') {
+          paragraph.appendChild(new SecondaryLinkElement(token));
+        } else if (token.type === 'ic') {
+          paragraph.appendChild(new IcLinkElement(token));
+        }
+      } else if (token.constructor === PunctuationToken) {
+        paragraph.appendChild(SpanElement(token));
+      }
+    });
+  });
+
+  // For each child node render a subtree and append it to the current element
+  BlockNode.children.forEach(function(childBlockNode) {
+    var childElement = renderTree(childBlockNode);
+    section.appendChild(childElement);
+  });
+
+  return section;
+}
+
+function SpanElement(token) {
+  var textNode = document.createTextNode(token.text);
+  return document.createElement('span').appendChild(textNode);
+}
+
+function LinkElement(token, clickHandler) {
+  var link = document.createElement('a');
+  link.appendChild(document.createTextNode(token.text));
+  link.href = '#';
+  link.addEventListener('click', clickHandler);
+  return link;
+}
+
+function PrimaryLinkElement(token) {
+  var link = LinkElement(token, function(e) {
+    e.preventDefault();
+    // If the link is already bolded, unbold it and collapse its children
+    if (link.classList.contains('selected')) {
+      display(link.parentNode.parentNode);
+    } else {
+      // Otherwise, display the child element that corresponds to the clicked link
+      display(document.getElementById(idFor(token.text)));
+    }
+  });
+  return link;
+}
+
+function SecondaryLinkElement(token) {
+  var link = LinkElement(token, function(e) {
+    e.preventDefault();
+  });
+  return link;
+}
+
+function IcLinkElement(token) {
+  var linkElement = LinkElement(token, function(e) {
+    e.preventDefault();
+    display(e.target.parentNode.parentNode);
+  });
+
+  linkElement.classList.add('ic-link');
+  return linkElement;
+}
+
+function display(element) {
+  // Set the window hash to the selected element id
+  window.location.hash = element.id;
+
+  // Hide all section elements
+  Array.prototype.slice.call(document.getElementsByTagName("section")).forEach(function(sectionElement) {
+    sectionElement.style.display = 'none';
+  });
+
+  // Unbold all links
+  Array.prototype.slice.call(document.getElementsByTagName("a")).forEach(function(linkElement) {
+    linkElement.classList.remove('selected');
+  });
+
+  //Add hrefs to all ic-links
+  Array.prototype.slice.call(document.getElementsByClassName("ic-link")).forEach(function(linkElement) {
+    linkElement.href = '#';
+  });
+
+  //Remove the href element of the ic-link of the currently displayed element
+  document.querySelector('#' + element.id + ' .ic-link').removeAttribute('href');
+
+  //Show path to the current element, not bolding any links in the selected (lowest) element
+  showPathTo(element, '');
+
+  function showPathTo(element, linkTextToBold) {
+    //Show the current element
+    element.style.display = 'block';
+
+    // Look through all spans and links of the current element for a link that matches the linkTextToBold argument
+    var linkToBold = Array.prototype.slice.call(element.childNodes[0].childNodes).filter(function(childElement) {
+      var linkText = (childElement.innerText||'').trim();
+      return linkText === linkTextToBold && childElement.tagName === 'A';
+    })[0];
+
+    // If you find a linkToBold, bold it
+    if(linkToBold) {
+      linkToBold.classList.add('selected');
+    }
+
+    // If you have reached the top of the tree, return
+    if (element.parentNode.id === '_moss') {
+      return;
+    } else {
+      // Otherwise, recursively visit the parent element
+      showPathTo(element.parentNode, icOf(element.innerText.trim()));
+    }
+  }
+}
+
