@@ -35,6 +35,11 @@ function renderTree(BlockNode) {
   return section;
 }
 
+function DerivationBoxElement() {
+  this.element = document.createElement('div');
+  this.element.id = '_derivation';
+}
+
 function SpanElement(token) {
   var textNode = document.createTextNode(token.text);
   return document.createElement('span').appendChild(textNode);

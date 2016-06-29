@@ -15,8 +15,16 @@ function Moss(dataString) {
     return icBlockNodes;
   }, {});
 
+  var icBlockNodesCopy = {};
+  for (key in icBlockNodes) {
+    icBlockNodesCopy[key] = icBlockNodes[key];
+  }
+
   // Assemble block nodes into tree and return root node
-  return assembleTree(icBlockNodes[icOf(dataString)], icBlockNodes, ics);
+  var tree = assembleTree(icBlockNodes[icOf(dataString)], icBlockNodes, ics);
+  tree.nodesByIc = icBlockNodes;
+
+  return tree;
 }
 
 function BlockNode(block, ics) {
