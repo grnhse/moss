@@ -1,7 +1,0 @@
-New York City is composed of five boroughs. New York City contains the Bronx.
-
-New York City contains the Bronx. The Bronx contains Bedford Park. The Bronx contains Woodlawn.
-
-The Bronx contains Bedford Park. Bedford Park is a neighborhood in the northwest Bronx.
-
-The Bronx contains Woodlawn. Woodlawn is a neighborhood in the north Bronx.
