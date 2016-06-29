@@ -101,7 +101,7 @@ function display(element) {
   //Remove the href element of the ic-link of the currently displayed element
   document.querySelector('#' + element.id + ' .ic-link').removeAttribute('href');
 
-  //Show path to the current element, not bolding any links in the selected (lowest) element
+  //Show path to the current element, not bolding any links in the first lowest paragraph we visit
   showPathTo(element, '');
 
   function showPathTo(element, linkTextToBold) {
