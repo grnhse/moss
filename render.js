@@ -1,22 +1,3 @@
-$.get('data.txt', function(dataString) {
-  // Generate AST
-  var AST = Moss(dataString);
-  // User is responsible for creating #_moss element
-  var container = document.getElementById('_moss');
-  // Render recursively the AST and take root element
-  var rootElement = renderTree(AST, container);
-  // Append root element to container element
-  container.appendChild(rootElement);
-
-  // If page has hash id of a particular node, display the path to that node
-  if (window.location.hash && document.getElementById(window.location.hash.slice(1))) {
-    display(document.getElementById(window.location.hash.slice(1)));
-  } else {
-    // Otherwise, just display the root
-    display(rootElement);
-  }
-});
-
 function renderTree(BlockNode) {
   // Every blockNode becomes a section element with one p child and n other section children
   var section = document.createElement('section');
