@@ -15,14 +15,13 @@ function Moss(dataString) {
     return icBlockNodes;
   }, {});
 
-  var icBlockNodesCopy = {};
+  var icBlockNodesReference = {};
   for (key in icBlockNodes) {
-    icBlockNodesCopy[key] = icBlockNodes[key];
+    icBlockNodesReference[key] = icBlockNodes[key];
   }
 
   // Assemble block nodes into tree and return root node
-  var tree = assembleTree(icBlockNodes[icOf(dataString)], icBlockNodes, ics);
-  tree.nodesByIc = icBlockNodes;
+  var tree = assembleTree(icBlockNodes[icOf(dataString)], icBlockNodes, icBlockNodesReference, ics);
 
   return tree;
 }
@@ -65,7 +64,7 @@ function Line(line, ics) {
   });
 }
 
-function assembleTree(rootNode, icBlockNodes, ics) {
+function assembleTree(rootNode, icBlockNodes, icBlockNodesReference, ics) {
   rootNode.lines.forEach(function(lineNode, lineIndex) {
     // Take the link tokens of the block node. For each link node:
     lineNode.tokens.filter(function(token){
@@ -76,19 +75,23 @@ function assembleTree(rootNode, icBlockNodes, ics) {
         linkToken.type = 'ic';
       } else if (icBlockNodes.hasOwnProperty(capitalize(linkToken.text))) {
         // if there is still a block node under that ic, make it the exclusive child and delete its key
-        rootNode.children.push(icBlockNodes[capitalize(linkToken.text)]);
+        var blockNode = icBlockNodes[capitalize(linkToken.text)];
+        rootNode.children.push(blockNode);
+        blockNode.parentNode = rootNode;
         delete icBlockNodes[capitalize(linkToken.text)];
-        linkToken.type = 'primary'
+        linkToken.type = 'primary';
+        linkToken.target = blockNode;
       } else {
         // otherwise make it a secondary non-exclusive link
-        linkToken.type = 'secondary'
+        linkToken.type = 'secondary';
+        linkToken.target = icBlockNodesReference[capitalize(linkToken.text)];
       }
     });
   });
 
   // Do the same for the children added in the last pass
   rootNode.children.forEach(function(childNode) {
-    assembleTree(childNode, icBlockNodes);
+    assembleTree(childNode, icBlockNodes, icBlockNodesReference);
   });
 
   return rootNode;

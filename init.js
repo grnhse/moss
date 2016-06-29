@@ -13,7 +13,7 @@ window.onload = function() {
       container.appendChild(rootElement);
 
       var derivationBox = new DerivationBoxElement();
-      container.appendChild(derivationBox.element);
+      container.appendChild(derivationBox);
 
       // If page has hash id of a particular node, display the path to that node
       if (window.location.hash && document.getElementById(window.location.hash.slice(1))) {

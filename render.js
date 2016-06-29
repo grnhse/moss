@@ -36,8 +36,9 @@ function renderTree(BlockNode) {
 }
 
 function DerivationBoxElement() {
-  this.element = document.createElement('div');
-  this.element.id = '_derivation';
+  var element = document.createElement('div');
+  element.id = '_derivation';
+  return element;
 }
 
 function SpanElement(token) {
@@ -56,6 +57,7 @@ function LinkElement(token, clickHandler) {
 function PrimaryLinkElement(token) {
   var link = LinkElement(token, function(e) {
     e.preventDefault();
+    document.getElementById('_derivation').innerHTML = '';
     // If the link is already bolded, unbold it and collapse its children
     if (link.classList.contains('selected')) {
       display(link.parentNode.parentNode);
@@ -70,8 +72,48 @@ function PrimaryLinkElement(token) {
 function SecondaryLinkElement(token) {
   var link = LinkElement(token, function(e) {
     e.preventDefault();
+    var derivationBox = document.getElementById('_derivation');
+    var blockNode = token.target;
+    var derivationElement = DerivationElement(blockNode);
+    derivationBox.appendChild(derivationElement);
   });
   return link;
+}
+
+function DerivationElement(blockNode, selector) {
+  var paragraphElement = document.createElement('p');
+  var introSpanElement = document.createElement('span');
+  var referencingSpanElement = document.createElement('span');
+
+  paragraphElement.appendChild(document.createTextNode('('));
+
+  if (blockNode.parentNode) {
+    var parentLink = document.createElement('a');
+    parentLink.innerText = blockNode.lines[0].tokens[0];
+    parentLink.href = '#';
+    parentLink.addEventListener('click', function(e) {
+      e.preventDefault();
+      var parentDerivationElement = DerivationElement(blockNode.parentNode, blockNode.ic);
+      document.getElementById('_derivation').appendChild(parentDerivationElement);
+    });
+    introSpanElement.appendChild(parentLink);
+  } else {
+    introSpanElement.appendChild(document.createTextNode(blockNode.lines[0].tokens[0]));
+  }
+
+  introSpanElement.appendChild(document.createTextNode(blockNode.lines[0].tokens.slice(1)));
+
+  blockNode.lines.slice(1).filter(function(line) {
+    return !!line.tokens.filter(function(token) {
+      return selector? token.text === selector : true;
+    });
+  });
+
+  paragraphElement.appendChild(introSpanElement);
+  paragraphElement.appendChild(referencingSpanElement);
+  paragraphElement.appendChild(document.createTextNode(')'));
+
+  return paragraphElement;
 }
 
 function IcLinkElement(token) {
@@ -86,6 +128,7 @@ function IcLinkElement(token) {
 
 function display(element) {
   // Set the window hash to the selected element id
+  debugger;
   window.location.hash = element.id;
 
   // Hide all section elements
