@@ -10,4 +10,4 @@ for file in $(sorted_files); do
   cat "$file"
   echo
   echo
-done > moss/site/data.txt
+done > site/data.txt

@@ -72,6 +72,7 @@ function PrimaryLinkElement(token) {
 function SecondaryLinkElement(token) {
   var link = LinkElement(token, function(e) {
     e.preventDefault();
+    e.target.classList.add('selected')
     var derivationBox = document.getElementById('_derivation');
     var blockNode = token.target;
     var derivationElement = DerivationElement(blockNode);
@@ -80,36 +81,42 @@ function SecondaryLinkElement(token) {
   return link;
 }
 
-function DerivationElement(blockNode, selector) {
+function DerivationElement(childBlockNode) {
   var paragraphElement = document.createElement('p');
   var introSpanElement = document.createElement('span');
   var referencingSpanElement = document.createElement('span');
 
   paragraphElement.appendChild(document.createTextNode('('));
 
-  if (blockNode.parentNode) {
+  var parentBlockNode = childBlockNode.parentNode;
+
+  if (parentBlockNode.parentNode) {
     var parentLink = document.createElement('a');
-    parentLink.innerText = blockNode.lines[0].tokens[0];
+    parentLink.innerText = parentBlockNode.lines[0].tokens[0].text;
     parentLink.href = '#';
     parentLink.addEventListener('click', function(e) {
       e.preventDefault();
-      var parentDerivationElement = DerivationElement(blockNode.parentNode, blockNode.ic);
+      e.target.removeAttribute('href');
+      var parentDerivationElement = DerivationElement(parentBlockNode);
       document.getElementById('_derivation').appendChild(parentDerivationElement);
     });
     introSpanElement.appendChild(parentLink);
   } else {
-    introSpanElement.appendChild(document.createTextNode(blockNode.lines[0].tokens[0]));
+    introSpanElement.appendChild(document.createTextNode(parentBlockNode.lines[0].tokens[0].text));
   }
 
-  introSpanElement.appendChild(document.createTextNode(blockNode.lines[0].tokens.slice(1)));
+  introSpanElement.appendChild(document.createTextNode(parentBlockNode.lines[0].tokens.slice(1).map(function(token){return token.text}).join(' ')));
 
-  blockNode.lines.slice(1).filter(function(line) {
-    return !!line.tokens.filter(function(token) {
-      return selector? token.text === selector : true;
-    });
+  var referencingLines = parentBlockNode.lines.slice(1).filter(function(line) {
+    return line.tokens.filter(function(token) {
+      return capitalize(token.text) === childBlockNode.ic;
+    }).length > 0;
   });
 
+  referencingSpanElement.innerText = referencingLines.map(function(line){return line.text}).join(' ');
+
   paragraphElement.appendChild(introSpanElement);
+  paragraphElement.appendChild(document.createTextNode(' '));
   paragraphElement.appendChild(referencingSpanElement);
   paragraphElement.appendChild(document.createTextNode(')'));
 
@@ -128,7 +135,6 @@ function IcLinkElement(token) {
 
 function display(element) {
   // Set the window hash to the selected element id
-  debugger;
   window.location.hash = element.id;
 
   // Hide all section elements
