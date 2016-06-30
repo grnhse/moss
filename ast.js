@@ -1,7 +1,4 @@
 function Moss(dataString) {
-  var icBlockNodes = {};
-  var ics = {};
-
   // Get a set of the ics to check substrings against
   // (Must be finished before next pass can start)
   var ics = dataString.split(/\n\n+(?=.)/).reduce(function(ics, block) {
@@ -10,13 +7,13 @@ function Moss(dataString) {
   }, {});
 
   // Create flat set of block nodes
-  var icBlockNodes = dataString.split(/\n\n+(?=.)/).reduce(function(icBlockNodes, block, collection) {
+  var icBlockNodes = dataString.split(/\n\n+(?=.)/).reduce(function(icBlockNodes, block) {
     icBlockNodes[icOf(block)] = new BlockNode(block, ics);
     return icBlockNodes;
   }, {});
 
   var icBlockNodesReference = {};
-  for (key in icBlockNodes) {
+  for (var key in icBlockNodes) {
     icBlockNodesReference[key] = icBlockNodes[key];
   }
 
