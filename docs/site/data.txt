@@ -1,0 +1,509 @@
+Greenhouse is a software company.
+Greenhouse helps companies be great at recruiting and onboarding.
+Greenhouse has several applications and services that support them.
+The Greenhouse organization has several departments.
+Decisions at Greenhouse are driven by our culture credo.
+Greenhouse has a long and illustrious history.
+
+
+Decisions at Greenhouse are driven by our culture credo:
+We are Authentic.
+We are Effective.
+We are Customer-Focused.
+We are Inclusive and Open-Minded.
+We are Collaborative.
+We are Ambitious.
+
+We are Authentic.
+We act and talk like real people.
+We are honest, candid, and sincere with our customers and colleagues.
+
+We are Effective.
+We are purposeful in the focus of our efforts.
+We have a strong bias for action.
+We deliver.
+
+We are Customer-Focused.
+We care about the success of our customers.
+We are thoughtful about delivering a positive customer experience.
+We act in the long-term best interests of our customers.
+
+We are Inclusive and Open-Minded.
+We are committed to an environment where people from a diversity of backgrounds feel included and comfortable.
+We encourage different perspectives and opinions.
+
+We are Collaborative.
+We work toward common goals.
+We trust and help each other.
+
+We are Ambitious.
+We challenge ourselves and each other to do great work.
+We empower people to do the best work of their career.
+
+
+
+Greenhouse has several applications and services that support them.
+Greenhouse has a recruiting application called Greenhouse Recruiting.
+Greenhouse has an onboarding application called Greenhouse Onboarding.
+Greenhouse has an iOS recruiting app.
+The Greenhouse applications share several services.
+The Greenhouse applications run on a common infrastructure.
+
+
+Greenhouse has a long and illustrious history.
+Greenhouse was founded in 2012 by Daniel Chait and Jon Stross.
+Mike Boufford was the first employee of Greenhouse, with Mike O'Neil coming just a couple of weeks after.
+Greenhouse got its first round of funding June 2012.
+There's probably more history!
+
+Mike Boufford was the first employee of Greenhouse.
+
+Greenhouse got its first round of funding June 2012, of 700K.
+That was really great.
+
+
+The Greenhouse organization has several departments.
+Greenhouse has a Customer Success department.
+Greenhouse has a Design team.
+Greenhouse has an Engineering department.
+Greenhouse has a Finance department.
+Greenhouse has a Marketing department.
+Greenhouse has a New Initiatives team.
+Greenhouse has a People team.
+Greenhouse has a Product team.
+Greenhouse has a Sales team.
+
+Greenhouse has a Sales team.
+Greenhouse has a Renewals team.
+
+Greenhouse has a Renewals team.
+The renewals team renews and upsells customers.
+
+Greenhouse has an Engineering department.
+Engineering has a Product Engineering team.
+Engineering has an Infrastructure team.
+Engineering has a QA team.
+Engineering has an Automation team.
+Engineering has a Security & IT team.
+Greenhouse has a Data Scientist.
+Mike Boufford is VP of Engineering.
+
+Engineering has a Security & IT team.
+It is composed of Dave Anderson, Alexiah Grant, Charles Lee, and Luan Luu.
+
+Engineering has an Infrastructure team.
+What goes here?
+
+Engineering has a QA team.
+QA stands for quality assurance. What this means is making sure that the code produced by developers is ready for release to production.
+The typical process for verification is that once cards are done with development they go through a round of functional testing by the QA person. If there are bugs found during testing, it is returned to the developers to fix or a new subtask is created for the bugs that are found. If the bug passes QA then it is ready to merge. Once it is determined that there is a release that developers can merge into, the code is merged into it. Once code is merged into the development branch it is regression-tested in the staging environment to verify the code is there and to verify that rollback works.
+QA is part of team TAQO, known as the spiciest team at Greenhouse.
+
+Engineering has a Product Engineering team.
+Product engineering has three teams.
+Greenhouse has a mobile team.
+Product engineering has two directors of product engineering, Adam Creeger and Aaron Gibralter.
+Product engineering has a director of mobile engineering, Andy Lister.
+Greenhouse has one software architect, Juan Müller.
+
+Product Engineering has three teams.
+One product engineering team is led by Aaron Gibralter.
+One product engineering team is led by Tim Johnson.
+One product engineering team is led by Mike O'Neil.
+
+One product engineering team is led by Mike O'Neil.
+Moneil's team includes Tharsan Bhuvanendran, Adriano Caloiaro, Rob Rosenbaum, David Han, Allen Krulwich.
+
+Greenhouse has a mobile team.
+It is led by Andy Lister.
+Andy's team includes Gautham Chandra, and Adriano Caloiaro.
+Guests on Andy's team have included Willa Wang, Orion Delwaterman, Adam Barcan, and Tim Frey.
+Mobile is supported by design and product including Sarah Butler, Alex Powell, and Jon Stross.
+The mobile team provides our customers with mobile experiences.
+The mobile team is working on an Andriod app, the same as the iOS app.
+The mobile team is working on an Onboarding Andriod app.
+
+One product engineering team is led by Aaron Gibralter.
+Aaron's team includes Adam Barcan, Orion Delwaterman, Matt Schmaus, Willa Wang, Andrew Zirm.
+Aaron's team is affectionately refered to as Team Rocky.
+
+One product engineering team is led by Tim Johnson.
+Tim's team includes Runbai Ma, Diana Liu, Hugo Marcotte, Juan Müller, and Rob Smith.
+Hugo Marcotte joined Greenhouse in April of 2015.
+Tim's team is affectionately known as J-Team, and Team Johnson.
+
+Hugo Marcotte joined Greenhouse in April of 2015.
+Hugo began on the test automation team and moved to the product team in December 2015.
+
+Greenhouse has one software architect, Juan Müller.
+Juan Müller lives in Fort Lee, New Jersey.
+Juan has his own acronym, WFJH, work-from-Juan's-house.
+
+Greenhouse has a data scientist.
+He is responsible for both internal and customer-facing data efforts.
+He has collected organizational and customer data into a single repository.
+These data are related to sales, customer behavior, support tickets, and the business as a whole.
+He has used these data to support internal dashboards which are used by other Greenhouse employees to facilitate their activities.
+
+
+Greenhouse helps companies be great at recruiting and onboarding.
+Greenhouse helps companies find candidates.
+Greenhouse helps companies interview more effectively.
+Greenhouse helps companies manage the flow of the hiring process.
+Greenhouse is used by employees throughout an organization.
+Greenhouse has integrations with other popular services.
+Greenhouse assures companies that their data is secure.
+
+Greenhouse assures companies that their data is secure.
+Greenhouse has a content-security policy.
+
+Greenhouse has a content-security policy.
+Content-security policy protects against loading unknown external resources as well as preventing execution of inline Javascript.
+The policy contains a whitelist for allowed external sources. In many different categories such as Javascripts, XHR requests, stylesheets, fonts, images, videos, etc.
+Preventing execution of inline Javascript is simply done by adding the keyword 'unsafe-inline' in single quotes in the script-src directive.
+
+Greenhouse has integrations with other popular services.
+We have integrated with Slack.
+
+We have integrated with Slack.
+Users can get notifications about new candidates or new referrals straight from their slack account. Soon they will be able to perform actions from the slack app, such as job approvals.
+
+Greenhouse helps companies interview more effectively.
+Greenhouse makes it easy to impose structure on your interview process.
+
+Greenhouse helps companies manage the flow of the hiring process.
+Greenhouse allows customers to retrieve all of their data through various APIs.
+To ensure that no one falls through the cracks, Greenhouse will assign an alert status to any candidates that have been in a stage for too long.
+Alert settings can be configured for each job and each stage in the job’s Interview Plan.
+
+Greenhouse allows customers to retrieve all of their data through various APIs.
+Greenhouse has a 'Harvest API'.
+Greenhouse has an ingestion API for sourcing partners.
+Greenhouse has a testing API for testing partners.
+
+Greenhouse has a 'Harvest API', to see all your candidate data, application data, and organization data.
+
+Greenhouse has an ingestion API for sourcing partners.
+A sourcing partner is an organiation that works with customers to add candidates to a customer's Greenhouse account.
+An example of someone who might use the ingestion API
+
+Greenhouse has a testing API for testing partners.
+Greenhouse uses testing partners to send candidates assessments as part of a customer's hiring process.
+The testing API lets testing partners integrate with Greenhouse, to retrieve candidate information, and communicate results back into Greenhouse.
+
+Greenhouse makes it easy to impose structure on your interview process.
+As with any data-driven endeavor, garbage in leads to garbage out.
+By collecting the same structured data for each candidate, Greenhouse supports unbiased data-informed decisions on candidates.
+Structured interviews produce consistent data.
+
+Structured interviews produce consistent data.
+
+Greenhouse is used by employees throughout an organization.
+Greenhouse is used by recruiters, coordinators, sourcers, hiring managers, interviewers, executives, and external agency recruiters.
+
+Greenhouse helps companies find candidates.
+Greenhouse helps companies post jobs to social media.
+Greenhouse helps companies post jobs to third party jobs boards.
+Greenhouse can host a company's careers page.
+Greenhouse helps companies collect referrals from their employees.
+Greenhouse helps third party agencies submit candidates.
+Greenhouse provides prospecting tools to help companies find candidates.
+Greenhouse can host internal job boards to help employees apply to internal jobs.
+Greenhouse allows you to assess which of your sources is producing your best candidates, which you can do because structured interviews produce consistent data.
+
+Greenhouse can host a company's careers page.
+We can handle job postings and application, with no work from the user’s standpoint.
+ In addition, we allow users to embed our job board on their on site (as an iframe).
+Finally, we expose most job board functionality through our job board API.
+
+
+The Greenhouse applications run on a common infrastructure.
+Greenhouse services run on a platform called Dajoku.
+
+Greenhouse services run on a platform called Dajoku. (Why the name Dajoku?)
+Dajoku is a platform for Deploying applications in Docker containers. Dajoku provides a command-line interface for managing applications in development and production. Dajoku is based on Marathon.
+
+Dajoku is a platform for Deploying applications in Docker containers.
+(What applications? Not just Greenhouse?)
+(Why does Greenhouse use containers?)
+
+Dajoku is based on Marathon, which is a framework for Mesos.
+(Why do we use Mesos?)
+(Why do we use Marathon?)
+
+
+Greenhouse has an iOS recruiting app.
+The iOS app is aimed at interviewers. Its written in Swift. iOS are native swift applications, but ours is a hybrid between native and web views, allowing us to reuse our mobile website.
+The iOS app interfaces with Greenhouse Recruiting via an API.
+The Mobile Notification Server sends mobile notifications to the iOS app.
+
+The iOS app interfaces with Greenhouse Recruiting via an API.
+The mobile API supports 3 kinds of login, bsic, SSO, and google auth.
+
+The Mobile Notification Server sends mobile notifications to the iOS app.
+Mobile Notification Server sends iOS notifications through Apple's APNS (Apple's push notification service.) The mobile app communicates with GHR.
+When the app starts up the application asks for permissions to send notifications.
+If the user says yes, apples creates a token per device based on the certificate.
+We then send that token to GHR and GHR saves it as a user device.
+Then, when a notification needs to get sent out to a device, GHR via the workers takes the notification packet of JSON and the device token and then the MNS interfaces with apple via HTTP2, which is why it has to be a seperate service.
+
+
+Greenhouse has an onboarding application called Greenhouse Onboarding.
+Greenhouse Onboarding checks for viruses with the Greenhouse Antivirus service.
+
+
+Greenhouse has a recruiting application called Greenhouse Recruiting.
+Greenhouse Recruiting has a tech stack.
+Greenhouse Recruiting has a data model.
+Greenhouse Recruiting has various features.
+Greenhouse Recruiting has an extensive codebase.
+Greenhouse Recruiting is supported by several services.
+Greenhouse Recruiting has automated tests.
+Greenhouse Recruiting releases new versions regularly.
+
+Greenhouse Recruiting has various features.
+Greenhouse has a variety of log-in methods.
+Greenhouse recruiting has an internal administration tool called 'The Shed'.
+The Greenhouse application has several APIs.
+
+Greenhouse Recruiting has an extensive codebase.
+Greenhouse Recruiting has models.
+Greenhouse Recruiting has controllers.
+Greenhouse Recruiting has views.
+Greenhouse Recruiting has presenters.
+
+Greenhouse Recruiting has models.
+Here would be a list of all the models.
+
+Greenhouse has a variety of log-in methods.
+There are three ways to log into the Greenhouse Recruiting application, the simple login with your email and password, sign in with a third-party single sign-on provider, and the sign in with your Google account.
+Greenhouse can support different authentication requirements. Although most organizations wouldn't mind having their users stay logged in, while some organizations might want a session to time out after a certain period of time, eg in the financial and consulting sectors they might have more strict policies regarding that.
+
+
+
+The Greenhouse applications share several services.
+Greenhouse has an anti-virus service.
+Greenhouse has a PDF-rendering service.
+
+
+The Greenhouse application has several APIs, both internal and external.
+The Greenhouse application has a set of APIs used by the mobile app.
+This set of APIs is not session based, it is token based, which means when a user logs in, instead of creating a session in the database, we actually return an auth token but we don't save the auth token, its very similar to how Devise handles the password, it uses a one-way hash so later the user can use the same auth token to make requests.
+
+
+Greenhouse Recruiting has a data model.
+The organization is the root of the data model.
+An organization represents a customer account.
+An organization might be a company or a non-profit.
+Organizations can be active or disabled.
+Some customers start with a sandbox organization which is mainly for trial purposes.
+An organization has many users.
+An organization has many jobs that they are recruiting for.
+An organization has many candidates.
+An organization has many prospects.
+
+
+Greenhouse Recruiting releases new versions regularly.
+The Greenhouse application uses branching strategy called Git Flow. When enough commits have been tested and verified by QA, we have developers merge them into a common branch called 'develop.' We take a cut of develop at a particular point in time and create a release branch. We open a pull request on the release branch to run our automated tests. We push that release branch up to a staging environment for verification. We use a deploy script to push the branch. Once the release branch is verified we merge the release branch into another branch called 'master.' Then, we use the deploy script to deploy that branch to production. If we don't see any errors, or hear of any other issues, we send out an email indicating that a new version has been released. If we find a critical bug in production that needs to be fixed right away, we follow the hotfix process.
+
+If we find a critical bug in production that needs to be fixed right away, we follow the hotfix process.
+A hotfix branch is a cut from master at a certain point to which the developer adds the commits that will fix the issue. The verification of staging follows the same process as before, but when the hotfix is verified it is merged into master and into develop.
+
+We use a deploy script to push the branch.
+The deploy script first verifies that we have built an image for the release branch.
+The deploy script shows the changes you are about to deploy. After confirmation it deploys to Heroku, runs migrations, and then deploys to Dajoku.
+
+We push that release branch up to a staging environment for verification.
+QA verifies that the expected commits were correctly merged into the release branch. QA then deploys the previous release into the staging environment to ensure that we can safely rollback in prod if something goes wrong.
+
+
+Greenhouse Recruiting is supported by several services.
+Greenhouse Recruiting is supported by JBEN.
+Greenhouse Recruiting uses the Greenhouse Antivirus service.
+Greenhouse Recruiting has an interview scheduling service.
+
+
+Greenhouse recruiting has an internal administration tool called 'The Shed'.
+The shed allows account managers, account executives, and other support personel to create new organizations within Greenhouse Recruiting, help troubleshoot issues with job posts, enable certain feature flags. jobs Greenhouse uses 'milestones', and more.
+Shed has tools to allow customers to migrate their data from old ATSs. These tools are used by the customers data migrations team. These migration tools use Sidekiq for background processing. The data is usually provided to us in CSVs and zips containing attachments, and we have workers that download the  -- there are three stages to every migration, the validation stage where we check for formatting, valid characters, and consistent ids, etc, then the adapting stage, where we build this intermediary model so for cndidates we would create a migration candidate and we do this because there are different kinds of migrations and we want them all to create this universal model which is used in the thids step, which creates the Greenhouse proper record, so from a CSV of candidates we would make migration candidates then make people in Greenhouse.
+
+
+Greenhouse Recruiting has a tech stack.
+Greenhouse Recruiting runs Javascript in the browser.
+Greenhouse Recruiting is a Rails application.
+
+
+Greenhouse Recruiting has automated tests.
+Greenhouse Recruiting tests include unit tests.
+Greenhouse Recruiting tests include feature tests using Capybara.
+Greenhouse Recruiting tests run on a service called Solano CI.
+Solano CI has webhooks, so whenever we make a commit to any branch, it pulls down the branch and runs rspec as well as Jasmine, then reports back to Github the status of the build, which is whether any tests have failed. For certain repos that are set up wit a post-build hook, if the build is successful it will also deploy to S3. This is implemented on the tech blog, and the getting started repo. Those repos are continuously deployed whenever a successful build to master is merged.
+
+Greenhouse Recruiting tests include unit tests.
+Greenhouse Recruiting unit tests run on RSpec.
+We have unit tests over services, models, controllers, presenters.
+The goal of units is to verify the correctness of our classes by testing the smallest components we can, while trying to avoid testing the implementation. -- Trying to test the public API of our classes.
+We have view tests. View tests can be thought of as similar to feature tests, but instead of spinning up a whole browser we test the logic included in our templates by setting up data, rendering the page, and expecting whatever the correct result is, usually for elements to appear or not appear, but it could also be eg css classes.
+
+Greenhouse Recruiting unit tests run on RSpec.
+Not only that, but Greenhouse developer Rob Smith has also contributed to the RSpec codebase.
+
+Greenhouse Recruiting tests include feature tests using Capybara.
+Feature tests spin up the whole app in a browser. We use Sellenium to simulate human input such as typing or clicking into a browser. We verify the correctness in these tests by expecting elements to appear or exist on a page as a result of our input.
+
+
+Greenhouse has an anti-virus service.
+The Greenhouse Antivirus service checks documents for viruses with ClamAV.
+Greenhouse Recruiting uses the Greenhouse Antivirus service.
+
+
+An organization might be a company or a non-profit. We chose the word organization to be more general because not everything is a company.
+
+Organizations can be active or disabled. We don't delete organizations when they leave, we just disable them. We could delete them if they ask us to, but standard procedure is not to do that. Being disabled prevents users from that organization from logging in or using the app. This way we can keep the organization's historical data in case they decide to sign back up.
+
+Some customers start with a sandbox organization which is mainly for trial purposes. If the customer decides to sign up for real, we generally create a new organization for them and disable their sandbox organization.
+Sandboxes have an expiration date at which time the organization will be disabled, but a product manager can reactivate the account and extend the expiration date.
+
+
+
+Greenhouse Recruiting is supported by JBEN.
+JBEN stands for Job Board Edge Nodes.
+JBEN communicates with Greenhouse.
+JBEN has automated tests.
+
+JBEN has automated tests. They run on both Solano and Jenkins. The feature test suite runs on Solano, and the mult-browser tests run on Jenkins via Sauce labs. The browsers that are tested are IE 9, 10, 11, not edge, Chrome, and Firefox. The Sauce tests should only run as part of the deploy process for master.
+
+JBEN communicates with Greenhouse.
+There are private APIs on Greenhouse and on JBEN that facilitate communication between the systems. There are multiple JBENs, so each JBEN exists in the Greenhouse application as an object. It is identified by a public and a secret key. We use HMAC authentication that validate that Greenhouse is Greenhouse when it talks to JBEN and that JBEN is JBEN when it talks to Greenhouse.
+
+
+Greenhouse has a PDF-rendering service.
+This service is responsible for transforming HTML documents with CSS into PDF
+files.
+This allows users to export certain useful views to a PDF file for
+archival/storage.
+
+
+Greenhouse Recruiting has an interview scheduling service.
+Interviews can be scheduled by sending an email to  schedule@greenhouse.io. The email must include calendar event information, and a link to the interview kit. This email will be received by a mail server and read by the Greenhouse Recruiting application. The attached calendar information is converted into an Interview and persisted.
+
+The email must include calendar event information. This must come in the form of an attached ICS file, or an attached TNEF file - also known as 'winmail.dat'. ICS files are parsed using the Icalendar gem, whereas TNEF files are parsed by the greenhouse_schedule_by_email gem itself.
+
+The attached calendar information is converted into an Interview and persisted.
+The greenhouse_schedule_by_email gem is responsible for converting emails into Appointments, which are then fed to Calendar::EventProcessor, where they are converted to Inverviews and saved.
+
+
+Greenhouse Recruiting runs Javascript in the browser.
+We use CSP to protect against cross-site scripting attacks.
+
+Greenhouse Recruiting is a Rails application. We are on 3.2.X, and in the process of migrating to Rails 4.
+The original team chose Rails for its large ecosystem, and benefits to productivity and developer happiness.
+Greenhouse depends on many gems.
+
+Greenhouse depends on many gems, such as Devise, Paperclip, CanCan.
+
+
+An organization has many candidates.
+A candidate is someone who has knowingly applied to a job, as opposed to a prospect who might not even be aware they are in Greenhouse's system. A candidate is someone should be notified about their progress as opposed to a prospect.
+Candidates can apply through the organization's careers page, or be added manually by a user, such as when a user refers someone.
+A candidate will have one application for every job they apply to.
+Greenhouse can automatically merge candidates which may be duplicates.
+Greenhouse uses 'milestones' to standardize the measure of candidate progress across jobs.
+
+Greenhouse can automatically merge candidates which may be duplicates.
+When an application comes in, Greenhouse checks for potential duplicates in the organization. If it finds another candidate with a similar email, it will attempt to auto-merge the new candidate with the existing candidate. When a potential duplicate candidate is found, Greenhouse will choose a primary candidate based on the candidate's data, and will merge into it the secondary candidate's data. Auto-merge must be enabled on the organization's settings page.
+
+A candidate will have one application for every job they apply to.
+An application has a status: active, rejected, or hired.
+A candidate moves through a set of stages as they progress through the interview process.
+An application can have a source and/or a referrer.
+
+
+
+An organization has many jobs that they are recruiting for.
+In the product, we refer to them as jobs, but in the codebase we typically refer to them as hiring plans.
+A job can have different statuses, open, closed, or draft.
+A job can have one or more openings. An opening is an actual position to be filled, so if we're hiring multiple people in the same role, you would only have one job in Greenhouse, but you would have multiple openings.
+Some jobs in Greenhouse are 'confidential', meaning only the user which created the job has access by default. That user needs to add other users explicitly to give them permission to the job. A common use case for confidential jobs is when you need to replace someone at your company, and so the existence of that job is sensitive.
+A job may belong to a department.
+A job may belong to one or more offices. That's generally for organizational purposes, to group your jobs and report on them better.
+
+A job can have different statuses, open, closed, or draft.
+A job is open when the team is actively recruiting for that job.
+A job is closed after the hires have been made, or if the team has decided to not move forward with that job any more.
+A job is draft if the team is not ready to recruit for that job, but wants to start prepping the interview plans.
+A job may also be in draft if its pending approval to be opened.
+Various pages in the product allow you to filter based on job status, such as job dashboards, reports, candidate search, etc.
+
+
+
+An organization has many prospects.
+A prospect is someone who the organization is interested in but who hasn't actively applied to a job yet. The organization may have reached out to the prospect to guage interest or start a dialog about the job.
+A prospect can be associated with one or more jobs for which they might be a good fit. A prospect might also be associated with offices or departments so that they automatically become associated with any new jobs that open in those offices or departments.
+A prospect may be 'unattached', which means they are not designated in Greenhouse as a prospect for any job. 'General' is a synonym for unattached.
+A prospect may be active or rejected.
+Prospects can have a source or referrer, similar to a candidate.
+
+
+An organization has many users.
+A user is someone that can log into that organization's account on Greenhouse.
+A typical user might be a recruiter, a hiring manager, an interviewer, etc, although a user doesn't have to be an employee of the organization, they could be a consultant, or an agency recruiter hired by the organization, although this is not the typical way for agency recruiters to work with an organization on Greenhouse.
+A user may have multiple email addresses, but one is always the primary email address. The primary email address just means the one we'll use to send you email, but you can use your other email addresses to sign in with, or to do scheduling with, or to send maildrops from, etc.
+A user has roles and permissions which determine their abilities.
+
+
+We use CSP to protect against cross-site scripting attacks.
+CSP accomplishes this by whitelisting sources and preventing inline Javascript execution.
+The policy contains a whitelist for allowed external sources such as Javascripts, XHR requests, stylesheets, fonts, images, videos, etc.
+Preventing execution of inline Javascript is simply done by adding the keyword 'unsafe-inline' in single quotes in the script-src directive.
+CSP is implemented in Greenhouse using the Secure Headers library.
+CSP is initialized in the initializers folder which means that the policy is set when the server loads on 'rails s', so CSP is initialized when the server starts -- so, if you make changes to CSP you have to restart your server.
+To test something without CSP, change the 'ENFORCE_CSP' environment variable to false, and restart your server.
+Currently in production we allow inline Javascript execution. In order to work towards preventing inline Javascript in production, we disallow it in our local dev environments.
+
+
+Greenhouse uses 'milestones' to standardize the measure of candidate progress across jobs.
+To standardize candidates' progress across multiple jobs Greenhouse uses 'milestones'.
+There are four milestone types, 'application review', 'assessment', 'face-to-face', and 'offer'.
+Milestones standardize the interview stages across different hiring plans -- every job for example has a first in-person interview called 'face to face', but it might correspond to a different interview on each job.
+The motivation for creating milestones was to see how far candidates got in the process across all jobs to judge the quality of recruitment using Greenhouse's reports such as the interviewing activity report, user pipeline report, and candidate quality report.
+Greenhouse uses certain rules to determine which milestone types to map to which hiring plan interview stages.
+If there are fewer than four hiring plan interview stages, multiple milestones will be assigned to the same stage.
+
+Greenhouse uses certain rules to determine which milestone types to map to which hiring plan interview stages.
+The 'application review' milestone type is always connected to the first hiring plan interview stage.
+The 'assessment' milestone type is always connected to the first hiring plan interview stage which is non-reviewable, which corresponds to a flag in the database.
+The 'face-to-face' milestone type should correspond to the first face-to-face candidate interaction.
+Greenhouse has to determine which hiring plan interview stage to connect to the 'face-to-face' milestone.
+
+Greenhouse has to determine which hiring plan interview stage to connect to the 'face-to-face' milestone.
+The hiring plan interview stage that gets connected to the 'face-to-face' milestone type is chosen by an algorithm, but the user can change that default.
+'Face-to-face' is the only milestone the user can change.
+The 'offer' milestone type is always the last hiring plan interview stage.
+The hiring plan interview stage that gets connected to the 'face-to-face' milestone type is chosen by an algorithm which can be found in Milestones::StageFinder#find_by_progressive_refinement.
+The algorithm begins by analyzing the name of the hiring plan interview stage, and looks for the first one that contains a common synonym of 'face-to-face', 'on-site', etc, but does not include 'review', 'phone', 'skype', or other counter-indications of face to face.
+If this was inconclusive, then we identify the first stage that has multiple steps which is not app review.
+If that step proved inconclusive, then we look for the stage right before offer.
+If that doesn't find it, then we look for the first non-app-review stage.
+If the algorithm is inconclusive, the last fail-over is the 'assessment_milestone_stage' method, which takes anything besides app-review and offer.
+
+
+
+A user has roles and permissions which determine their abilities.
+Roles are a collection of permissions that are applied per user per hiring plan or just per user.
+Permissions are individual abilities that can be applied per user and per user per hiring plan.
+Abilities are a set of rules that determine what a user can do in the app based on their permissions and roles.
+
+Roles are a collection of permissions that are applied per user per hiring plan or just per user.
+There are three levels of role: Interviewer, Job Admin, and Site Admin.
+A site admin is usually a user role. A user role is general, it is not constrained to a single hiring plan.
+Job Admin and Interviewer are hiring plan user roles, that is, they are specific to a single hiring plan. In some cases, a site admin can also be a hiring plan user role.
+Although a user may have at most one hiring plan user role per hiring plan, they can have a hiring plan user role on several jobs.
+We can give a user hiring plan user roles on all future jobs, optionally scoped by office and/or department through 'wild card user roles.'
+
+Permissions are individual abilities that can be applied per user and per user per hiring plan.
+For example, a job admin by default can not see private candidates, but a job admin can gain the permission to do so.
+
+Abilities are a set of rules that determine what a user can do in the app based on their permissions and roles. Think of abilities as the implementation of a user's permissions and roles. For example, a user may have a job admin hiring plan user role with the additional permission to see private candidates. However, we need an ability to distinguish this user from one without these permissions. We can set an ability like 'view profile' that considers a candidate's profile and application. When the candidate is private, the ability limits access to the profile to only those users with the appropriate roles and permissions.
+
+
