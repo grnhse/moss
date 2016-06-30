@@ -1,4 +1,5 @@
 function Moss(dataString) {
+  if (!dataString || dataString.constructor !== String) { throw "No data string provided"; }
   // Get a set of the ics to check substrings against
   // (Must be finished before next pass can start)
   var ics = dataString.split(/\n\n+(?=.)/).reduce(function(ics, block) {
@@ -27,16 +28,19 @@ function BlockNode(block, ics) {
   this.text = block.trim();
   this.id = idFor(icOf(block));
   this.ic = icOf(block);
-  this.lines = block.trim().split('\n').map(function(line) { return new Line(line, ics);});
+  this.lines = block.trim().split('\n').map(function(line, index) { return new Line(line, ics, index);});
   this.children = [];
 }
 
-function Line(line, ics) {
+function Line(line, ics, index) {
+  if (!line || dataString.constructor !== String) { throw "Invalid line: " + index; }
   this.text = line;
   var lineNode = this;
   lineNode.tokens = [];
   // Split the line into an array of clauses that include their terminal punctuation
   var clauseRegex = / ?([^,.:;?!)'"]+[,.:;?!)'"]+)/g;
+  if (line.match(clauseRegex) === null) { throw "No valid clauses on this line: " + line; }
+
   line.match(clauseRegex).forEach(function(clauseWithPunctuation) {
     var punctuation = clauseWithPunctuation.match(/[,.:;?!)'"]+/)[0];
     var clause = clauseWithPunctuation.slice(0, -punctuation.length);
