@@ -120,6 +120,18 @@ function DerivationElement(childBlockNode) {
   paragraphElement.appendChild(referencingSpanElement);
   paragraphElement.appendChild(document.createTextNode(')'));
 
+  var externalLink = document.createElement('a');
+  externalLink.href = '#';
+  externalLink.innerText = '->';
+  externalLink.addEventListener('click', function(e) {
+    e.preventDefault();
+    document.getElementById('_derivation').innerHTML = '';
+    display(document.getElementById(parentBlockNode.id));
+  });
+  externalLink.classList.add('external-link');
+  paragraphElement.appendChild(document.createTextNode(' '));
+  paragraphElement.appendChild(externalLink);
+
   return paragraphElement;
 }
 
@@ -165,7 +177,7 @@ function display(element) {
     // Look through all spans and links of the current element for a link that matches the linkTextToBold argument
     var linkToBold = Array.prototype.slice.call(element.childNodes[0].childNodes).filter(function(childElement) {
       var linkText = (childElement.innerText||'').trim();
-      return linkText === linkTextToBold && childElement.tagName === 'A';
+      return (linkText === linkTextToBold || capitalize(linkText) === linkTextToBold) && childElement.tagName === 'A';
     })[0];
 
     // If you find a linkToBold, bold it
