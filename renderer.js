@@ -63,7 +63,7 @@ function PrimaryLinkElement(token) {
       display(link.parentNode.parentNode);
     } else {
       // Otherwise, display the child element that corresponds to the clicked link
-      display(document.getElementById(idFor(token.text)));
+      display(document.getElementById(idFor(capitalize(token.text))));
     }
   });
   return link;
