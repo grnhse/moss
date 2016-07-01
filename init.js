@@ -6,6 +6,7 @@ window.onload = function() {
       if (request.status >= 200 && request.status < 400) {
         // Generate AST
         var AST = Moss(request.responseText);
+        console.log(AST);
         // User is responsible for creating #_moss element
         var container = document.getElementById('_moss');
         // Render recursively the AST and take root element

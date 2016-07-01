@@ -33,7 +33,7 @@ function BlockNode(block, ics) {
 }
 
 function Line(line, ics, index) {
-  if (!line || dataString.constructor !== String) { throw "Invalid line: " + index; }
+  if (!line || line.constructor !== String) { throw "Invalid line: " + index; }
   this.text = line;
   var lineNode = this;
   lineNode.tokens = [];
