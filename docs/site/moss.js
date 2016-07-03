@@ -1,1 +1,1 @@
-../../moss.js
+../../assets/moss.js

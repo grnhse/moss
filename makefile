@@ -1,2 +1,2 @@
 all:
-	cat src/init.js src/ast.js src/renderer.js > moss.js
+	cat src/init.js src/ast.js src/renderer.js > assets/moss.js && cp src/moss.css assets/
