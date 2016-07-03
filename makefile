@@ -1,2 +1,2 @@
 all:
-	cat init.js ast.js renderer.js > moss.js
+	cat src/init.js src/ast.js src/renderer.js > moss.js

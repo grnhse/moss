@@ -6,6 +6,7 @@ window.onload = function() {
       if (request.status >= 200 && request.status < 400) {
         // Generate AST
         var AST = Moss(request.responseText);
+        console.log(AST);
         // User is responsible for creating #_moss element
         var container = document.getElementById('_moss');
         // Render recursively the AST and take root element
@@ -36,6 +37,7 @@ window.onload = function() {
   }
 }
 function Moss(dataString) {
+  if (!dataString || dataString.constructor !== String) { throw "No data string provided"; }
   // Get a set of the ics to check substrings against
   // (Must be finished before next pass can start)
   var ics = dataString.split(/\n\n+(?=.)/).reduce(function(ics, block) {
@@ -64,16 +66,19 @@ function BlockNode(block, ics) {
   this.text = block.trim();
   this.id = idFor(icOf(block));
   this.ic = icOf(block);
-  this.lines = block.trim().split('\n').map(function(line) { return new Line(line, ics);});
+  this.lines = block.trim().split('\n').map(function(line, index) { return new Line(line, ics, index);});
   this.children = [];
 }
 
-function Line(line, ics) {
+function Line(line, ics, index) {
+  if (!line || line.constructor !== String) { throw "Invalid line: " + index; }
   this.text = line;
   var lineNode = this;
   lineNode.tokens = [];
   // Split the line into an array of clauses that include their terminal punctuation
   var clauseRegex = / ?([^,.:;?!)'"]+[,.:;?!)'"]+)/g;
+  if (line.match(clauseRegex) === null) { throw "No valid clauses on this line: " + line; }
+
   line.match(clauseRegex).forEach(function(clauseWithPunctuation) {
     var punctuation = clauseWithPunctuation.match(/[,.:;?!)'"]+/)[0];
     var clause = clauseWithPunctuation.slice(0, -punctuation.length);
@@ -99,7 +104,7 @@ function Line(line, ics) {
   });
 }
 
-function assembleTree(rootNode, icBlockNodes, icBlockNodesReference) {
+function assembleTree(rootNode, icBlockNodes, icBlockNodesReference, ics) {
   rootNode.lines.forEach(function(lineNode, lineIndex) {
     // Take the link tokens of the block node. For each link node:
     lineNode.tokens.filter(function(token){
@@ -220,7 +225,7 @@ function PrimaryLinkElement(token) {
       display(link.parentNode.parentNode);
     } else {
       // Otherwise, display the child element that corresponds to the clicked link
-      display(document.getElementById(idFor(token.text)));
+      display(document.getElementById(idFor(capitalize(token.text))));
     }
   });
   return link;
@@ -277,6 +282,18 @@ function DerivationElement(childBlockNode) {
   paragraphElement.appendChild(referencingSpanElement);
   paragraphElement.appendChild(document.createTextNode(')'));
 
+  var externalLink = document.createElement('a');
+  externalLink.href = '#';
+  externalLink.innerText = '->';
+  externalLink.addEventListener('click', function(e) {
+    e.preventDefault();
+    document.getElementById('_derivation').innerHTML = '';
+    display(document.getElementById(parentBlockNode.id));
+  });
+  externalLink.classList.add('external-link');
+  paragraphElement.appendChild(document.createTextNode(' '));
+  paragraphElement.appendChild(externalLink);
+
   return paragraphElement;
 }
 
@@ -322,7 +339,7 @@ function display(element) {
     // Look through all spans and links of the current element for a link that matches the linkTextToBold argument
     var linkToBold = Array.prototype.slice.call(element.childNodes[0].childNodes).filter(function(childElement) {
       var linkText = (childElement.innerText||'').trim();
-      return linkText === linkTextToBold && childElement.tagName === 'A';
+      return (linkText === linkTextToBold || capitalize(linkText) === linkTextToBold) && childElement.tagName === 'A';
     })[0];
 
     // If you find a linkToBold, bold it
