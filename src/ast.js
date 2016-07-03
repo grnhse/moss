@@ -28,7 +28,7 @@ function BlockNode(block, ics) {
   this.text = block.trim();
   this.id = idFor(icOf(block));
   this.ic = icOf(block);
-  this.lines = block.trim().split('\n').map(function(line, index) { return new Line(line, ics, index);});
+  this.lines = block.trim().split('\n').map(function(line, index) { return new Line(line.trim(), ics, index);});
   this.children = [];
 }
 
