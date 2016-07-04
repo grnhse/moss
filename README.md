@@ -32,7 +32,7 @@ Blocks are seperated by double newlines.
 2. Run `make`
 
 3. Either deploy `assets/concat/index.html` or manually assemble from the contents of `assets/`.
-  - For your convinience, Moss will build for you an index.html that includes all the required assets.
+  - For your convinience, Moss will build for you the assets/concat/index.html file that contains all necessary files.
   - You are however free to manually assemble a custom configuration.
 
 #### Custom configuration ####
