@@ -21,11 +21,11 @@ Moss is a small Javascript framework for converting natural language plaintext e
   3. Include moss.css in a style sheet tag.
   4 Create an html element with the id '\_moss'. Moss.js will put your content here.
   5. Moss.js requires a data string, which can be provided in one of two ways:
-  - Moss will look on the \_moss element for an attribute called `data-source`.
-  - If the data-source attribute exists, Moss will make a GET request to its value and expect a data string.
-  - Moss will look for text in the \_moss element and use this for its data string, clearing the text before rendering.
-  - If providing Moss the data string via text in the element, it is recommended to use a single `pre` tag.
-  - Otherwise Moss will get a string without newline characters, which it needs to determine where paragraphs break.
+    - Moss will look on the \_moss element for an attribute called `data-source`.
+    - If the data-source attribute exists, Moss will make a GET request to its value and expect a data string.
+    - Moss will look for text in the \_moss element and use this for its data string, clearing the text before rendering.
+    - If providing Moss the data string via text in the element, it is recommended to use a single `pre` tag.
+    - Otherwise Moss will get a string without newline characters, which it needs to determine where paragraphs break.
 
 #### Build ####
 
