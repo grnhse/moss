@@ -19,7 +19,7 @@ Moss is a small Javascript framework for converting natural language plaintext e
   1. Create an index.html
   2. Include assets/moss.js in a script tag.
   3. Include assets/moss.css in a style sheet tag.
-  4 Create an html element with the id '\_moss'. Moss.js will put your content there.
+  4. Create an html element with the id '\_moss'. Moss.js will put your content there.
   5. Moss.js requires a data string, which can be provided in one of two ways:
     - Moss will look on the \_moss element for an attribute called `data-source`.
       - If the data-source attribute exists, Moss will make a GET request to its value and expect a data string.
