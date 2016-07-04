@@ -1,7 +1,7 @@
 ## Moss ##
 Moss is a small Javascript framework for converting natural language plaintext explanations into interactive explanation tree webpages.
 
-### Build ###
+#### Build ####
 
 Running `make` will do the following:
 - Take the js files in src/ and compile them into assets/moss.js
@@ -16,7 +16,7 @@ Running `make` will do the following:
   - Build docs/data.txt:
     - From which we build docs/index.html, which includes assets/moss.js and assets/moss.css
 
-### To use ###
+#### To use ####
 
 1. Put your text files in `/project`
   - It is recommended that you put them under seperate version control, eg in a `project/contents` directory.
@@ -25,7 +25,7 @@ Running `make` will do the following:
 
 3. Deploy either `assets/concat/index.html` or manually assemble from the contents of `assets/`.
 
-### Manual assembly ###
+#### Manual assembly ####
 
 1. Create an index.html
 2. Include moss.js in a script tag.
