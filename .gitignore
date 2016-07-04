@@ -1,6 +1,8 @@
 bower_components
 node_modules
 assets/**
+docs/data.txt
+docs/index.html
 project/**
 !project/.gitkeep
 **/.DS_Store
