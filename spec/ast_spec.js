@@ -3,7 +3,7 @@
 
   describe('Moss', function () {
     it('exists', function () {
-      expect(!!Moss).toBe(true);
+      expect(Moss instanceof Function).toBe(true);
     });
 
     it('builds a single-node AST', function() {
