@@ -1,7 +1,19 @@
-all:
-	cat src/init.js src/ast.js src/renderer.js > assets/moss.js && \
-	cp src/moss.css assets/ && \
-	./script/make.sh content assets/data.txt && \
-	./script/make.sh docs/content docs/data.txt && \
-	ruby script/render_index.rb assets/data.txt > assets/concat/index.html && \
+all: assets/moss.js assets/moss.css assets/data.txt assets/concat/index.html docs/data.txt docs/index.html
+
+assets/moss.js: src/init.js src/ast.js src/renderer.js
+	cat src/init.js src/ast.js src/renderer.js > assets/moss.js
+
+assets/moss.css: src/moss.css
+	cp src/moss.css assets/
+
+assets/data.txt: content
+	./script/make.sh content assets/data.txt
+
+assets/concat/index.html: assets/data.txt
+	ruby script/render_index.rb assets/data.txt > assets/concat/index.html
+
+docs/data.txt: docs/content
+	./script/make.sh docs/content docs/data.txt
+
+docs/index.html: docs/data.txt
 	ruby script/render_index.rb docs/data.txt > docs/index.html
