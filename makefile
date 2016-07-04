@@ -9,7 +9,7 @@ assets/moss.css: src/moss.css
 assets/data.txt: content
 	./script/make.sh content assets/data.txt
 
-assets/concat/index.html: assets/data.txt
+assets/concat/index.html: assets/data.txt assets/moss.js assets/moss.css script/render_index.rb script/index.html.erb
 	ruby script/render_index.rb assets/data.txt > assets/concat/index.html
 
 docs/data.txt: docs/content
