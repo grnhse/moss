@@ -3,7 +3,7 @@ Moss is a small Javascript framework for converting natural language plaintext e
 
 #### To use ####
 
-1. Put your text files and subdirectories in `/project`
+1. Put your text files and subdirectories in `/project`. The contents will be `gitignored`.
 - Text files are recursively concatinated and subdirectories don't matter, so structure your project however you like.
 - It is recommended that you put your project directory under version control.
 
