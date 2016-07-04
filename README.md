@@ -1,7 +1,7 @@
 ## Moss ##
 Moss is a Javascript framework that converts plaintext explanations into interactive webpages.
 
-#### Data string format ####
+#### Plaintext format ####
 
 For input, Moss requires a data string in the following format:
 
