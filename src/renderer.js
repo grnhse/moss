@@ -7,12 +7,16 @@ function renderTree(BlockNode) {
 
   // For each line, for each token of that line,
   BlockNode.lines.forEach(function(line) {
-    line.tokens.forEach(function(token) {
+    line.tokens.forEach(function(token, tokenIndex) {
       if (token.constructor === TextToken) {
-        paragraph.appendChild(document.createTextNode(' ')); // todo: token classes should manage preceeding spaces
+        if (tokenIndex > 0) {
+          paragraph.appendChild(document.createTextNode(' '));
+        }
         paragraph.appendChild(new SpanElement(token));
       } else if (token.constructor === LinkToken) {
-        paragraph.appendChild(document.createTextNode(' '));
+        if (tokenIndex > 0) {
+          paragraph.appendChild(document.createTextNode(' '));
+        }
         if (token.type === 'primary') {
           paragraph.appendChild(new PrimaryLinkElement(token));
         } else if (token.type === 'secondary') {
@@ -184,7 +188,7 @@ function display(element) {
     if(linkToBold) {
       linkToBold.classList.add('selected');
     } else {
-      element.childNodes[0].childNodes[1].classList.add('selected');
+      element.childNodes[0].childNodes[0].classList.add('selected');
     }
 
     // If you have reached the top of the tree, return
