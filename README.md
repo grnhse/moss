@@ -13,7 +13,7 @@ You can create multiple blocks.
 You can create multiple blocks.
 Blocks are seperated by double newlines.
 ```
-
+- This example data string has two blocks.
 - The first clause of a block is its independent clause, or "IC".
 - The first occurance of a block's IC in an earlier paragraph produces a "primary link".
 - All subsequent references to a block's IC produce "secondary links".
