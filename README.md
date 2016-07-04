@@ -1,6 +1,25 @@
 ## Moss ##
 Moss is a small Javascript framework for converting natural language plaintext explanations into interactive explanation tree webpages.
 
+Moss takes a data string, and produces an interactive webpage.
+
+#### Data string format ####
+
+A Moss data file has the following format:
+
+```
+Moss data files have blocks.
+Blocks are composed of multiple newline seperated lines of text.
+You can create multiple blocks.
+
+You can create multiple blocks.
+Blocks are seperated by double newlines.
+```
+
+- The first clause of a block is its independent clause, or "IC".
+- The first occurance of a block's IC in an earlier paragraph produces a "primary link".
+- All subsequent references to a block's IC produce "secondary links".
+
 #### To use ####
 
 1. Put your text files and subdirectories in `/project`. The contents will be `gitignored`.
