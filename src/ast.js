@@ -2,7 +2,7 @@ function Moss(dataString) {
   if (!dataString || dataString.constructor !== String) { throw "No data string provided"; }
   // Get a set of the ics to check substrings against
   // (Must be finished before next pass can start)
-  var ics = dataString.split(/\n\n+(?=.)/).reduce(function(ics, block) {
+  var ics = dataString.split(/\n\n+(?=(.|$))/).reduce(function(ics, block) {
     ics[icOf(block)] = true;
     return ics;
   }, {});
@@ -38,11 +38,11 @@ function Line(lineText, ics, index) {
   var line = this;
   line.tokens = [];
   // Split the line into an array of clauses that include their terminal punctuation
-  var clauseRegex = / ?.+[,.:;?!)'"]+(\s|$)/g;
-  if (lineText.match(clauseRegex) === null) { throw "No valid clauses on this line: " + line; }
+  var clauseRegex = /.+?[,.:;?!)'"]+(?=(\s|$))/g;
+  if (lineText.match(clauseRegex) === null) { throw "No valid clauses on this line: " + line.text; }
 
   lineText.match(clauseRegex).forEach(function(clauseWithPunctuation) {
-    var punctuation = clauseWithPunctuation.match(/[,.:;?!)'"]+/)[0];
+    var punctuation = clauseWithPunctuation.match(/[,.:;?!)'"]+$/)[0];
     var clause = clauseWithPunctuation.slice(0, -punctuation.length);
     var words = clause.split(' ');
     // Loop over words of clause removing matches from front
@@ -112,11 +112,11 @@ function PunctuationToken(text) {
 }
 
 function icOf(string) {
-  return string.split(/[,.;:?!]/)[0];
+  return string.split(/[,.;:?!](\s|$)/)[0];
 }
 
 function idFor(text) {
-  return text.replace(/[ ]/g, '_').replace(/['")]/g, '').replace(/[&]/g, 'and');
+  return text.replace(/[ .,;:]/g, '_').replace(/['")]/g, '').replace(/[&]/g, 'and');
 }
 
 function capitalize(text) {

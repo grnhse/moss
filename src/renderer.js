@@ -24,6 +24,7 @@ function renderTree(BlockNode) {
         paragraph.appendChild(SpanElement(token));
       }
     });
+    paragraph.appendChild(document.createElement('br'));
   });
 
   // For each child node render a subtree and append it to the current element
@@ -96,7 +97,6 @@ function DerivationElement(childBlockNode) {
     parentLink.href = '#';
     parentLink.addEventListener('click', function(e) {
       e.preventDefault();
-      e.target.removeAttribute('href');
       var parentDerivationElement = DerivationElement(parentBlockNode);
       document.getElementById('_derivation').appendChild(parentDerivationElement);
     });
@@ -165,7 +165,7 @@ function display(element) {
   });
 
   //Remove the href element of the ic-link of the currently displayed element
-  document.querySelector('#' + element.id + ' .ic-link').removeAttribute('href');
+  //document.querySelector('#' + element.id + ' .ic-link').removeAttribute('href');
 
   //Show path to the current element, not bolding any links in the first lowest paragraph we visit
   showPathTo(element, '');
@@ -183,6 +183,8 @@ function display(element) {
     // If you find a linkToBold, bold it
     if(linkToBold) {
       linkToBold.classList.add('selected');
+    } else {
+      element.childNodes[0].childNodes[1].classList.add('selected');
     }
 
     // If you have reached the top of the tree, return
