@@ -15,5 +15,5 @@ assets/concat/index.html: assets/data.txt assets/moss.js assets/moss.css script/
 docs/data.txt: docs/content
 	./script/make.sh docs/content docs/data.txt
 
-docs/index.html: docs/data.txt
+docs/index.html: docs/data.txt assets/moss.js assets/moss.css
 	ruby script/render_index.rb docs/data.txt > docs/index.html

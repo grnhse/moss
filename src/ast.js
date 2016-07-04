@@ -32,16 +32,16 @@ function BlockNode(block, ics) {
   this.children = [];
 }
 
-function Line(line, ics, index) {
-  if (!line || line.constructor !== String) { throw "Invalid line: " + index; }
-  this.text = line;
-  var lineNode = this;
-  lineNode.tokens = [];
+function Line(lineText, ics, index) {
+  if (!lineText || lineText.constructor !== String) { throw "Invalid line: " + index; }
+  this.text = lineText;
+  var line = this;
+  line.tokens = [];
   // Split the line into an array of clauses that include their terminal punctuation
-  var clauseRegex = / ?([^,.:;?!)'"]+[,.:;?!)'"]+)/g;
-  if (line.match(clauseRegex) === null) { throw "No valid clauses on this line: " + line; }
+  var clauseRegex = / ?.+[,.:;?!)'"]+(\s|$)/g;
+  if (lineText.match(clauseRegex) === null) { throw "No valid clauses on this line: " + line; }
 
-  line.match(clauseRegex).forEach(function(clauseWithPunctuation) {
+  lineText.match(clauseRegex).forEach(function(clauseWithPunctuation) {
     var punctuation = clauseWithPunctuation.match(/[,.:;?!)'"]+/)[0];
     var clause = clauseWithPunctuation.slice(0, -punctuation.length);
     var words = clause.split(' ');
@@ -53,23 +53,23 @@ function Line(line, ics, index) {
           var substring = words.slice(0, i).join(' ');
           if (ics.hasOwnProperty(capitalize(substring))) {
             //if there's a match, remove it from the words array, make a token, and continue to next while loop
-            lineNode.tokens.push(new LinkToken(substring));
+            line.tokens.push(new LinkToken(substring));
             words = words.slice(i);
             break next_while_loop;
           }
           // if you get to the end of the words array with no match, remove and tokenize the first word
           var word = words.shift();
-          lineNode.tokens.push(new TextToken(word));
+          line.tokens.push(new TextToken(word));
         }
     }
-    lineNode.tokens.push(new PunctuationToken(punctuation));
+    line.tokens.push(new PunctuationToken(punctuation));
   });
 }
 
 function assembleTree(rootNode, icBlockNodes, icBlockNodesReference, ics) {
-  rootNode.lines.forEach(function(lineNode, lineIndex) {
+  rootNode.lines.forEach(function(line, lineIndex) {
     // Take the link tokens of the block node. For each link node:
-    lineNode.tokens.filter(function(token){
+    line.tokens.filter(function(token){
       return token.constructor === LinkToken;
     }).forEach(function(linkToken, tokenIndex) {
       // if the link node is an ic, make its type ic

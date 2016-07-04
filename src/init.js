@@ -26,6 +26,7 @@ window.onload = function() {
 function init(dataString) {
   // Generate AST
   var AST = Moss(dataString);
+  console.log(AST);
   // User is responsible for creating #_moss element
   var container = document.getElementById('_moss');
   container.innerHTML = ''; //User might be providing data in the element that needs to be cleared
