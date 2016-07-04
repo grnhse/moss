@@ -25,8 +25,9 @@ Blocks are seperated by double newlines.
 #### To use ####
 
 1. Put your text files and subdirectories in `/project`. The contents will be `gitignored`.
-  - Text files in `/project` and its subdirectories are recursively concatinated.
+  - `.txt` files in `/project` and its subdirectories are recursively concatinated.
     - What goes in which file or subdirectory doesn't matter, everything gets concatinated.
+    - Anything that's not a `.txt` file is skipped.
   - It is recommended that you put your project directory under version control.
 
 2. Run `make`
