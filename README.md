@@ -37,13 +37,14 @@ Blocks are seperated by double newlines.
 
 #### Custom configuration ####
 
-  1. Create an index.html
+  1. Create an index.html, or use assets/index.html as a model.
   2. Include assets/moss.js in a script tag.
   3. Include assets/moss.css in a style sheet tag.
   4. Create an html element with the id '\_moss'. Moss.js will put your content there.
   5. Moss.js requires a data string, which can be provided in one of two ways:
     - Moss will look on the \_moss element for an attribute called `data-source`.
       - If the data-source attribute exists, Moss will make a GET request to its value and expect a data string.
+      - In the example assets/index.html, a request is made for a /data.txt file from the same directory as index.html.
     - Moss will look for text in the \_moss element and use this for its data string, clearing the text before rendering.
       - If providing Moss the data string via text in the element, it is recommended to use a single `pre` tag.
         - Otherwise Moss will get a string without newline characters, which it needs to determine where paragraphs break.
