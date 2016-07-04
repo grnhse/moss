@@ -25,12 +25,12 @@ window.onload = function() {
 
 function init(dataString) {
   // Generate AST
-  var AST = Moss(dataString);
+  var ast = AST(dataString);
   // User is responsible for creating #_moss element
   var container = document.getElementById('_moss');
   container.innerHTML = ''; //User might be providing data in the element that needs to be cleared
   // Render recursively the AST and take root element
-  var rootElement = renderTree(AST, container);
+  var rootElement = renderTree(ast, container);
   // Append root element to container element
   container.appendChild(rootElement);
 
@@ -45,3 +45,10 @@ function init(dataString) {
     display(rootElement);
   }
 }
+
+function DerivationBoxElement() {
+  var element = document.createElement('div');
+  element.id = '_derivations';
+  return element;
+}
+

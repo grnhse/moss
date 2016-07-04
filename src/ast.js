@@ -1,4 +1,4 @@
-function Moss(dataString) {
+function AST(dataString) {
   if (!dataString || dataString.constructor !== String) { throw "No data string provided"; }
   // Get a set of the ics to check substrings against
   // (Must be finished before next pass can start)

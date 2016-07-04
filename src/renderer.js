@@ -40,12 +40,6 @@ function renderTree(BlockNode) {
   return section;
 }
 
-function DerivationBoxElement() {
-  var element = document.createElement('div');
-  element.id = '_derivation';
-  return element;
-}
-
 function SpanElement(token) {
   var textNode = document.createTextNode(token.text);
   return document.createElement('span').appendChild(textNode);
@@ -62,7 +56,7 @@ function LinkElement(token, clickHandler) {
 function PrimaryLinkElement(token) {
   var link = LinkElement(token, function(e) {
     e.preventDefault();
-    document.getElementById('_derivation').innerHTML = '';
+    document.getElementById('_derivations').innerHTML = '';
     // If the link is already bolded, unbold it and collapse its children
     if (link.classList.contains('selected')) {
       display(link.parentNode.parentNode);
@@ -77,17 +71,25 @@ function PrimaryLinkElement(token) {
 function SecondaryLinkElement(token) {
   var link = LinkElement(token, function(e) {
     e.preventDefault();
+
+    e.target.parentNode.childNodes.forEach(function(element) {
+      element.tagName === 'A' && element.classList.remove('selected');
+    });
     e.target.classList.add('selected')
-    var derivationBox = document.getElementById('_derivation');
-    var blockNode = token.target;
-    var derivationElement = DerivationElement(blockNode);
-    derivationBox.appendChild(derivationElement);
+
+    var derivationBox = document.getElementById('_derivations');
+    if (!document.getElementById('_derivations_' + token.target.id)) {
+      var blockNode = token.target;
+      var derivationElement = DerivationElement(blockNode);
+      derivationBox.appendChild(derivationElement);
+    }
   });
   return link;
 }
 
 function DerivationElement(childBlockNode) {
   var paragraphElement = document.createElement('p');
+  paragraphElement.id = '_derivations_' + childBlockNode.id;
   var introSpanElement = document.createElement('span');
   var referencingSpanElement = document.createElement('span');
 
@@ -102,7 +104,7 @@ function DerivationElement(childBlockNode) {
     parentLink.addEventListener('click', function(e) {
       e.preventDefault();
       var parentDerivationElement = DerivationElement(parentBlockNode);
-      document.getElementById('_derivation').appendChild(parentDerivationElement);
+      document.getElementById('_derivations').appendChild(parentDerivationElement);
     });
     introSpanElement.appendChild(parentLink);
   } else {
@@ -129,7 +131,7 @@ function DerivationElement(childBlockNode) {
   externalLink.innerText = '->';
   externalLink.addEventListener('click', function(e) {
     e.preventDefault();
-    document.getElementById('_derivation').innerHTML = '';
+    document.getElementById('_derivations').innerHTML = '';
     display(document.getElementById(parentBlockNode.id));
   });
   externalLink.classList.add('external-link');
@@ -168,8 +170,8 @@ function display(element) {
     linkElement.href = '#';
   });
 
-  //Remove the href element of the ic-link of the currently displayed element
-  //document.querySelector('#' + element.id + ' .ic-link').removeAttribute('href');
+  //Empty visible derivations
+  document.getElementById('_derivations').innerHTML = '';
 
   //Show path to the current element, not bolding any links in the first lowest paragraph we visit
   showPathTo(element, '');
