@@ -4,12 +4,13 @@ Moss is a small Javascript framework for converting natural language plaintext e
 #### To use ####
 
 1. Put your text files and subdirectories in `/project`. The contents will be `gitignored`.
-- Text files are recursively concatinated and subdirectories don't matter, so structure your project however you like.
+- Text files in `/project` and its subdirectories are recursively concatinated.
+  - What goes in which file or subdirectories don't matter, everything gets concatinated.
 - It is recommended that you put your project directory under version control.
 
-2. Run make
+2. Run `make`
 
-3. Deploy either `assets/concat/index.html` or manually assemble from the contents of `assets/`.
+3. Either deploy `assets/concat/index.html` or manually assemble from the contents of `assets/`.
   - For your convinience, Moss will build for you an index.html that includes all the required assets.
   - You are however free to manually assemble a custom configuration.
 
