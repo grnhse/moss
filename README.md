@@ -26,7 +26,8 @@ Blocks are seperated by double newlines.
 
 1. Put your text files and subdirectories in `/project`. The contents will be `gitignored`.
   - `.txt` files in `/project` and its subdirectories are recursively concatinated.
-    - What goes in which file or subdirectory doesn't matter, everything gets concatinated.
+    - Files of a level will be concatinated before all files of subdirectories of that level.
+      - This lets us ensure parents with references occur before the blocks they are referencing.
     - Anything that's not a `.txt` file is skipped.
   - It is recommended that you put your project directory under version control.
 
