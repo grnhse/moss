@@ -30,7 +30,7 @@ Blocks are seperated by double newlines.
       - This lets us ensure parents with references occur before the blocks they are referencing.
     - Anything that's not a `.txt` file is skipped.
   - It is recommended that you put your project directory under seperate version control.
-    - If you already have a project repo, run `git clone $URL project`
+    - If you already have a project repo, delete the project directory and run `git clone $URL project`
 
 2. Run `make`
 
