@@ -1,16 +1,22 @@
-all: assets/moss.js assets/moss.css assets/data.txt assets/concat/index.html docs/data.txt docs/index.html
+all: assets assets/moss.js assets/moss.css assets/data.txt assets/concat/index.html docs/data.txt docs/index.html
 
-assets/moss.js: src/init.js src/ast.js src/renderer.js
+assets/moss.js: assets/ src/init.js src/ast.js src/renderer.js
 	cat src/init.js src/ast.js src/renderer.js > assets/moss.js
 
-assets/moss.css: src/moss.css
+assets/moss.css: assets/ src/moss.css
 	cp src/moss.css assets/
 
-assets/data.txt: $(shell find project -type f -name '*.txt')
+assets/data.txt: assets/ $(shell find project -type f -name '*.txt')
 	./script/make.sh project assets/data.txt
 
-assets/concat/index.html: assets/data.txt assets/moss.js assets/moss.css script/render_index.rb script/index.html.erb
+assets/concat/index.html: assets assets/concat assets/data.txt assets/moss.js assets/moss.css script/render_index.rb script/index.html.erb
 	ruby script/render_index.rb assets/data.txt > assets/concat/index.html
+
+assets/concat: assets
+	mkdir assets/concat
+
+assets:
+	mkdir assets
 
 docs/data.txt: docs/content
 	./script/make.sh docs/content docs/data.txt
