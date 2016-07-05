@@ -1,6 +1,8 @@
 ## Moss ##
 Moss is a Javascript framework that converts plaintext explanations into interactive webpages.
 
+For a demo, run `make` and open docs/index.html in your browser.
+
 #### Plaintext format ####
 
 For input, Moss requires a data string in the following format:
@@ -31,6 +33,7 @@ Blocks are seperated by double newlines.
     - Anything that's not a `.txt` file is skipped.
   - It is recommended that you put your project directory under seperate version control.
     - If you already have a project repo, delete the project directory and run `git clone $URL project`
+  - To see a demo project directory, look at docs/content.
 
 2. Run `make`
 
