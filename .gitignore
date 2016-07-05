@@ -3,6 +3,5 @@ node_modules
 assets/**
 docs/data.txt
 docs/index.html
-project/**
-!project/.gitkeep
+project
 **/.DS_Store

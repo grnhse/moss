@@ -24,12 +24,12 @@ Blocks are seperated by double newlines.
 
 #### To use ####
 
-1. Put your text files and subdirectories in `/project`. The contents will be `gitignored`.
-  - `.txt` files in `/project` and its subdirectories are recursively concatinated.
+1. Create a subdirectory called `project` and fill it with your text files. The contents will be `gitignored`.
+  - All `.txt` files in `/project` and its subdirectories are recursively concatinated.
     - Files of a level will be concatinated before all files of subdirectories of that level.
       - This lets us ensure parents with references occur before the blocks they are referencing.
     - Anything that's not a `.txt` file is skipped.
-  - It is recommended that you put your project directory under version control.
+  - It is recommended that you put your project directory under seperate version control.
 
 2. Run `make`
 
@@ -65,3 +65,11 @@ Running `make` will do the following:
 - Take the text files of of docs/contents and:
   - Build docs/data.txt:
     - From which it build docs/index.html, which includes assets/moss.js and assets/moss.css
+
+#### Tests ####
+
+Run the tests by opening `spec/index.html` in your browser.
+
+#### Linting ####
+
+Lint by running `make` then `npm install` then `./node_modules/.bin/eslint assets/moss.js`

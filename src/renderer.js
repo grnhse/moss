@@ -73,9 +73,9 @@ function SecondaryLinkElement(token) {
     e.preventDefault();
 
     e.target.parentNode.childNodes.forEach(function(element) {
-      element.tagName === 'A' && element.classList.remove('selected');
+      if (element.tagName === 'A') { element.classList.remove('selected'); }
     });
-    e.target.classList.add('selected')
+    e.target.classList.add('selected');
 
     var derivationBox = document.getElementById('_derivations');
     if (!document.getElementById('_derivations_' + token.target.id)) {

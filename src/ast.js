@@ -1,5 +1,5 @@
 function AST(dataString) {
-  if (!dataString || dataString.constructor !== String) { throw "No data string provided"; }
+  if (!dataString || dataString.constructor !== String) { throw new Error("No data string provided"); }
   // Get a set of the ics to check substrings against
   // (Must be finished before next pass can start)
   var ics = dataString.split(/\n\n+(?=(.|$))/).reduce(function(ics, block) {
@@ -33,13 +33,13 @@ function BlockNode(block, ics) {
 }
 
 function Line(lineText, ics, index) {
-  if (!lineText || lineText.constructor !== String) { throw "Invalid line: " + index; }
+  if (!lineText || lineText.constructor !== String) { throw new Error("Invalid line: " + index); }
   this.text = lineText;
   var line = this;
   line.tokens = [];
   // Split the line into an array of clauses that include their terminal punctuation
   var clauseRegex = /.+?[,.:;?!)'"]+(?=(\s|$))/g;
-  if (lineText.match(clauseRegex) === null) { throw "No valid clauses on this line: " + line.text; }
+  if (lineText.match(clauseRegex) === null) { throw new Error("No valid clauses on this line: " + line.text); }
 
   lineText.match(clauseRegex).forEach(function(clauseWithPunctuation) {
     var punctuation = clauseWithPunctuation.match(/[,.:;?!)'"]+$/)[0];
@@ -66,7 +66,7 @@ function Line(lineText, ics, index) {
   });
 }
 
-function assembleTree(rootNode, icBlockNodes, icBlockNodesReference, ics) {
+function assembleTree(rootNode, icBlockNodes, icBlockNodesReference) {
   rootNode.lines.forEach(function(line, lineIndex) {
     // Take the link tokens of the block node. For each link node:
     line.tokens.filter(function(token){
