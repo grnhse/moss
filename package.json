@@ -1,0 +1,23 @@
+{
+  "name": "moss",
+  "version": "1.0.0",
+  "description": "Moss is a small Javascript framework for converting natural language plaintext explanations into interactive explanation tree webpages.",
+  "main": "make",
+  "dependencies": {
+    "eslint-config-standard": "^5.3.1",
+    "fswatch": "^0.1.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "open spec/index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/grnhse/moss.git"
+  },
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/grnhse/moss/issues"
+  },
+  "homepage": "https://github.com/grnhse/moss#readme"
+}

@@ -1,1 +1,7 @@
-site/data.txt
+bower_components
+node_modules
+assets/**
+docs/data.txt
+docs/index.html
+project
+**/.DS_Store

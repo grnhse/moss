@@ -1,0 +1,2 @@
+Moss is a library for generating explanation trees.
+The Moss repo has various files and directories.
