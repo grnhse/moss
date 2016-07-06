@@ -37,6 +37,28 @@ function init(dataString) {
   var derivationBox = new DerivationBoxElement();
   container.appendChild(derivationBox);
 
+  document.onkeydown = function(e) {
+    var currentElement = document.getElementById(window.location.hash.slice(1));
+
+    if (e.keyCode === 37 || e.keyCode === 72) { // Left
+      if (currentElement.previousSibling && currentElement.parentNode.id !== '_moss') {
+        display(currentElement.previousSibling);
+      }
+    } else if (e.keyCode === 39 || e.keyCode === 76) { // Right
+      if (currentElement.nextSibling && currentElement.parentNode.id !== '_moss') {
+        display(currentElement.nextSibling);
+      }
+    } else if (e.keyCode === 38 || e.keyCode === 75) { // Down
+      if (currentElement.parentNode.id !== '_moss') {
+        display(currentElement.parentNode);
+      }
+    } else if (e.keyCode === 40 || e.keyCode === 74) { // Up
+      if (currentElement.childNodes[1]){
+        display(currentElement.childNodes[1]);
+      }
+    }
+  }
+
   // If page has hash id of a particular node, display the path to that node
   if (window.location.hash && document.getElementById(window.location.hash.slice(1))) {
     display(document.getElementById(window.location.hash.slice(1)));
