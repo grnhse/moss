@@ -4,7 +4,8 @@
   "description": "Moss is a small Javascript framework for converting natural language plaintext explanations into interactive explanation tree webpages.",
   "main": "make",
   "dependencies": {
-    "eslint-config-standard": "^5.3.1"
+    "eslint-config-standard": "^5.3.1",
+    "fswatch": "^0.1.4"
   },
   "devDependencies": {},
   "scripts": {

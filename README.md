@@ -70,6 +70,10 @@ Running `make` will do the following:
   - Build docs/data.txt:
     - From which it build docs/index.html, which includes assets/moss.js and assets/moss.css
 
+#### Watch ####
+
+Run npm install and then `make watch` and have changes to /project automatically run `make`.
+
 #### Tests ####
 
 Run the tests by opening `spec/index.html` in your browser.

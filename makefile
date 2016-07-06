@@ -7,7 +7,7 @@ assets/moss.css: assets/ src/moss.css
 	cp src/moss.css assets/
 
 assets/data.txt: assets/ project/ $(shell find project -type f -name '*.txt')
-	./script/make.sh project assets/data.txt
+	./script/concat_files.sh project assets/data.txt
 
 project:
 	mkdir project
@@ -22,7 +22,11 @@ assets:
 	mkdir assets
 
 docs/data.txt: docs/content
-	./script/make.sh docs/content docs/data.txt
+	./script/concat_files.sh docs/content docs/data.txt
 
 docs/index.html: docs/data.txt assets/moss.js assets/moss.css
 	ruby script/render_index.rb docs/data.txt > docs/index.html
+
+.PHONY: watch
+watch:
+	fswatch -0 -o project | xargs -0 -n1 -I{} make > /dev/null 2>&1 &
