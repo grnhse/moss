@@ -151,6 +151,8 @@ function IcLinkElement(token) {
 }
 
 function display(element) {
+  if (!element || element.id[0] === '_') { return display(document.getElementById('_moss').childNodes[0]); }
+
   // Set the window hash to the selected element id
   window.location.hash = element.id;
 

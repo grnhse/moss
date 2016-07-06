@@ -1,16 +1,22 @@
 all: assets project assets/moss.js assets/moss.css assets/data.txt assets/concat/index.html docs/data.txt docs/index.html
 
-assets/moss.js: assets/ src/init.js src/ast.js src/renderer.js
+assets/moss.js: src/init.js src/ast.js src/renderer.js | assets
 	cat src/init.js src/ast.js src/renderer.js > assets/moss.js
 
-assets/moss.css: assets/ src/moss.css
+assets/moss.css: src/moss.css | assets
 	cp src/moss.css assets/
-
-assets/data.txt: assets/ project/ $(shell find project -type f -name '*.txt')
-	./script/concat_files.sh project assets/data.txt
 
 project:
 	mkdir project
+
+assets:
+	mkdir assets
+
+assets/concat: | assets
+	mkdir assets/concat
+
+assets/data.txt: assets/ project/ $(shell find project -type f -name '*.txt')
+	./script/concat_files.sh project assets/data.txt
 
 assets/concat/index_partial.html: assets assets/concat
 	sed '/<script>/ r assets/moss.js' script/index_template.html | \
@@ -19,12 +25,6 @@ assets/concat/index_partial.html: assets assets/concat
 assets/concat/index.html: assets/data.txt assets/moss.js assets/moss.css assets/concat/index_partial.html
 	cat assets/concat/index_partial.html | \
 		sed '/<pre>/ r assets/data.txt' > assets/concat/index.html
-
-assets/concat: assets
-	mkdir assets/concat
-
-assets:
-	mkdir assets
 
 docs/data.txt: docs/content
 	./script/concat_files.sh docs/content docs/data.txt

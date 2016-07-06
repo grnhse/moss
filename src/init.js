@@ -37,6 +37,37 @@ function init(dataString) {
   var derivationBox = new DerivationBoxElement();
   container.appendChild(derivationBox);
 
+  document.onkeydown = function(e) {
+    console.log(e);
+    var currentElement = document.getElementById(window.location.hash.slice(1));
+    var rootElement = document.getElementById('_moss').firstChild;
+
+    if (e.keyCode === 37 || e.keyCode === 72) { // Left
+      if (currentElement.parentNode.id !== '_moss') {
+        display(currentElement.parentNode);
+      }
+    } else if (e.keyCode === 39 || e.keyCode === 76) { // Right
+      if (currentElement.childNodes[1]){
+        display(currentElement.childNodes[1]);
+      } else if(currentElement.nextSibling) {
+        display(currentElement.nextSibling);
+      }
+    } else if (e.keyCode === 38 || e.keyCode === 75) { // Up
+      if (currentElement.previousSibling.previousSibling) {
+        display(currentElement.previousSibling);
+      } else if(currentElement.parentNode.id !== '_moss') {
+        display(currentElement.parentNode);
+      }
+    } else if (e.keyCode === 40 || e.keyCode === 74) { // Down
+      console.log(currentElement.id === rootElement.id, rootElement.childNodes[1]);
+      if (currentElement.id === rootElement.id) {
+        display(rootElement.childNodes[1]);
+      } else if (currentElement.nextSibling || currentElement.childNodes[1]) {
+        display(currentElement.nextSibling || currentElement.childNodes[1]);
+      }
+    }
+  }
+
   // If page has hash id of a particular node, display the path to that node
   if (window.location.hash && document.getElementById(window.location.hash.slice(1))) {
     display(document.getElementById(window.location.hash.slice(1)));
