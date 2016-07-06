@@ -38,23 +38,32 @@ function init(dataString) {
   container.appendChild(derivationBox);
 
   document.onkeydown = function(e) {
+    console.log(e);
     var currentElement = document.getElementById(window.location.hash.slice(1));
+    var rootElement = document.getElementById('_moss').firstChild;
 
     if (e.keyCode === 37 || e.keyCode === 72) { // Left
-      if (currentElement.previousSibling && currentElement.parentNode.id !== '_moss') {
-        display(currentElement.previousSibling);
-      }
-    } else if (e.keyCode === 39 || e.keyCode === 76) { // Right
-      if (currentElement.nextSibling && currentElement.parentNode.id !== '_moss') {
-        display(currentElement.nextSibling);
-      }
-    } else if (e.keyCode === 38 || e.keyCode === 75) { // Down
       if (currentElement.parentNode.id !== '_moss') {
         display(currentElement.parentNode);
       }
-    } else if (e.keyCode === 40 || e.keyCode === 74) { // Up
+    } else if (e.keyCode === 39 || e.keyCode === 76) { // Right
       if (currentElement.childNodes[1]){
         display(currentElement.childNodes[1]);
+      } else if(currentElement.nextSibling) {
+        display(currentElement.nextSibling);
+      }
+    } else if (e.keyCode === 38 || e.keyCode === 75) { // Up
+      if (currentElement.previousSibling.previousSibling) {
+        display(currentElement.previousSibling);
+      } else if(currentElement.parentNode.id !== '_moss') {
+        display(currentElement.parentNode);
+      }
+    } else if (e.keyCode === 40 || e.keyCode === 74) { // Down
+      console.log(currentElement.id === rootElement.id, rootElement.childNodes[1]);
+      if (currentElement.id === rootElement.id) {
+        display(rootElement.childNodes[1]);
+      } else if (currentElement.nextSibling || currentElement.childNodes[1]) {
+        display(currentElement.nextSibling || currentElement.childNodes[1]);
       }
     }
   }
