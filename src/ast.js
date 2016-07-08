@@ -2,13 +2,14 @@ function AST(dataString) {
   if (!dataString || dataString.constructor !== String) { throw new Error("No data string provided"); }
   // Get a set of the ics to check substrings against
   // (Must be finished before next pass can start)
-  var ics = dataString.split(/\n\n+(?=(.|$))/).reduce(function(ics, block) {
+  var blocks = dataString.split(/\n\n+/).filter(notAComment);
+  var ics = blocks.reduce(function(ics, block) {
     ics[icOf(block)] = true;
     return ics;
   }, {});
 
   // Create flat set of block nodes
-  var icBlockNodes = dataString.split(/\n\n+(?=.)/).reduce(function(icBlockNodes, block) {
+  var icBlockNodes = blocks.reduce(function(icBlockNodes, block) {
     icBlockNodes[icOf(block)] = new BlockNode(block, ics);
     return icBlockNodes;
   }, {});
@@ -21,6 +22,12 @@ function AST(dataString) {
   // Assemble block nodes into tree and return root node
   var tree = assembleTree(icBlockNodes[icOf(dataString)], icBlockNodes, icBlockNodesReference, ics);
 
+  for (var ic in icBlockNodes) {
+    if (ic !== icOf(dataString)) {
+      console.log('No parent for: "' + ic + '"');
+    }
+  }
+
   return tree;
 }
 
@@ -28,7 +35,8 @@ function BlockNode(block, ics) {
   this.text = block.trim();
   this.id = idFor(icOf(block));
   this.ic = icOf(block);
-  this.lines = block.trim().split('\n').map(function(line, index) { return new Line(line.trim(), ics, index);});
+  var validLines = block.trim().split('\n').filter(notAComment).filter(hasValidClauses);
+  this.lines = validLines.map(function(line, index) { return new Line(line.trim(), ics, index);});
   this.children = [];
 }
 
@@ -39,7 +47,6 @@ function Line(lineText, ics, index) {
   line.tokens = [];
   // Split the line into an array of clauses that include their terminal punctuation
   var clauseRegex = /.+?[,.:;?!)'"]+(?=(\s|$))/g;
-  if (lineText.match(clauseRegex) === null) { throw new Error("No valid clauses on this line: " + line.text); }
 
   lineText.match(clauseRegex).forEach(function(clauseWithPunctuation) {
     var punctuation = clauseWithPunctuation.match(/[,.:;?!)'"]+$/)[0];
@@ -112,7 +119,7 @@ function PunctuationToken(text) {
 }
 
 function icOf(string) {
-  return string.split(/[,.;:?!](\s|$)/)[0];
+  return string.split(/[,.;:?!](\s|$)/)[0] || string;
 }
 
 function idFor(text) {
@@ -121,4 +128,14 @@ function idFor(text) {
 
 function capitalize(text) {
   return text ? text[0].toUpperCase() + text.slice(1) : '';
+}
+
+function notAComment(line) {
+  return !line.match(/^\s*-/);
+}
+
+function hasValidClauses(line) {
+  var result = !!line.match(/.+?[,.:;?!)'"]+(?=(\s|$))/g);
+  if (!result) {console.log('No valid clauses on line: "' + line + '"')}
+  return result;
 }
