@@ -1,5 +1,5 @@
 The Moss repo has various files and directories.
-The Moss repo has an assets directory.
+The Moss repo generates an assets directory.
 The Moss repo has a docs directory.
 The Moss repo has a project directory.
 The Moss repo has a script directory.
@@ -14,7 +14,7 @@ The Moss repo has a bower.json file.
 The Moss repo has a makefile.
 The Moss repo has a package.json file.
 
-The Moss repo has an assets directory. The assets directory is used to store assets compiled from the src and project directories.
+The Moss repo generates an assets directory.
 
 The Moss repo has a docs directory.
 

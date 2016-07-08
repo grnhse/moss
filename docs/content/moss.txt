@@ -1,2 +1,19 @@
-Moss is a library for generating explanation trees.
+Moss is a library for producing explanation trees.
+Explanation trees a medium of explanation.
 The Moss repo has various files and directories.
+
+-What is moss?
+What is it for?
+When should I use it?
+Why did you make it?
+Why is it like this?
+How should it look?
+  ie should there be questions, etc.
+How do I write it?
+What does a good explanation tree look like?
+
+-Use cases
+Documentation
+Use cases in software development
+
+-Design goals
