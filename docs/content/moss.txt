@@ -16,4 +16,3 @@ What does a good explanation tree look like?
 Documentation
 Use cases in software development
 
--Design goals
