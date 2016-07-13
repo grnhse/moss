@@ -2,7 +2,7 @@ function AST(dataString) {
   if (!dataString || dataString.constructor !== String) { throw new Error("No data string provided"); }
   // Get a set of the ics to check substrings against
   // (Must be finished before next pass can start)
-  var blocks = dataString.split(/\n\n+/).filter(notAComment);
+  var blocks = dataString.split(/\n\n+/).filter(notAComment).filter(notADelimiter);
   var ics = blocks.reduce(function(ics, block) {
     ics[icOf(block)] = true;
     return ics;
@@ -132,6 +132,10 @@ function capitalize(text) {
 
 function notAComment(line) {
   return !line.match(/^\s*-/);
+}
+
+function notADelimiter(line) {
+  return !line.match(/^(=|-)+$/);
 }
 
 function hasValidClauses(line) {
