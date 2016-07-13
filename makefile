@@ -6,8 +6,8 @@ assets:
 assets/concat: assets
 	mkdir assets/concat
 
-assets/moss.js: assets/ src/init.js src/ast.js src/renderer.js
-	cat src/init.js src/ast.js src/renderer.js > assets/moss.js
+assets/moss.js: assets/ src/init.js src/keys.js src/ast.js src/renderer.js
+	cat src/init.js src/keys.js src/ast.js src/renderer.js > assets/moss.js
 
 assets/moss.css: assets/ src/moss.css
 	cp src/moss.css assets/

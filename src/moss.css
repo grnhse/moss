@@ -17,15 +17,7 @@
   text-decoration: underline;
 }
 
-#_moss p a.current-first-link:hover {
-  text-decoration: none;
-}
-
-#_moss p a:not([href]):hover {
-  text-decoration: none;
-}
-
-#_moss p a.selected {
+#_moss p .selected {
   text-decoration: underline;
   text-shadow: .6px 0px 0px black;
 }
