@@ -19,10 +19,13 @@ function renderTree(BlockNode) {
         }
         if (token.type === 'primary') {
           var primaryLinkElement = new PrimaryLinkElement(token);
+          primaryLinkElement.classList.add('primary-link');
           primaryLinkElement.dataset.targetId = token.target.id;
           paragraph.appendChild(primaryLinkElement);
         } else if (token.type === 'secondary') {
-          paragraph.appendChild(new SecondaryLinkElement(token));
+          var secondaryLinkElement = new SecondaryLinkElement(token);
+          secondaryLinkElement.classList.add('secondary-link');
+          paragraph.appendChild(secondaryLinkElement);
         } else if (token.type === 'ic') {
           section.dataset.ic = token.text;
           var icLinkElement = new IcLinkElement(token);

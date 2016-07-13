@@ -9,8 +9,11 @@ document.onkeydown = function(e) {
   var currentElement;
   if (currentLink.classList.contains('ic-link')){
     currentElement = document.getElementById(window.location.hash.slice(1));
-  } else {
+  } else if (currentLink.classList.contains('primary-link')) {
     currentElement = document.getElementById(currentLink.dataset.targetId);
+  } else if (currentLink.classList.contains('secondary-link')) {
+    // If there is a secondary link open, ignore it and take the paragraph which contains it as the current element
+    currentElement = document.getElementById(window.location.hash.slice(1));
   }
 
   if (e.keyCode === 37 || e.keyCode === 72) { // Left
@@ -20,6 +23,9 @@ document.onkeydown = function(e) {
         // lowest section element on the page, but should move the selected link from its ic
         // to the referencing link to it in its parent.
         display(currentElement, false);
+      } else if (currentLink.classList.contains('secondary-link')) {
+        // if a secondary link is displayed, 'left' should select the ic of the paragraph in which it occurs.
+        display(currentElement, true);
       } else {
         // If a non-ic link is selected, pressing left should remove the lowest paragraph
         // from the page, and remove the currently selected link, making the previous
