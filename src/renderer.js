@@ -15,12 +15,14 @@ function renderTree(BlockNode) {
         paragraph.appendChild(new SpanElement(token));
       } else if (token.constructor === LinkToken) {
         if (tokenIndex > 0) {
+          //If its not the first token, put a space before it
           paragraph.appendChild(document.createTextNode(' '));
         }
         if (token.type === 'primary') {
           var primaryLinkElement = new PrimaryLinkElement(token);
           primaryLinkElement.classList.add('primary-link');
           primaryLinkElement.dataset.targetId = token.target.id;
+          primaryLinkElement.dataset.type = 'primary';
           paragraph.appendChild(primaryLinkElement);
         } else if (token.type === 'secondary') {
           var secondaryLinkElement = new SecondaryLinkElement(token);
@@ -29,6 +31,7 @@ function renderTree(BlockNode) {
         } else if (token.type === 'ic') {
           section.dataset.ic = token.text;
           var icLinkElement = new IcLinkElement(token);
+          icLinkElement.dataset.type = 'ic';
           paragraph.appendChild(icLinkElement);
         }
       } else if (token.constructor === PunctuationToken) {
@@ -66,10 +69,10 @@ function PrimaryLinkElement(token) {
     document.getElementById('_derivations').innerHTML = '';
     // If the link is already bolded, unbold it and collapse its children
     if (link.classList.contains('selected')) {
-      display(link.parentNode.parentNode);
+      display(link.parentNode.parentNode, false);
     } else {
       // Otherwise, display the child element that corresponds to the clicked link
-      display(document.getElementById(idFor(capitalize(token.text))));
+      display(document.getElementById(idFor(capitalize(token.text))), false);
     }
   });
 
@@ -155,7 +158,7 @@ function DerivationElement(childBlockNode) {
   externalLink.addEventListener('click', function(e) {
     e.preventDefault();
     document.getElementById('_derivations').innerHTML = '';
-    display(document.getElementById(parentBlockNode.id));
+    display(document.getElementById(parentBlockNode.id), true);
   });
   externalLink.classList.add('external-link');
   paragraphElement.appendChild(document.createTextNode(' '));
@@ -168,18 +171,10 @@ function display(sectionElement, lastIcSelected) {
   var rootElement = document.getElementById('_moss').firstChild;
 
   if (!sectionElement || sectionElement.id[0] === '_') {
-    return display(document.getElementById('_moss').childNodes[0]);
+    return display(document.getElementById('_moss').childNodes[0], true);
   }
 
-  // If the caller wants sectionElement's ic link selected, the fragment id becomes sectionElement's id.
-  if (lastIcSelected) {
-    window.location.hash = sectionElement.id;
-  // If not, we are going to bold a non-ic link and preview its child, but not change the fragment id,
-  // The fragment id should remain that of the paragraph in which the bolded link occurs, because the user
-  // has not yet selected to advance to the previewed paragraph.
-  } else {
-    window.location.hash = sectionElement.id === rootElement.id ? rootElement.id : sectionElement.parentNode.id;
-  }
+  window.location.hash = sectionElement.id;
 
   // Hide all section elements
   Array.prototype.slice.call(document.getElementsByTagName("section")).forEach(function(sectionElement) {
@@ -196,11 +191,6 @@ function display(sectionElement, lastIcSelected) {
 
   //Show path to the current sectionElement, not bolding any links in the first lowest paragraph we visit
   showPathTo(sectionElement, lastIcSelected ? sectionElement.dataset.ic : '');
-
-  //If root, bold ic link
-  if (sectionElement.parentNode.id === '_moss') {
-    document.querySelector('#' + sectionElement.id + " > p a.ic-link").classList.add('selected');
-  }
 
   function showPathTo(sectionElement, linkTextToBold) {
     //Show the current sectionElement

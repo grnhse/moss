@@ -42,7 +42,7 @@ function init(dataString) {
   var selectedElement = hash ? document.getElementById(window.location.hash.slice(1)) : null;
 
   if (selectedElement && selectedElement.parentNode.id !== '_moss') {
-    display(document.getElementById(window.location.hash.slice(1)), true);
+    display(document.getElementById(window.location.hash.slice(1)), false);
   } else {
     // Otherwise, just display the root
     display(rootElement, true);

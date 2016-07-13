@@ -1,56 +1,40 @@
 document.onkeydown = function(e) {
-  var rootElement = document.getElementById('_moss').firstChild;
+  // Set current element to the lowest section element on the page.
+  var currentElement = currentElement = document.getElementById(window.location.hash.slice(1));
 
   // The current link is the lowest selected link
-  var currentLink = document.querySelector(window.location.hash + ' > p a.selected') || rootElement.childNodes[0].childNodes[0];
+  var currentLink = document.querySelector('#' + currentElement.id + ' > p a.selected') ||
+    document.querySelector('#' + currentElement.parentNode.id + ' > p a.selected');
 
-  // Current element should resolve to the lowest section element on the page.
-  // If the current element has no selected link, it is a 'preview paragraph'.
-  var currentElement;
-  if (currentLink.classList.contains('ic-link')){
-    currentElement = document.getElementById(window.location.hash.slice(1));
-  } else if (currentLink.classList.contains('primary-link')) {
-    currentElement = document.getElementById(currentLink.dataset.targetId);
-  } else if (currentLink.classList.contains('secondary-link')) {
-    // If there is a secondary link open, ignore it and take the paragraph which contains it as the current element
-    currentElement = document.getElementById(window.location.hash.slice(1));
-  }
+  var rootElement = document.getElementById('_moss').firstChild;
 
   if (e.keyCode === 37 || e.keyCode === 72) { // Left
-    if (currentElement.parentNode.id !== '_moss') { // If we are at the root, do nothing
-      if (currentLink.classList.contains('ic-link')) {
-        // If the current link is an ic, then pressing left should not remove the currently
-        // lowest section element on the page, but should move the selected link from its ic
-        // to the referencing link to it in its parent.
-        display(currentElement, false);
-      } else if (currentLink.classList.contains('secondary-link')) {
-        // if a secondary link is displayed, 'left' should select the ic of the paragraph in which it occurs.
-        display(currentElement, true);
-      } else {
-        // If a non-ic link is selected, pressing left should remove the lowest paragraph
-        // from the page, and remove the currently selected link, making the previous
-        // selected link the currentLink.
-        display(currentElement.parentNode, false);
-      }
+    if (currentLink.parentNode.parentNode === rootElement) { // If we are at the root, do nothing
+      display(rootElement, true);
+    } else {
+      display(currentElement, false);
     }
   } else if (e.keyCode === 39 || e.keyCode === 76) { // Right
-    // Pressing right takes the preview paragraph and selects its ic.
-    display(currentElement, true);
+    if (currentLink.dataset.type === 'primary') {
+      display(currentElement, true);
+    }
   } else if (e.keyCode === 38 || e.keyCode === 75) { // Up
-    // If the current element has a previous tree node sibling, display it and move the selected link.
-    if (currentElement.previousSibling.previousSibling) { // (ie, a previous sibling that's not its paragraph element)
-      display(currentElement.previousSibling, false);
-    // Otherwise, we are at the first child ie the second link is selected, and pressing up should select the ic link
-    } else if (!document.querySelector('#' + currentElement.id + ' a.ic-link.selected')) {
-      display(currentElement.parentNode, true);
+    if (currentLink.dataset.type === 'primary') {
+      if (currentElement.previousSibling.tagName === 'SECTION') {
+        display(currentElement.previousSibling, false);
+      } else {
+        display(currentElement.parentNode, true); // Is this a problem?
+      }
     }
   } else if (e.keyCode === 40 || e.keyCode === 74) { // Down
-    // If the ic link is selected and there is a child node to display, display it as a preview
-    if (document.querySelector('#' + currentElement.id + ' a.ic-link.selected') && currentElement.childNodes[1]) {
-      display(currentElement.childNodes[1], false);
-    // Otherwise, if there is a next sibling of the current preview to display, display it as a preview.
-    } else if ((document.getElementById(currentLink.dataset.targetId)||{}).nextSibling) {
-      display(document.getElementById(currentLink.dataset.targetId).nextSibling, false);
+    if (currentLink.dataset.type === 'ic') {
+      if (currentElement.childNodes[1]) {
+        display(currentElement.childNodes[1], false);
+      }
+    } else if (currentLink.dataset.type === 'primary') {
+      if (currentElement.nextSibling) {
+        display(currentElement.nextSibling, false);
+      }
     }
   }
 }
