@@ -26,7 +26,7 @@ function AST(dataString) {
 
   for (var ic in icBlockNodes) {
     if (ic !== icOf(dataString)) {
-      console.log('No parent for: "' + ic + '"');
+      // console.log('No parent for: "' + ic + '"');
     }
   }
 
