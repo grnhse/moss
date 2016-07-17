@@ -80,7 +80,7 @@ function ParentLinkElement(token) {
       display(parentLinkElement.parentNode.parentNode, null);
     } else {
       // Otherwise, display the child element that corresponds to the clicked link
-      display(document.getElementById(token.id), null);
+      display(document.getElementById(token.targetId), null);
     }
   });
 
