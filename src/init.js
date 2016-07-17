@@ -18,6 +18,7 @@ window.onload = function() {
 
       request.send();
     } else if(mossElement.innerText) {
+      // User may provide text in the moss element
       init(mossElement.innerText.trim());
     }
   }
@@ -34,24 +35,20 @@ function init(dataString) {
   // Append root element to container element
   container.appendChild(rootElement);
 
-  var derivationBox = new DerivationBoxElement();
-  container.appendChild(derivationBox);
-
   // If page has hash id of a particular node, display the path to that node
   var hash = window.location.hash;
   var selectedElement = hash ? document.getElementById(window.location.hash.slice(1)) : null;
 
   if (selectedElement && selectedElement.parentNode.id !== '_moss') {
-    display(document.getElementById(window.location.hash.slice(1)), false);
+    display(document.getElementById(window.location.hash.slice(1)), null);
   } else {
     // Otherwise, just display the root
-    display(rootElement, true);
+    display(rootElement, rootElement.childNodes[0].childNodes[0]);
   }
 }
 
-function DerivationBoxElement() {
-  var element = document.createElement('div');
-  element.id = '_derivations';
-  return element;
-}
-
+window.addEventListener('hashchange', function(e) {
+  if (document.getElementsByClassName('selected-section')[0].id !== e.newURL.slice(e.newURL.indexOf('#') + 1)) {
+    display(document.getElementById(window.location.hash.slice(1)), null);
+  }
+});

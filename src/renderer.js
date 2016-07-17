@@ -13,27 +13,35 @@ function renderTree(BlockNode) {
           paragraph.appendChild(document.createTextNode(' '));
         }
         paragraph.appendChild(new SpanElement(token));
-      } else if (token.constructor === LinkToken) {
+      } else if (token.constructor === ParentLinkToken) {
         if (tokenIndex > 0) {
           //If its not the first token, put a space before it
           paragraph.appendChild(document.createTextNode(' '));
         }
-        if (token.type === 'primary') {
-          var primaryLinkElement = new PrimaryLinkElement(token);
-          primaryLinkElement.classList.add('primary-link');
-          primaryLinkElement.dataset.targetId = token.target.id;
-          primaryLinkElement.dataset.type = 'primary';
-          paragraph.appendChild(primaryLinkElement);
-        } else if (token.type === 'secondary') {
-          var secondaryLinkElement = new SecondaryLinkElement(token);
-          secondaryLinkElement.classList.add('secondary-link');
-          paragraph.appendChild(secondaryLinkElement);
-        } else if (token.type === 'ic') {
-          section.dataset.ic = token.text;
-          var icLinkElement = new IcLinkElement(token);
-          icLinkElement.dataset.type = 'ic';
-          paragraph.appendChild(icLinkElement);
+        var parentLinkElement = new ParentLinkElement(token);
+        parentLinkElement.dataset.targetId = token.targetId;
+        parentLinkElement.dataset.id = token.targetId;
+        parentLinkElement.dataset.type = 'parent';
+        paragraph.appendChild(parentLinkElement);
+      } else if (token.constructor === AliasToken) {
+        if (tokenIndex > 0) {
+          //If its not the first token, put a space before it
+          paragraph.appendChild(document.createTextNode(' '));
         }
+        var aliasLinkElement = new AliasLinkElement(token);
+        aliasLinkElement.dataset.targetId = token.targetId;
+        aliasLinkElement.dataset.id = token.targetId;
+        paragraph.appendChild(aliasLinkElement);
+      } else if (token.constructor === IcLinkToken) {
+        if (tokenIndex > 0) {
+          //If its not the first token, put a space before it
+          paragraph.appendChild(document.createTextNode(' '));
+        }
+        section.dataset.ic = token.text;
+        var icLinkElement = new IcLinkElement(token);
+        icLinkElement.dataset.type = 'ic';
+        icLinkElement.dataset.id = token.id;
+        paragraph.appendChild(icLinkElement);
       } else if (token.constructor === PunctuationToken) {
         paragraph.appendChild(SpanElement(token));
       }
@@ -63,38 +71,33 @@ function LinkElement(token, clickHandler) {
   return link;
 }
 
-function PrimaryLinkElement(token) {
-  var link = LinkElement(token, function(e) {
+function ParentLinkElement(token) {
+  var parentLinkElement = LinkElement(token, function(e) {
     e.preventDefault();
-    document.getElementById('_derivations').innerHTML = '';
+
     // If the link is already bolded, unbold it and collapse its children
-    if (link.classList.contains('selected')) {
-      display(link.parentNode.parentNode, false);
+    if (parentLinkElement.classList.contains('selected-link')) {
+      display(parentLinkElement.parentNode.parentNode, null);
     } else {
       // Otherwise, display the child element that corresponds to the clicked link
-      display(document.getElementById(idFor(capitalize(token.text))), false);
+      display(document.getElementById(token.id), null);
     }
   });
 
-  return link;
+  parentLinkElement.classList.add('parent-link');
+  parentLinkElement.dataset.targetId = token.target.id;
+  parentLinkElement.dataset.type = 'parent';
+  return parentLinkElement;
 }
 
-function SecondaryLinkElement(token) {
+function AliasLinkElement(token) {
   var link = LinkElement(token, function(e) {
     e.preventDefault();
-
-    e.target.parentNode.childNodes.forEach(function(element) {
-      if (element.tagName === 'A') { element.classList.remove('selected'); }
-    });
-    e.target.classList.add('selected');
-
-    var derivationBox = document.getElementById('_derivations');
-    var blockNode = token.target;
-    var derivationElement = DerivationElement(blockNode);
-    derivationBox.appendChild(derivationElement);
+    display(document.getElementById(e.target.dataset.targetId), null);
   });
 
-  link.dataset.type = 'secondary';
+  link.dataset.type = 'alias';
+  link.classList.add('alias-link');
 
   return link;
 }
@@ -102,119 +105,13 @@ function SecondaryLinkElement(token) {
 function IcLinkElement(token) {
   var linkElement = LinkElement(token, function(e) {
     e.preventDefault();
-    if (e.target.classList.contains('selected')) {
-      display(e.target.parentNode.parentNode, false);
+    if (e.target.classList.contains('selected-link')) {
+      display(e.target.parentNode.parentNode, null);
     } else {
-      display(e.target.parentNode.parentNode, true);
+      display(e.target.parentNode.parentNode, e.target);
     }
   });
   linkElement.classList.add('ic-link');
   return linkElement;
 }
-
-function DerivationElement(childBlockNode) {
-  var paragraphElement = document.createElement('p');
-  paragraphElement.id = '_derivations_' + childBlockNode.id;
-  var introSpanElement = document.createElement('span');
-  var referencingSpanElement = document.createElement('span');
-
-  paragraphElement.appendChild(document.createTextNode('('));
-
-  var parentBlockNode = childBlockNode.parentNode;
-
-  if (parentBlockNode.parentNode) {
-    var parentLink = document.createElement('a');
-    parentLink.innerText = parentBlockNode.lines[0].tokens[0].text;
-    parentLink.href = '#';
-    parentLink.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.target.removeAttribute('href');
-      var parentDerivationElement = DerivationElement(parentBlockNode);
-      document.getElementById('_derivations').appendChild(parentDerivationElement);
-    });
-    introSpanElement.appendChild(parentLink);
-  } else {
-    introSpanElement.appendChild(document.createTextNode(parentBlockNode.lines[0].tokens[0].text));
-  }
-
-  introSpanElement.appendChild(document.createTextNode(parentBlockNode.lines[0].tokens.slice(1).map(function(token){return token.text}).join(' ')));
-
-  var referencingLines = parentBlockNode.lines.slice(1).filter(function(line) {
-    return line.tokens.filter(function(token) {
-      return capitalize(token.text) === childBlockNode.ic;
-    }).length > 0;
-  });
-
-  referencingSpanElement.innerText = referencingLines.map(function(line){return line.text}).join(' ');
-
-  paragraphElement.appendChild(introSpanElement);
-  paragraphElement.appendChild(document.createTextNode(' '));
-  paragraphElement.appendChild(referencingSpanElement);
-  paragraphElement.appendChild(document.createTextNode(')'));
-
-  var externalLink = document.createElement('a');
-  externalLink.href = '#';
-  externalLink.innerText = '->';
-  externalLink.addEventListener('click', function(e) {
-    e.preventDefault();
-    document.getElementById('_derivations').innerHTML = '';
-    display(document.getElementById(parentBlockNode.id), true);
-  });
-  externalLink.classList.add('external-link');
-  paragraphElement.appendChild(document.createTextNode(' '));
-  paragraphElement.appendChild(externalLink);
-
-  return paragraphElement;
-}
-
-function display(sectionElement, lastIcSelected) {
-  var rootElement = document.getElementById('_moss').firstChild;
-
-  if (!sectionElement || sectionElement.id[0] === '_') {
-    return display(document.getElementById('_moss').childNodes[0], true);
-  }
-
-  window.location.hash = sectionElement.id;
-
-  // Hide all section elements
-  Array.prototype.slice.call(document.getElementsByTagName("section")).forEach(function(sectionElement) {
-    sectionElement.style.display = 'none';
-  });
-
-  // Unbold all links
-  Array.prototype.slice.call(document.getElementsByTagName("a")).forEach(function(linkElement) {
-    linkElement.classList.remove('selected');
-  });
-
-  //Empty visible derivations
-  document.getElementById('_derivations').innerHTML = '';
-
-  //Show path to the current sectionElement, not bolding any links in the first lowest paragraph we visit
-  showPathTo(sectionElement, lastIcSelected ? sectionElement.dataset.ic : '');
-
-  function showPathTo(sectionElement, linkTextToBold) {
-    //Show the current sectionElement
-    sectionElement.style.display = 'block';
-
-    // Look through all spans and links of the current sectionElement for a link that matches the linkTextToBold argument
-    var linkToBold = Array.prototype.slice.call(sectionElement.childNodes[0].childNodes).filter(function(childElement) {
-      var linkText = (childElement.innerText||'').trim();
-      return (linkText === linkTextToBold || capitalize(linkText) === linkTextToBold) && childElement.tagName === 'A';
-    })[0];
-
-    // If you find a linkToBold, bold it
-    if(linkToBold) {
-      linkToBold.classList.add('selected');
-    }
-
-    // If you have reached the top of the tree, return
-    if (sectionElement.parentNode.id === '_moss') {
-      return;
-    } else {
-      // Otherwise, recursively visit the parent sectionElement
-      showPathTo(sectionElement.parentNode, icOf(sectionElement.innerText.trim()));
-    }
-  }
-}
-
 
