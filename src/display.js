@@ -28,20 +28,23 @@ function display(sectionElement, selectedLinkElement) {
     linkElement.classList.remove('selected-link');
   });
 
-  //Show path to the current sectionElement, not bolding any links in the first lowest paragraph we visit
+  // Show path to the current sectionElement, not bolding any links in the first lowest paragraph we visit
   showPathTo(sectionElement, '');
 
   if (sectionElement === rootElement && !selectedLinkElement) {
     selectedLinkElement = rootElement.firstChild.firstChild;
   }
 
-  //Bold selected link
+  // Bold selected link
   if (selectedLinkElement) {
-    if (selectedLinkElement.constructor !== HTMLAnchorElement) {debugger;}
     selectedLinkElement.classList.add('selected-link');
   }
 
+  // Set URL to element id
   window.location.hash = sectionElement.id;
+
+  // Scroll to bottom
+  window.scrollTo(0,document.body.scrollHeight);
 
   function showPathTo(sectionElement, linkTextToBold) {
     //Show the current sectionElement

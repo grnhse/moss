@@ -85,7 +85,7 @@ function ParentLinkElement(token) {
   });
 
   parentLinkElement.classList.add('parent-link');
-  parentLinkElement.dataset.targetId = token.target.id;
+  parentLinkElement.dataset.targetId = token.targetId;
   parentLinkElement.dataset.type = 'parent';
   return parentLinkElement;
 }

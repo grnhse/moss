@@ -1,6 +1,5 @@
 document.onkeydown = function(e) {
   if (e.metaKey || e.altKey || e.shiftKey || e.ctrlKey) {
-    console.log('ignored key');
     return;
   }
   // Set current element to the lowest section element on the page.

@@ -52,12 +52,12 @@ function Line(lineText, ics, lineIndex) {
 
   lineText.match(clauseRegex).forEach(function(clauseWithPunctuation, clauseIndex) {
     var punctuation = clauseWithPunctuation.match(/[,.:;?!)'"]+$/)[0];
-    var clause = clauseWithPunctuation.slice(0, -punctuation.length);
+    var clause = clauseWithPunctuation.slice(0, -punctuation.length).trim();
     var words = clause.split(' ');
 
     if (lineIndex === 0 && clauseIndex === 0) {
       line.tokens.push(new IcLinkToken(clause));
-    } else if (ics.hasOwnProperty(clause)) {
+    } else if (ics.hasOwnProperty(clause.trim())) {
       line.tokens.push(new ParentLinkToken(clause));
     } else {
       // Loop over words of clause removing matches from front
