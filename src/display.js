@@ -10,8 +10,6 @@ function display(sectionElement, selectedLinkElement) {
     }
   }
 
-  sectionElement.classList.add('selected-section');
-
   var rootElement = document.getElementById('_moss').firstChild;
 
   if (!sectionElement || sectionElement.id[0] === '_') {
@@ -42,9 +40,10 @@ function display(sectionElement, selectedLinkElement) {
 
   // Set URL to element id
   window.location.hash = sectionElement.id;
+  sectionElement.classList.add('selected-section');
 
   // Scroll to bottom
-  window.scrollTo(0,document.body.scrollHeight);
+  // window.scrollTo(0,document.body.scrollHeight);
 
   function showPathTo(sectionElement, linkTextToBold) {
     //Show the current sectionElement

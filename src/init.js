@@ -49,6 +49,6 @@ function init(dataString) {
 
 window.addEventListener('hashchange', function(e) {
   if (document.getElementsByClassName('selected-section')[0].id !== e.newURL.slice(e.newURL.indexOf('#') + 1)) {
-    display(document.getElementById(window.location.hash.slice(1)), null);
+    setTimeout(0, display.bind({}, document.getElementById(window.location.hash.slice(1)), null));
   }
 });
