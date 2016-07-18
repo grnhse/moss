@@ -68,7 +68,7 @@ function Line(lineText, ics, lineIndex) {
             var substring = words.slice(0, i).join(' ');
             if (ics.hasOwnProperty(capitalize(substring))) {
               //if there's a match, remove it from the words array, make a token, and continue to next while loop
-              line.tokens.push(new AliasToken(substring));
+              line.tokens.push(new AliasToken(substring, clause));
               words = words.slice(i);
               break next_while_loop;
             }
@@ -118,12 +118,14 @@ function IcLinkToken(text) {
 
 function ParentLinkToken(text) {
   this.text = text;
-  this.targetId = idFor(icOf(text));
+  this.id = idFor(icOf(text));
 }
 
-function AliasToken(text) {
+function AliasToken(text, clause) {
   this.text = text;
   this.targetId = idFor(capitalize(text));
+  this.clauseText = clause;
+  this.id = idFor(clause);
 }
 
 function PunctuationToken(text) {

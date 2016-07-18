@@ -1,12 +1,12 @@
 function renderTree(BlockNode) {
   // Every blockNode becomes a section element with one p child and n other section children
   var section = document.createElement('section');
-  section.id = BlockNode.id;
+  // section.classList.add(BlockNode.id);
   var paragraph = document.createElement('p');
   section.appendChild(paragraph);
 
   // For each line, for each token of that line,
-  BlockNode.lines.forEach(function(line) {
+  BlockNode.lines.forEach(function(line, lineIndex) {
     line.tokens.forEach(function(token, tokenIndex) {
       if (token.constructor === TextToken) {
         if (tokenIndex > 0) {
@@ -19,9 +19,6 @@ function renderTree(BlockNode) {
           paragraph.appendChild(document.createTextNode(' '));
         }
         var parentLinkElement = new ParentLinkElement(token);
-        parentLinkElement.dataset.targetId = token.targetId;
-        parentLinkElement.dataset.id = token.targetId;
-        parentLinkElement.dataset.type = 'parent';
         paragraph.appendChild(parentLinkElement);
       } else if (token.constructor === AliasToken) {
         if (tokenIndex > 0) {
@@ -38,7 +35,7 @@ function renderTree(BlockNode) {
           paragraph.appendChild(document.createTextNode(' '));
         }
         section.dataset.ic = token.text;
-        var icLinkElement = new IcLinkElement(token);
+        var icLinkElement = new IcLinkElement(token, lineIndex === 0 && tokenIndex === 0);
         icLinkElement.dataset.type = 'ic';
         icLinkElement.dataset.id = token.id;
         paragraph.appendChild(icLinkElement);
@@ -77,15 +74,16 @@ function ParentLinkElement(token) {
 
     // If the link is already bolded, unbold it and collapse its children
     if (parentLinkElement.classList.contains('selected-link')) {
-      display(parentLinkElement.parentNode.parentNode, null);
+      display(parentLinkElement.parentNode.parentNode);
     } else {
       // Otherwise, display the child element that corresponds to the clicked link
-      display(document.getElementById(token.targetId), null);
+      display(document.getElementById(token.id));
     }
   });
 
+  parentLinkElement.dataset.displayHash = token.id;
+  parentLinkElement.id = token.id;
   parentLinkElement.classList.add('parent-link');
-  parentLinkElement.dataset.targetId = token.targetId;
   parentLinkElement.dataset.type = 'parent';
   return parentLinkElement;
 }
@@ -96,21 +94,31 @@ function AliasLinkElement(token) {
     display(document.getElementById(e.target.dataset.targetId), null);
   });
 
+  link.id = token.id;
+  link.dataset.displayHash = token.id;
   link.dataset.type = 'alias';
   link.classList.add('alias-link');
 
   return link;
 }
 
-function IcLinkElement(token) {
+function IcLinkElement(token, rootIc) {
   var linkElement = LinkElement(token, function(e) {
     e.preventDefault();
     if (e.target.classList.contains('selected-link')) {
-      display(e.target.parentNode.parentNode, null);
+      display(document.getElementById(e.target.dataset.id));
     } else {
-      display(e.target.parentNode.parentNode, e.target);
+      display(e.target);
     }
   });
+
+  if (rootIc) {
+    linkElement.id = token.id;
+  }
+
+  linkElement.dataset.displayHash = token.id;
+  linkElement.classList.add(token.id);
+  linkElement.dataset.childId = token.id;
   linkElement.classList.add('ic-link');
   return linkElement;
 }

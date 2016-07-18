@@ -1,20 +1,16 @@
-function display(sectionElement, selectedLinkElement) {
-  console.log(document.getElementsByClassName('selected-section'));
-  if (!sectionElement) {
-    var sectionElement;
-    if (selectedLinkElement) {
-      if (selectedLinkElement.dataset.type === 'parent') {
-        sectionElement = document.getElementById(selectedLinkElement.dataset.targetId);
-      } else {
-        sectionElement = selectedLinkElement.parentNode.parentNode;
-      }
-    }
+function display(currentLink) {
+  if (!currentLink){debugger;}
+  var sectionElement;
+  if (currentLink.dataset.type === 'parent') {
+    sectionElement = document.getElementsByClassName(currentLink.id)[0].parentNode.parentNode;
+  } else {
+    sectionElement = currentLink.parentNode.parentNode;
   }
 
   var rootElement = document.getElementById('_moss').firstChild;
 
   if (!sectionElement || sectionElement.id[0] === '_') {
-    return display(rootElement, rootElement.firstChild.firstChild);
+    return display(rootElement.firstChild.firstChild);
   }
 
   // Hide all section elements
@@ -30,23 +26,18 @@ function display(sectionElement, selectedLinkElement) {
   // Show path to the current sectionElement, not bolding any links in the first lowest paragraph we visit
   showPathTo(sectionElement, '');
 
-  if (sectionElement === rootElement && !selectedLinkElement) {
-    selectedLinkElement = rootElement.firstChild.firstChild;
-  }
-
   // Bold selected link
-  if (selectedLinkElement) {
-    selectedLinkElement.classList.add('selected-link');
+  if (currentLink) {
+    currentLink.classList.add('selected-link');
   }
-
-  // Set URL to element id
-  window.location.hash = sectionElement.id;
 
   //Deselect section and select new section
   Array.prototype.slice.call(document.getElementsByClassName("selected-section")).forEach(function(sectionElement) {
     sectionElement.classList.remove('selected-section');
   });
   sectionElement.classList.add('selected-section');
+
+  window.location.hash = currentLink.dataset.displayHash;
 
   // Scroll to bottom
   // window.scrollTo(0,document.body.scrollHeight);

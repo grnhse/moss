@@ -37,22 +37,24 @@ function init(dataString) {
 
   // If page has hash id of a particular node, display the path to that node
   var hash = window.location.hash;
-  var selectedElement = hash ? document.getElementById(window.location.hash.slice(1)) : null;
+  var hashLink = hash ? document.getElementById(window.location.hash.slice(1)) : null;
 
-  if (selectedElement && selectedElement.parentNode.id !== '_moss') {
-    display(document.getElementById(window.location.hash.slice(1)), null);
+  if (hashLink) {
+    display(hashLink);
   } else {
     // Otherwise, just display the root
-    display(rootElement, rootElement.childNodes[0].childNodes[0]);
+    display(rootElement.childNodes[0].childNodes[0]);
   }
 }
 
 window.addEventListener('hashchange', function(e) {
   window.setTimeout(function(e){
     // If the hash changes not as a result of the regular display function
-    if (document.getElementsByClassName('selected-section')[0].id !== e.newURL.slice(e.newURL.indexOf('#') + 1)) {
+    var selectedLinks = document.getElementsByClassName('selected-link')
+    var currentLink = selectedLinks[selectedLinks.length - 1];
+    if (currentLink.dataset.displayHash !== e.newURL.slice(e.newURL.indexOf('#') + 1)) {
       // Allow all previous display invocations to finish updating the hash then display the hash element
-      window.setTimeout(display.bind({}, document.getElementById(window.location.hash.slice(1)), null));
+      window.setTimeout(display.bind({}, document.getElementById(window.location.hash.slice(1))));
     }
   }.bind(this, e), 0);
 });
