@@ -48,9 +48,11 @@ function init(dataString) {
 }
 
 window.addEventListener('hashchange', function(e) {
-  // If the hash changes not as a result of the regular display function
-  if (document.getElementsByClassName('selected-section')[0].id !== e.newURL.slice(e.newURL.indexOf('#') + 1)) {
-    // Allow all previous display invocations to finish updating the hash then display the hash element
-    window.setTimeout(display.bind({}, document.getElementById(window.location.hash.slice(1)), null));
-  }
+  window.setTimeout(function(e){
+    // If the hash changes not as a result of the regular display function
+    if (document.getElementsByClassName('selected-section')[0].id !== e.newURL.slice(e.newURL.indexOf('#') + 1)) {
+      // Allow all previous display invocations to finish updating the hash then display the hash element
+      window.setTimeout(display.bind({}, document.getElementById(window.location.hash.slice(1)), null));
+    }
+  }.bind(this, e), 0);
 });

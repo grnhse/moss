@@ -22,8 +22,14 @@
   text-shadow: .6px 0px 0px black;
 }
 
-#_moss a.alias-link {
+/* #_moss a.alias-link { */
+/*   color: #4078c0; */
+/* } */
+#_moss p:hover .alias-link {
+  display: inline;
   color: #4078c0;
+  /* font-style: italic; */
+  text-decoration: underline;
 }
 
 #_moss a.alias-link.selected-link {
@@ -34,16 +40,3 @@
   text-decoration: underline;
 }
 
-#_moss p:hover .alias-link {
-  display: inline;
-  color: #4078c0;
-  text-shadow: .6px 0px 0px black;
-  /* font-style: italic; */
-  text-decoration: underline;
-}
-
-h3 {
-  text-align: center;
-  margin: auto;
-  padding-bottom: 20px;
-}

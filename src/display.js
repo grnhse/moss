@@ -1,4 +1,5 @@
 function display(sectionElement, selectedLinkElement) {
+  console.log(document.getElementsByClassName('selected-section'));
   if (!sectionElement) {
     var sectionElement;
     if (selectedLinkElement) {
@@ -40,6 +41,11 @@ function display(sectionElement, selectedLinkElement) {
 
   // Set URL to element id
   window.location.hash = sectionElement.id;
+
+  //Deselect section and select new section
+  Array.prototype.slice.call(document.getElementsByClassName("selected-section")).forEach(function(sectionElement) {
+    sectionElement.classList.remove('selected-section');
+  });
   sectionElement.classList.add('selected-section');
 
   // Scroll to bottom
