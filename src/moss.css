@@ -40,3 +40,6 @@
   text-decoration: underline;
 }
 
+a:focus {
+  outline:0;
+}
