@@ -27,14 +27,10 @@ function renderTree(BlockNode, rootBlockNode) {
             paragraph.appendChild(document.createTextNode(' '));
           }
           var aliasLinkElement = new AliasLinkElement(token);
-          aliasLinkElement.dataset.targetId = token.targetId;
-          aliasLinkElement.dataset.id = token.targetId;
           paragraph.appendChild(aliasLinkElement);
         } else if (token.type === 'ic') {
           section.dataset.ic = token.text;
           var icLinkElement = new IcLinkElement(token, rootBlockNode);
-          icLinkElement.dataset.type = 'ic';
-          icLinkElement.dataset.id = token.id;
           paragraph.appendChild(icLinkElement);
         }
       } else if (token.constructor === PunctuationToken) {
@@ -81,7 +77,6 @@ function ParentLinkElement(token) {
 
   parentLinkElement.dataset.displayHash = token.id;
   parentLinkElement.id = token.id;
-  parentLinkElement.classList.add('parent-link');
   parentLinkElement.dataset.type = 'parent';
   return parentLinkElement;
 }
@@ -95,7 +90,8 @@ function AliasLinkElement(token) {
   link.id = token.id;
   link.dataset.displayHash = token.id;
   link.dataset.type = 'alias';
-  link.classList.add('alias-link');
+  link.dataset.targetId = token.targetId;
+  link.dataset.id = token.targetId;
 
   return link;
 }
@@ -115,9 +111,11 @@ function IcLinkElement(token, rootIc) {
   }
 
   linkElement.dataset.displayHash = token.id;
+  linkElement.dataset.type = 'ic';
+  linkElement.dataset.id = token.id;
   linkElement.classList.add(token.id);
   linkElement.dataset.childId = token.id;
-  linkElement.classList.add('ic-link');
+
   return linkElement;
 }
 
