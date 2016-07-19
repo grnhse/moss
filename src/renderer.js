@@ -1,4 +1,4 @@
-function renderTree(BlockNode) {
+function renderTree(BlockNode, rootBlockNode) {
   // Every blockNode becomes a section element with one p child and n other section children
   var section = document.createElement('section');
   // section.classList.add(BlockNode.id);
@@ -13,32 +13,30 @@ function renderTree(BlockNode) {
           paragraph.appendChild(document.createTextNode(' '));
         }
         paragraph.appendChild(new SpanElement(token));
-      } else if (token.constructor === ParentLinkToken) {
-        if (tokenIndex > 0) {
-          //If its not the first token, put a space before it
-          paragraph.appendChild(document.createTextNode(' '));
+      } else if (token.constructor === LinkToken){
+        if (token.type === 'parent') {
+          if (tokenIndex > 0) {
+            //If its not the first token, put a space before it
+            paragraph.appendChild(document.createTextNode(' '));
+          }
+          var parentLinkElement = new ParentLinkElement(token);
+          paragraph.appendChild(parentLinkElement);
+        } else if (token.type === 'alias') {
+          if (tokenIndex > 0) {
+            //If its not the first token, put a space before it
+            paragraph.appendChild(document.createTextNode(' '));
+          }
+          var aliasLinkElement = new AliasLinkElement(token);
+          aliasLinkElement.dataset.targetId = token.targetId;
+          aliasLinkElement.dataset.id = token.targetId;
+          paragraph.appendChild(aliasLinkElement);
+        } else if (token.type === 'ic') {
+          section.dataset.ic = token.text;
+          var icLinkElement = new IcLinkElement(token, rootBlockNode);
+          icLinkElement.dataset.type = 'ic';
+          icLinkElement.dataset.id = token.id;
+          paragraph.appendChild(icLinkElement);
         }
-        var parentLinkElement = new ParentLinkElement(token);
-        paragraph.appendChild(parentLinkElement);
-      } else if (token.constructor === AliasToken) {
-        if (tokenIndex > 0) {
-          //If its not the first token, put a space before it
-          paragraph.appendChild(document.createTextNode(' '));
-        }
-        var aliasLinkElement = new AliasLinkElement(token);
-        aliasLinkElement.dataset.targetId = token.targetId;
-        aliasLinkElement.dataset.id = token.targetId;
-        paragraph.appendChild(aliasLinkElement);
-      } else if (token.constructor === IcLinkToken) {
-        if (tokenIndex > 0) {
-          //If its not the first token, put a space before it
-          paragraph.appendChild(document.createTextNode(' '));
-        }
-        section.dataset.ic = token.text;
-        var icLinkElement = new IcLinkElement(token, lineIndex === 0 && tokenIndex === 0);
-        icLinkElement.dataset.type = 'ic';
-        icLinkElement.dataset.id = token.id;
-        paragraph.appendChild(icLinkElement);
       } else if (token.constructor === PunctuationToken) {
         paragraph.appendChild(SpanElement(token));
       }
@@ -91,7 +89,7 @@ function ParentLinkElement(token) {
 function AliasLinkElement(token) {
   var link = LinkElement(token, function(e) {
     e.preventDefault();
-    display(document.getElementById(e.target.dataset.targetId), null);
+    display(document.getElementById(e.target.dataset.targetId));
   });
 
   link.id = token.id;

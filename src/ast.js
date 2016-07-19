@@ -55,10 +55,8 @@ function Line(lineText, ics, lineIndex) {
     var clause = clauseWithPunctuation.slice(0, -punctuation.length).trim();
     var words = clause.split(' ');
 
-    if (lineIndex === 0 && clauseIndex === 0) {
-      line.tokens.push(new IcLinkToken(clause));
-    } else if (ics.hasOwnProperty(clause.trim())) {
-      line.tokens.push(new ParentLinkToken(clause));
+    if (ics.hasOwnProperty(clause.trim())) {
+      line.tokens.push(new LinkToken(clause, clause));
     } else {
       // Loop over words of clause removing matches from front
       while (words.length > 0) {
@@ -68,7 +66,9 @@ function Line(lineText, ics, lineIndex) {
             var substring = words.slice(0, i).join(' ');
             if (ics.hasOwnProperty(capitalize(substring))) {
               //if there's a match, remove it from the words array, make a token, and continue to next while loop
-              line.tokens.push(new AliasToken(substring, clause));
+              var aliasToken = new LinkToken(substring, clause);
+              aliasToken.type = 'alias';
+              line.tokens.push(aliasToken);
               words = words.slice(i);
               break next_while_loop;
             }
@@ -86,15 +86,22 @@ function assembleTree(rootNode, icBlockNodes, icBlockNodesReference) {
   rootNode.lines.forEach(function(line, lineIndex) {
     // Take the link tokens of the block node. For each link node:
     line.tokens.filter(function(token){
-      return token.constructor === ParentLinkToken;
-    }).forEach(function(parentLinkToken, tokenIndex) {
-      if (icBlockNodes.hasOwnProperty(capitalize(parentLinkToken.text))) {
+      return token.constructor === LinkToken;
+    }).forEach(function(linkToken, tokenIndex) {
+      if (linkToken.type === 'alias') {
+        return;
+      } else if (lineIndex === 0 && tokenIndex === 0) {
+        linkToken.type = 'ic';
+      } else if (icBlockNodes.hasOwnProperty(capitalize(linkToken.text))) {
+        linkToken.type = 'parent';
         // if there is still a block node under that ic, make it the exclusive child and delete its key
-        var blockNode = icBlockNodes[capitalize(parentLinkToken.text)];
+        var blockNode = icBlockNodes[capitalize(linkToken.text)];
         rootNode.children.push(blockNode);
         blockNode.parentNode = rootNode;
-        delete icBlockNodes[capitalize(parentLinkToken.text)];
-        parentLinkToken.target = blockNode;
+        delete icBlockNodes[capitalize(linkToken.text)];
+        linkToken.target = blockNode;
+      } else {
+        linkToken.type = 'alias';
       }
     });
   });
@@ -111,21 +118,11 @@ function TextToken(text) {
   this.text = text;
 }
 
-function IcLinkToken(text) {
+function LinkToken(text, clause) {
   this.text = text;
-  this.id = idFor(capitalize(text));
-}
-
-function ParentLinkToken(text) {
-  this.text = text;
-  this.id = idFor(icOf(text));
-}
-
-function AliasToken(text, clause) {
-  this.text = text;
+  this.id = idFor(capitalize(clause));
   this.targetId = idFor(capitalize(text));
   this.clauseText = clause;
-  this.id = idFor(clause);
 }
 
 function PunctuationToken(text) {
