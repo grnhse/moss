@@ -1,13 +1,14 @@
 function display(currentLink) {
-  if (!currentLink){debugger;}
+  var rootElement = document.getElementById('_moss').firstChild;
+
+  if (!currentLink){ var currentLink = rootElement.firstChild.firstChild; }
+
   var sectionElement;
   if (currentLink.dataset.type === 'parent') {
     sectionElement = document.getElementsByClassName(currentLink.id)[0].parentNode.parentNode;
   } else {
     sectionElement = currentLink.parentNode.parentNode;
   }
-
-  var rootElement = document.getElementById('_moss').firstChild;
 
   if (!sectionElement || sectionElement.id[0] === '_') {
     return display(rootElement.firstChild.firstChild);
@@ -47,10 +48,7 @@ function display(currentLink) {
     sectionElement.style.display = 'block';
 
     // Look through all spans and links of the current sectionElement for a link that matches the linkTextToBold argument
-    var linkToBold = Array.prototype.slice.call(sectionElement.childNodes[0].childNodes).filter(function(childElement) {
-      var linkText = (childElement.innerText||'').trim();
-      return (linkText === linkTextToBold || capitalize(linkText) === linkTextToBold) && childElement.tagName === 'A';
-    })[0];
+    var linkToBold = document.getElementById(idFor(linkTextToBold));
 
     // If you find a linkToBold, bold it
     if(linkToBold) {

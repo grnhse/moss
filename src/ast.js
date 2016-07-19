@@ -16,13 +16,8 @@ function AST(dataString) {
     return icBlockNodes;
   }, {});
 
-  var icBlockNodesReference = {};
-  for (var key in icBlockNodes) {
-    icBlockNodesReference[key] = icBlockNodes[key];
-  }
-
   // Assemble block nodes into tree and return root node
-  var tree = assembleTree(icBlockNodes[icOf(dataString)], icBlockNodes, icBlockNodesReference, ics);
+  var tree = assembleTree(icBlockNodes[icOf(dataString)], icBlockNodes, ics);
 
   for (var ic in icBlockNodes) {
     if (ic !== icOf(dataString)) {
@@ -82,10 +77,10 @@ function Line(lineText, ics, lineIndex) {
   });
 }
 
-function assembleTree(rootNode, icBlockNodes, icBlockNodesReference) {
+function assembleTree(rootNode, icBlockNodes) {
   rootNode.lines.forEach(function(line, lineIndex) {
     // Take the link tokens of the block node. For each link node:
-    line.tokens.filter(function(token){
+    line.tokens.filter(function(token) {
       return token.constructor === LinkToken;
     }).forEach(function(linkToken, tokenIndex) {
       if (linkToken.type === 'alias') {
@@ -108,7 +103,7 @@ function assembleTree(rootNode, icBlockNodes, icBlockNodesReference) {
 
   // Do the same for the children added in the last pass
   rootNode.children.forEach(function(childNode) {
-    assembleTree(childNode, icBlockNodes, icBlockNodesReference);
+    assembleTree(childNode, icBlockNodes);
   });
 
   return rootNode;
