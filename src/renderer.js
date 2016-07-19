@@ -78,6 +78,8 @@ function ParentLinkElement(token) {
   parentLinkElement.dataset.displayHash = token.id;
   parentLinkElement.id = token.id;
   parentLinkElement.dataset.type = 'parent';
+  link.classList.add('parent-link');
+
   return parentLinkElement;
 }
 
@@ -92,6 +94,7 @@ function AliasLinkElement(token) {
   link.dataset.type = 'alias';
   link.dataset.targetId = token.targetId;
   link.dataset.id = token.targetId;
+  link.classList.add('alias-link');
 
   return link;
 }
@@ -115,6 +118,7 @@ function IcLinkElement(token, rootIc) {
   linkElement.dataset.id = token.id;
   linkElement.classList.add(token.id);
   linkElement.dataset.childId = token.id;
+  link.classList.add('ic-link');
 
   return linkElement;
 }
