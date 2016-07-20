@@ -5,7 +5,7 @@ function display(currentLink) {
 
   var sectionElement;
   if (currentLink.dataset.type === 'parent') {
-    sectionElement = document.getElementsByClassName(currentLink.id)[0].parentNode.parentNode;
+    sectionElement = document.getElementById(currentLink.id + '/').parentNode.parentNode;
   } else {
     sectionElement = currentLink.parentNode.parentNode;
   }
@@ -32,16 +32,11 @@ function display(currentLink) {
     currentLink.classList.add('selected-link');
   }
 
-  //Deselect section and select new section
-  Array.prototype.slice.call(document.getElementsByClassName("selected-section")).forEach(function(sectionElement) {
-    sectionElement.classList.remove('selected-section');
-  });
-  sectionElement.classList.add('selected-section');
-
-  window.location.hash = currentLink.dataset.displayHash;
+  // For the initial case, where '/' is being requested and redirected to the root link, otherwise noop
+  window.location.hash = currentLink.id;
 
   // Scroll to bottom
-  // window.scrollTo(0,document.body.scrollHeight);
+  window.scrollTo(0,document.body.scrollHeight);
 
   function showPathTo(sectionElement, linkTextToBold) {
     //Show the current sectionElement

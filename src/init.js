@@ -37,10 +37,9 @@ function init(dataString) {
 
   // If page has hash id of a particular node, display the path to that node
   var hash = window.location.hash;
-  var hashLink = hash ? document.getElementById(window.location.hash.slice(1)) : null;
 
-  if (hashLink) {
-    display(hashLink);
+  if (hash) {
+    display(document.getElementById(hash.slice(1)));
   } else {
     // Otherwise, just display the root
     display(rootElement.childNodes[0].childNodes[0]);
@@ -48,13 +47,6 @@ function init(dataString) {
 }
 
 window.addEventListener('hashchange', function(e) {
-  window.setTimeout(function(e){
-    // If the hash changes not as a result of the regular display function
-    var selectedLinks = document.getElementsByClassName('selected-link')
-    var currentLink = selectedLinks[selectedLinks.length - 1];
-    if (currentLink.dataset.displayHash !== e.newURL.slice(e.newURL.indexOf('#') + 1)) {
-      // Allow all previous display invocations to finish updating the hash then display the hash element
-      window.setTimeout(display.bind({}, document.getElementById(window.location.hash.slice(1))));
-    }
-  }.bind(this, e), 0);
+  e.preventDefault();
+  display(document.getElementById(e.newURL.split('#')[1]));
 });

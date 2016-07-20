@@ -54,72 +54,34 @@ function SpanElement(token) {
   return document.createElement('span').appendChild(textNode);
 }
 
-function LinkElement(token, clickHandler) {
-  var link = document.createElement('a');
-  link.appendChild(document.createTextNode(token.text));
-  link.href = '#';
-  link.addEventListener('click', clickHandler);
-  return link;
-}
-
 function ParentLinkElement(token) {
-  var parentLinkElement = LinkElement(token, function(e) {
-    e.preventDefault();
-
-    // If the link is already bolded, unbold it and collapse its children
-    if (parentLinkElement.classList.contains('selected-link')) {
-      display(parentLinkElement.parentNode.parentNode);
-    } else {
-      // Otherwise, display the child element that corresponds to the clicked link
-      display(document.getElementById(token.id));
-    }
-  });
-
-  parentLinkElement.dataset.displayHash = token.id;
-  parentLinkElement.id = token.id;
-  parentLinkElement.dataset.type = 'parent';
-  link.classList.add('parent-link');
-
-  return parentLinkElement;
+  var linkElement = document.createElement('a');
+  linkElement.appendChild(document.createTextNode(token.text));
+  linkElement.id = token.id;
+  linkElement.href = '#' + token.id;
+  linkElement.dataset.type = 'parent';
+  linkElement.classList.add('parent-link');
+  return linkElement;
 }
 
 function AliasLinkElement(token) {
-  var link = LinkElement(token, function(e) {
-    e.preventDefault();
-    display(document.getElementById(e.target.dataset.targetId));
-  });
-
-  link.id = token.id;
-  link.dataset.displayHash = token.id;
-  link.dataset.type = 'alias';
-  link.dataset.targetId = token.targetId;
-  link.dataset.id = token.targetId;
-  link.classList.add('alias-link');
-
-  return link;
+  var linkElement = document.createElement('a');
+  linkElement.appendChild(document.createTextNode(token.text));
+  linkElement.id = token.id;
+  linkElement.dataset.targetId = token.targetId;
+  linkElement.href = '#' + token.targetId;
+  linkElement.dataset.type = 'alias';
+  linkElement.classList.add('alias-link');
+  return linkElement;
 }
 
 function IcLinkElement(token, rootIc) {
-  var linkElement = LinkElement(token, function(e) {
-    e.preventDefault();
-    if (e.target.classList.contains('selected-link')) {
-      display(document.getElementById(e.target.dataset.id));
-    } else {
-      display(e.target);
-    }
-  });
-
-  if (rootIc) {
-    linkElement.id = token.id;
-  }
-
-  linkElement.dataset.displayHash = token.id;
+  var linkElement = document.createElement('a');
+  linkElement.appendChild(document.createTextNode(token.text));
+  linkElement.id = token.id + '/';
+  linkElement.href = '#' + token.id + '/';
   linkElement.dataset.type = 'ic';
-  linkElement.dataset.id = token.id;
-  linkElement.classList.add(token.id);
-  linkElement.dataset.childId = token.id;
-  link.classList.add('ic-link');
-
+  linkElement.classList.add('ic-link');
   return linkElement;
 }
 
