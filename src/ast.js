@@ -96,7 +96,7 @@ function assembleTree(rootNode, icBlockNodes) {
         delete icBlockNodes[capitalize(linkToken.text)];
         linkToken.target = blockNode;
       } else {
-        linkToken.type = 'alias';
+        linkToken.type = 'duplicate-parent';
       }
     });
   });

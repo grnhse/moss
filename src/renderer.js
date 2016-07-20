@@ -32,6 +32,10 @@ function renderTree(BlockNode, rootBlockNode) {
           section.dataset.ic = token.text;
           var icLinkElement = new IcLinkElement(token, rootBlockNode);
           paragraph.appendChild(icLinkElement);
+        } else if (token.type === 'duplicate-parent') {
+          section.dataset.ic = token.text;
+          var spanElement = new SpanElement(token);
+          paragraph.appendChild(spanElement);
         }
       } else if (token.constructor === PunctuationToken) {
         paragraph.appendChild(SpanElement(token));
