@@ -19,11 +19,8 @@ function AST(dataString) {
   // Assemble block nodes into tree and return root node
   var tree = assembleTree(icBlockNodes[icOf(dataString)], icBlockNodes, ics);
 
-  for (var ic in icBlockNodes) {
-    if (ic !== icOf(dataString)) {
-      // console.log('No parent for: "' + ic + '"');
-    }
-  }
+  delete icBlockNodes[icOf(dataString)];
+  tree.orphanList = icBlockNodes;
 
   return tree;
 }

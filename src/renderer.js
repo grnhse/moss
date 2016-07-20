@@ -1,4 +1,4 @@
-function renderTree(BlockNode, rootBlockNode) {
+function renderTree(BlockNode, orphanList) {
   // Every blockNode becomes a section element with one p child and n other section children
   var section = document.createElement('section');
   // section.classList.add(BlockNode.id);
@@ -22,19 +22,23 @@ function renderTree(BlockNode, rootBlockNode) {
           var parentLinkElement = new ParentLinkElement(token);
           paragraph.appendChild(parentLinkElement);
         } else if (token.type === 'alias') {
-          if (tokenIndex > 0) {
-            //If its not the first token, put a space before it
+          if (orphanList.hasOwnProperty(capitalize(token.text))) {
             paragraph.appendChild(document.createTextNode(' '));
+            var spanElement = SpanElement(token);
+            spanElement.classList.add('broken-link');
+            paragraph.appendChild(spanElement);
+          } else {
+            paragraph.appendChild(document.createTextNode(' '));
+            var aliasLinkElement = new AliasLinkElement(token);
+            paragraph.appendChild(aliasLinkElement);
           }
-          var aliasLinkElement = new AliasLinkElement(token);
-          paragraph.appendChild(aliasLinkElement);
         } else if (token.type === 'ic') {
           section.dataset.ic = token.text;
-          var icLinkElement = new IcLinkElement(token, rootBlockNode);
+          var icLinkElement = new IcLinkElement(token);
           paragraph.appendChild(icLinkElement);
         } else if (token.type === 'duplicate-parent') {
-          section.dataset.ic = token.text;
-          var spanElement = new SpanElement(token);
+          var spanElement = SpanElement(token);
+          spanElement.classList.add('duplicate-parent');
           paragraph.appendChild(spanElement);
         }
       } else if (token.constructor === PunctuationToken) {
@@ -46,7 +50,7 @@ function renderTree(BlockNode, rootBlockNode) {
 
   // For each child node render a subtree and append it to the current element
   BlockNode.children.forEach(function(childBlockNode) {
-    var childElement = renderTree(childBlockNode);
+    var childElement = renderTree(childBlockNode, orphanList);
     section.appendChild(childElement);
   });
 
@@ -55,7 +59,9 @@ function renderTree(BlockNode, rootBlockNode) {
 
 function SpanElement(token) {
   var textNode = document.createTextNode(token.text);
-  return document.createElement('span').appendChild(textNode);
+  var spanElement = document.createElement('span');
+  spanElement.appendChild(textNode);
+  return spanElement;
 }
 
 function ParentLinkElement(token) {
@@ -65,6 +71,7 @@ function ParentLinkElement(token) {
   linkElement.href = '#' + token.id;
   linkElement.dataset.type = 'parent';
   linkElement.classList.add('parent-link');
+
   return linkElement;
 }
 
@@ -79,7 +86,7 @@ function AliasLinkElement(token) {
   return linkElement;
 }
 
-function IcLinkElement(token, rootIc) {
+function IcLinkElement(token) {
   var linkElement = document.createElement('a');
   linkElement.appendChild(document.createTextNode(token.text));
   linkElement.id = token.id + '/';
@@ -88,4 +95,3 @@ function IcLinkElement(token, rootIc) {
   linkElement.classList.add('ic-link');
   return linkElement;
 }
-

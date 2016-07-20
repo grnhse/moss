@@ -31,7 +31,7 @@ function init(dataString) {
   var container = document.getElementById('_moss');
   container.innerHTML = ''; //User might be providing data in the element that needs to be cleared
   // Render recursively the AST and take root element
-  var rootElement = renderTree(ast, container);
+  var rootElement = renderTree(ast, ast.orphanList);
   // Append root element to container element
   container.appendChild(rootElement);
 
