@@ -1,12 +1,12 @@
-function renderTree(BlockNode, orphanList) {
+function renderTree(blockNode) {
   // Every blockNode becomes a section element with one p child and n other section children
   var section = document.createElement('section');
-  // section.classList.add(BlockNode.id);
+  // section.classList.add(blockNode.id);
   var paragraph = document.createElement('p');
   section.appendChild(paragraph);
 
   // For each line, for each token of that line,
-  BlockNode.lines.forEach(function(line, lineIndex) {
+  blockNode.lines.forEach(function(line, lineIndex) {
     line.tokens.forEach(function(token, tokenIndex) {
       if (token.constructor === TextToken) {
         if (tokenIndex > 0) {
@@ -22,10 +22,10 @@ function renderTree(BlockNode, orphanList) {
           var parentLinkElement = new ParentLinkElement(token);
           paragraph.appendChild(parentLinkElement);
         } else if (token.type === 'alias') {
-          if (orphanList.hasOwnProperty(capitalize(token.text))) {
+          if (blockNode.orphanList.hasOwnProperty(capitalize(token.text))) {
             paragraph.appendChild(document.createTextNode(' '));
             var spanElement = SpanElement(token);
-            spanElement.classList.add('broken-link');
+            spanElement.classList.add('broken-alias-link-to-unrendered-block');
             paragraph.appendChild(spanElement);
           } else {
             paragraph.appendChild(document.createTextNode(' '));
@@ -38,7 +38,7 @@ function renderTree(BlockNode, orphanList) {
           paragraph.appendChild(icLinkElement);
         } else if (token.type === 'duplicate-parent') {
           var spanElement = SpanElement(token);
-          spanElement.classList.add('duplicate-parent');
+          spanElement.classList.add('duplicate-parent-reference');
           paragraph.appendChild(spanElement);
         }
       } else if (token.constructor === PunctuationToken) {
@@ -49,8 +49,8 @@ function renderTree(BlockNode, orphanList) {
   });
 
   // For each child node render a subtree and append it to the current element
-  BlockNode.children.forEach(function(childBlockNode) {
-    var childElement = renderTree(childBlockNode, orphanList);
+  blockNode.children.forEach(function(childBlockNode) {
+    var childElement = renderTree(childBlockNode);
     section.appendChild(childElement);
   });
 

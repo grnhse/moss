@@ -12,7 +12,7 @@ function AST(dataString) {
 
   // Create flat set of block nodes
   var icBlockNodes = blocks.reduce(function(icBlockNodes, block) {
-    icBlockNodes[icOf(block)] = new BlockNode(block, ics);
+    icBlockNodes[icOf(block)] = new BlockNode(block, ics, icBlockNodes);
     return icBlockNodes;
   }, {});
 
@@ -25,13 +25,14 @@ function AST(dataString) {
   return tree;
 }
 
-function BlockNode(block, ics) {
+function BlockNode(block, ics, icBlockNodes) {
   this.text = block.trim();
   this.id = idFor(icOf(block));
   this.ic = icOf(block);
   var validLines = block.trim().split('\n').filter(notAComment).filter(hasValidClauses);
   this.lines = validLines.map(function(line, index) { return new Line(line.trim(), ics, index);});
   this.children = [];
+  this.orphanList = icBlockNodes;
 }
 
 function Line(lineText, ics, lineIndex) {
