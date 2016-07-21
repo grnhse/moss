@@ -9,16 +9,20 @@ function renderTree(blockNode) {
     line.tokens.forEach(function(token, tokenIndex) {
       if (token.constructor === TextToken) {
         paragraph.appendChild(new SpanElement(token));
+
       } else if (token.constructor === LinkToken){
         if (token.type === 'parent') {
           var parentLinkElement = new ParentLinkElement(token);
           paragraph.appendChild(parentLinkElement);
         } else if (token.type === 'alias') {
+          // An alias link that points to a paragraph that was never integrated by
+          // parent reference, ie an orphan, should be rendered as a span.
           if (blockNode.orphanList.hasOwnProperty(capitalize(token.text))) {
             var spanElement = SpanElement(token);
             spanElement.classList.add('broken-alias-link-to-unrendered-block');
             paragraph.appendChild(spanElement);
           } else {
+            // If the alias points to a valid paragraph, render it
             var aliasLinkElement = new AliasLinkElement(token);
             paragraph.appendChild(aliasLinkElement);
           }
@@ -31,6 +35,7 @@ function renderTree(blockNode) {
           spanElement.classList.add('duplicate-parent-reference');
           paragraph.appendChild(spanElement);
         }
+
       } else if (token.constructor === PunctuationToken) {
         paragraph.appendChild(SpanElement(token));
       }

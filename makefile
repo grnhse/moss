@@ -25,7 +25,7 @@ assets/temp/index_partial.html: assets assets/temp assets/moss.js assets/moss.cs
 	sed '/<script>/ r assets/moss.js' script/index_template.html | \
 		sed '/<style>/ r assets/moss.css' > assets/temp/index_partial.html
 
-assets/concat/index.html: assets/data.txt assets/temp/index_partial.html
+assets/concat/index.html: assets/data.txt assets/temp/index_partial.html assets/concat
 	cat assets/temp/index_partial.html | \
 		sed '/<pre>/ r assets/data.txt' > assets/concat/index.html
 

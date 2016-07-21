@@ -3,17 +3,17 @@ window.onload = function() {
   var mossContainer = document.getElementById('_moss');
   if (mossContainer) {
     if (mossContainer.dataset.source) {
-      request.open('GET', document.getElementById('_moss').dataset.source, true);
+      request.open('GET', mossContainer.dataset.source, true);
       request.onload = function() {
         if (request.status >= 200 && request.status < 400) {
           init(request.responseText)
         } else {
-          throw new Error('Server error');
+          throw new Error(request.status + ': Server reached but responded with error.');
         }
       };
 
       request.onerror = function() {
-        throw new Error('Connection error');
+        throw new Error(request.status + ': Connection error: Server could not be reached');
       };
 
       request.send();

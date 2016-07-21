@@ -30,7 +30,9 @@ function BlockNode(block, ics, icBlockNodes) {
   this.id = idFor(icOf(block));
   this.ic = icOf(block);
   var validLines = block.trim().split('\n').filter(notAComment).filter(hasValidClauses);
-  this.lines = validLines.map(function(line, index) { return new Line(line.trim(), ics, index);});
+  this.lines = validLines.map(function(line, index) {
+    return new Line(line.trim(), ics, index);
+  });
   this.children = [];
   this.orphanList = icBlockNodes;
 }
@@ -170,7 +172,9 @@ function notADelimiter(line) {
 
 function hasValidClauses(line) {
   var result = !!line.match(/.+?[,.:;?!)'"]+(?=(\s|$))/g);
-  if (!result) {console.log('No valid clauses on line: "' + line + '"')}
+  if (!result) {
+    // console.log('No valid clauses on line: "' + line + '"')
+  }
   return result;
 }
 
