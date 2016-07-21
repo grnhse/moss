@@ -1,7 +1,6 @@
 function renderTree(blockNode) {
   // Every blockNode becomes a section element with one p child and n other section children
   var section = document.createElement('section');
-  // section.classList.add(blockNode.id);
   var paragraph = document.createElement('p');
   section.appendChild(paragraph);
 

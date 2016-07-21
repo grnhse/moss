@@ -36,7 +36,10 @@ function BlockNode(block, ics, icBlockNodes) {
 }
 
 function Line(lineText, ics, lineIndex) {
-  if (!lineText || lineText.constructor !== String) { throw new Error("Invalid line: " + lineIndex); }
+  if (!lineText || lineText.constructor !== String) {
+    throw new Error("Invalid line: " + lineIndex);
+  }
+
   this.text = lineText;
   var line = this;
   line.tokens = [];
@@ -44,7 +47,7 @@ function Line(lineText, ics, lineIndex) {
   var clauseRegex = /(.+?[,.:;?!)'"]+)(?=(\s|$))/g;
 
   lineText.match(clauseRegex).forEach(function(clause, clauseIndex) {
-    var strings = clause.match(/\s+|\w+|[().,:;?!.]/g);
+    var strings = clause.match(/\s+|\w+|[().,:;?!.'"]/g);
 
     if (ics.hasOwnProperty(capitalize(clause.trim().replace(/[,:;.!?]/g, '')))) {
       var leadingSpace = clause.match(/^\s*/)[0];
