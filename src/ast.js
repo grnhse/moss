@@ -17,7 +17,7 @@ function AST(dataString) {
   }, {});
 
   // Assemble block nodes into tree and return root node
-  var tree = assembleTree(icBlockNodes[icOf(dataString)], icBlockNodes, ics);
+  var tree = assembleTree(icBlockNodes[icOf(dataString)], icBlockNodes);
 
   delete icBlockNodes[icOf(dataString)];
   tree.orphanList = icBlockNodes;
@@ -125,6 +125,8 @@ function TextToken(text) {
 }
 
 function LinkToken(text, clause) {
+  // `text` is the link text, and `clause` is the text of the clause it comes from.
+  // For alias links, the id should be the text of the clause, but the targetId should be just the ic match
   var clause = clause || text;
   this.text = text;
   this.id = idFor(capitalize(clause)).replace(/[.!?,:;]$/g, ''); //Remove terminal punctuation

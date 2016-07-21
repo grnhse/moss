@@ -1,7 +1,14 @@
 function display(currentLink) {
-  var rootElement = document.getElementById('_moss').firstChild;
+  var mossContainer = document.getElementById('_moss');
+  var rootElement = mossContainer.firstChild;
 
-  if (!currentLink){ var currentLink = rootElement.firstChild.firstChild; }
+  if (!currentLink){
+    if (window.display.hash) {
+      var currentLink = document.getElementById(window.display.hash.slice(1));
+    } else {
+      var currentLink = rootElement.firstChild.firstChild;
+    }
+  }
 
   var sectionElement;
   if (currentLink.dataset.type === 'parent') {
@@ -10,7 +17,7 @@ function display(currentLink) {
     sectionElement = currentLink.parentNode.parentNode;
   }
 
-  if (!sectionElement || sectionElement.id[0] === '_') {
+  if (!sectionElement || sectionElement === mossContainer) {
     return display(rootElement.firstChild.firstChild);
   }
 
@@ -38,6 +45,8 @@ function display(currentLink) {
   // Scroll to bottom
   window.scrollTo(0,document.body.scrollHeight);
 
+  // Recursively go up the tree from the leaf node, displaying each paragraph and bolding the link in the parent
+  // paragraph that corresponds to the ic of the child paragraph.
   function showPathTo(sectionElement, linkTextToBold) {
     //Show the current sectionElement
     sectionElement.style.display = 'block';
@@ -51,11 +60,12 @@ function display(currentLink) {
     }
 
     // If you have reached the top of the tree, return
-    if (sectionElement.parentNode.id === '_moss') {
+    if (sectionElement.parentNode === mossContainer) {
       return;
     } else {
-      // Otherwise, recursively visit the parent sectionElement
-      showPathTo(sectionElement.parentNode, icOf(sectionElement.innerText.trim()));
+      // Otherwise, visit the parent section of the current one and in it, bold the parent link which references
+      // the current section element's ic.
+      showPathTo(sectionElement.parentNode, sectionElement.firstChild.firstChild.innerText);
     }
   }
 }
