@@ -9,26 +9,17 @@ function renderTree(blockNode) {
   blockNode.lines.forEach(function(line, lineIndex) {
     line.tokens.forEach(function(token, tokenIndex) {
       if (token.constructor === TextToken) {
-        if (tokenIndex > 0) {
-          paragraph.appendChild(document.createTextNode(' '));
-        }
         paragraph.appendChild(new SpanElement(token));
       } else if (token.constructor === LinkToken){
         if (token.type === 'parent') {
-          if (tokenIndex > 0) {
-            //If its not the first token, put a space before it
-            paragraph.appendChild(document.createTextNode(' '));
-          }
           var parentLinkElement = new ParentLinkElement(token);
           paragraph.appendChild(parentLinkElement);
         } else if (token.type === 'alias') {
           if (blockNode.orphanList.hasOwnProperty(capitalize(token.text))) {
-            paragraph.appendChild(document.createTextNode(' '));
             var spanElement = SpanElement(token);
             spanElement.classList.add('broken-alias-link-to-unrendered-block');
             paragraph.appendChild(spanElement);
           } else {
-            paragraph.appendChild(document.createTextNode(' '));
             var aliasLinkElement = new AliasLinkElement(token);
             paragraph.appendChild(aliasLinkElement);
           }

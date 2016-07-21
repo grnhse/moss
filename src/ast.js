@@ -41,37 +41,47 @@ function Line(lineText, ics, lineIndex) {
   var line = this;
   line.tokens = [];
   // Split the line into an array of clauses that include their terminal punctuation
-  var clauseRegex = /.+?[,.:;?!)'"]+(?=(\s|$))/g;
+  var clauseRegex = /(.+?[,.:;?!)'"]+)(?=(\s|$))/g;
 
-  lineText.match(clauseRegex).forEach(function(clauseWithPunctuation, clauseIndex) {
-    var punctuation = clauseWithPunctuation.match(/[,.:;?!)'"]+$/)[0];
-    var clause = clauseWithPunctuation.slice(0, -punctuation.length).trim();
-    var words = clause.split(' ');
+  lineText.match(clauseRegex).forEach(function(clause, clauseIndex) {
+    var strings = clause.match(/\s+|\w+|[().,:;?!.]/g);
 
-    if (ics.hasOwnProperty(clause.trim())) {
-      line.tokens.push(new LinkToken(clause, clause));
+    if (ics.hasOwnProperty(capitalize(clause.trim().replace(/[,:;.!?]/g, '')))) {
+      var leadingSpace = clause.match(/^\s*/)[0];
+      var clauseText = clause.match(/^\s*(.*?)[,:;.?!]$/)[1];
+      var terminalPunctuation = clause.match(/[,:;.?!]$/)[0];
+
+      if (leadingSpace) {
+        line.tokens.push(new TextToken(leadingSpace));
+      }
+      line.tokens.push(new LinkToken(clauseText));
+      line.tokens.push(new TextToken(terminalPunctuation));
     } else {
       // Loop over words of clause removing matches from front
-      while (words.length > 0) {
-        next_while_loop:
-          // for each loop, try each contracting prefix of the current word array
-          for (var i = words.length; i > 0; i--) {
-            var substring = words.slice(0, i).join(' ');
+      while (strings.length > 0) {
+          // for each string set, try each prefix of the current string array
+          var aliasLinkFound = false;
+          for (var i = strings.length; i > 0; i--) {
+            var substring = strings.slice(0, i).join('');
             if (ics.hasOwnProperty(capitalize(substring))) {
               //if there's a match, remove it from the words array, make a token, and continue to next while loop
-              var aliasToken = new LinkToken(substring, clause);
+              var aliasToken = new LinkToken(substring, clause.trim());
               aliasToken.type = 'alias';
               line.tokens.push(aliasToken);
-              words = words.slice(i);
-              break next_while_loop;
+              strings = strings.slice(i);
+              aliasLinkFound = true;
+              break;
             }
-            // if you get to the end of the words array with no match, remove and tokenize the first word
-            var word = words.shift();
-            line.tokens.push(new TextToken(word));
           }
+
+          if (aliasLinkFound) {
+            continue;
+          }
+        // if you get to the end of the words array with no match, remove and tokenize the first word
+        var string = strings.shift();
+        line.tokens.push(new TextToken(string));
       }
     }
-    line.tokens.push(new PunctuationToken(punctuation));
   });
 }
 
@@ -112,14 +122,11 @@ function TextToken(text) {
 }
 
 function LinkToken(text, clause) {
+  var clause = clause || text;
   this.text = text;
-  this.id = idFor(capitalize(clause));
+  this.id = idFor(capitalize(clause)).replace(/[.!?,:;]$/g, ''); //Remove terminal punctuation
   this.targetId = idFor(capitalize(text));
   this.clauseText = clause;
-}
-
-function PunctuationToken(text) {
-  this.text = text;
 }
 
 function icOf(string) {
@@ -127,7 +134,7 @@ function icOf(string) {
 }
 
 function idFor(text) {
-  return text.replace(/[ .,;:]/g, '_').replace(/['")]/g, '').replace(/[&]/g, 'and');
+  return text.replace(/[ ]/g, '_').replace(/['"()]/g, '').replace(/[&]/g, 'and');
 }
 
 function capitalize(text) {
@@ -147,3 +154,4 @@ function hasValidClauses(line) {
   if (!result) {console.log('No valid clauses on line: "' + line + '"')}
   return result;
 }
+
