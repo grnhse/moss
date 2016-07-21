@@ -1,4 +1,4 @@
-all: assets/moss.js assets/moss.css assets/data.txt docs/index.html
+all: assets/moss.js assets/moss.css docs/index.html
 
 assets:
 	mkdir assets
