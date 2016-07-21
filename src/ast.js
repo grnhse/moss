@@ -134,11 +134,25 @@ function icOf(string) {
 }
 
 function idFor(text) {
-  return text.replace(/[ ]/g, '_').replace(/['"()]/g, '').replace(/[&]/g, 'and');
+  return text.replace(/[ ]/g, '_').replace(/['"]/g, '').replace(/[&]/g, 'and');
 }
 
 function capitalize(text) {
-  return text ? text[0].toUpperCase() + text.slice(1) : '';
+  if (!text) {
+    return '';
+  }
+
+  if (text[0] !== '(') {
+    return text[0].toUpperCase() + text.slice(1)
+  }
+
+  if (text[0] === '(') {
+    if (text[1]) {
+      return text[0] + text[1].toUpperCase() + text.slice(2);
+    } else {
+      return text[0];
+    }
+  }
 }
 
 function notAComment(line) {
