@@ -6,23 +6,23 @@ document.onkeydown = function(e) {
   var rootElement = document.getElementById('_moss').firstChild;
 
   if (!(e.metaKey || e.altKey || e.shiftKey || e.ctrlKey)) {
-    if (e.keyCode === 37 || e.keyCode === 72) { // Left
+    if (e.keyCode === 37 || e.keyCode === 72 || e.keyCode === 65) { // Left
       if (currentLink.parentNode.parentNode === rootElement) { // If we are at the root, do nothing
         window.location.hash = rootElement.firstChild.firstChild.id
       } else {
         window.location.hash = currentLink.parentNode.firstChild.id.slice(0, -1);
       }
-    } else if (e.keyCode === 39 || e.keyCode === 76) { // Right
+    } else if (e.keyCode === 39 || e.keyCode === 76 || e.keyCode === 68) { // Right
       // If a primary link is selected, bold the ic of the child paragraph
       if (currentLink.dataset.type === 'parent') {
         window.location.hash = currentLink.id + '/';
       }
-    } else if (e.keyCode === 38 || e.keyCode === 75) { // Up
+    } else if (e.keyCode === 38 || e.keyCode === 75 || e.keyCode === 87) { // Up
       var links = currentLink.parentNode.querySelectorAll('a');
       if (currentLink !== links[0]){
         window.location.hash = links[Array.prototype.slice.call(links).indexOf(currentLink) - 1].id;
       }
-    } else if (e.keyCode === 40 || e.keyCode === 74) { // Down
+    } else if (e.keyCode === 40 || e.keyCode === 74 || e.keyCode === 83) { // Down
       var links = currentLink.parentNode.querySelectorAll('a');
       if (currentLink !== links[links.length - 1]){
         window.location.hash = links[Array.prototype.slice.call(links).indexOf(currentLink) + 1].id;
