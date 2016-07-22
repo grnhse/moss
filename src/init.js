@@ -1,6 +1,7 @@
 window.onload = function() {
   var request = new XMLHttpRequest();
   var mossContainer = document.getElementById('_moss');
+
   if (mossContainer) {
     if (mossContainer.dataset.source) {
       request.open('GET', mossContainer.dataset.source, true);
@@ -21,6 +22,8 @@ window.onload = function() {
       // User may provide text in the moss element
       init(mossContainer.innerText.trim());
     }
+  } else {
+    throw new Error('Page must have an html element with id "_moss"');
   }
 
   function init(dataString) {
