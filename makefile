@@ -1,4 +1,4 @@
-all: assets/moss.js assets/moss.css docs/index.html
+all: assets/moss.js assets/moss.css docs/index.html clean
 
 assets:
 	mkdir assets
@@ -21,3 +21,7 @@ docs/tmp/index_partial.html: assets/moss.js assets/moss.css | docs/tmp
 
 docs/tmp:
 	mkdir docs/tmp
+
+.PHONY: clean
+clean:
+	rm -rf docs/tmp && rm docs/data.txt
