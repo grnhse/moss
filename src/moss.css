@@ -25,6 +25,7 @@
 #_moss p:hover .alias-link {
   display: inline;
   color: #4078c0;
+  text-shadow: .6px 0px 0px black;
   text-decoration: underline;
 }
 
