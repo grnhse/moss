@@ -8,32 +8,29 @@
   padding-bottom: 15px;
 }
 
-#_moss p a {
+#_moss a {
   color: black;
   text-decoration: none;
 }
 
-#_moss p a:hover {
+#_moss a:hover {
   text-decoration: underline;
 }
 
-#_moss p .selected-link {
-  text-decoration: underline;
-  text-shadow: .6px 0px 0px black;
-}
-
-#_moss p .alias-link:hover {
+#_moss .alias-link:hover {
   display: inline;
   color: #4078c0;
   text-shadow: .6px 0px 0px black;
-  text-decoration: underline;
 }
 
-#_moss a.alias-link.selected-link {
+#_moss .selected-link {
+  text-decoration: underline;
+  text-shadow: .6px 0px 0px black;
+}
+
+#_moss .selected-link.alias-link {
   display: inline;
   color: #4078c0;
-  text-shadow: .6px 0px 0px black;
-  text-decoration: underline;
 }
 
 a:focus {
