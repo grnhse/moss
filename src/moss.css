@@ -22,7 +22,7 @@
   text-shadow: .6px 0px 0px black;
 }
 
-#_moss p:hover .alias-link {
+#_moss p .alias-link:hover {
   display: inline;
   color: #4078c0;
   text-shadow: .6px 0px 0px black;
