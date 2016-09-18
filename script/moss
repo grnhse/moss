@@ -1,0 +1,132 @@
+#!/bin/sh
+
+set -e
+
+PROJECT_NAME=${PWD##*/}
+
+if [ "$2" != "" ]; then
+  MOSS_ASSETS_PATH="$2"
+elif [ "$MOSS_ASSETS_PATH" != "" ]; then
+  MOSS_ASSETS_PATH=$MOSS_ASSETS_PATH
+else
+  MOSS_ASSETS_PATH=/usr/local/lib/moss/assets
+fi
+
+case $1 in
+build)
+  if [ ! -d ./content ]; then
+    echo "There must be a content directory at the current path"
+    exit 1
+  fi
+
+  rm -rf ./assets
+
+  mkdir assets
+
+  cp $MOSS_ASSETS_PATH/moss.js ./assets/moss.js
+  cp $MOSS_ASSETS_PATH/moss.css ./assets/moss.css
+
+  sorted_files() {
+    # sort filenames by depth then path
+    find -L content -name '*.txt' \
+      | awk -F/ '{printf("%04d %s\n", NF, $0)}' \
+      | sort \
+      | cut -d ' ' -f 2
+  }
+
+  for file in $(sorted_files); do
+    cat "$file"
+    echo
+    echo
+  done > assets/data.txt
+
+  cat << EOF > assets/index.html
+  <html>
+  <head>
+  <script src="/moss.js"></script>
+  <link rel="stylesheet" type="text/css" href="moss.css">
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  </head>
+  <body>
+  <div id="_moss" data-source_url="/data.txt">
+  </div>
+  </body>
+  </html>
+EOF
+
+  cat << EOF > $PROJECT_NAME.html
+  <html>
+  <head>
+  <script>
+  </script>
+  <style>
+  </style>
+  </head>
+  <body>
+  <div id="_moss" data-debug="true">
+  <pre>
+  </pre>
+  </div>
+  </body>
+  </html>
+EOF
+
+  sed -i '' '/<script>/ r assets/moss.js' $PROJECT_NAME.html
+  sed -i '' '/<style>/ r assets/moss.css' $PROJECT_NAME.html
+  sed -i '' '/<pre>/ r assets/data.txt' $PROJECT_NAME.html;;
+
+update)
+  cd /usr/local/lib/moss
+  git pull
+  make
+  ./script/install;;
+
+init)
+  mkdir content
+  touch .gitignore
+  echo "assets" >> .gitignore
+  echo "*.html" >> .gitignore
+  echo "*.pid" >> .gitignore
+  git init
+  touch "content/$PROJECT_NAME.txt"
+  git add .
+  git commit -m "Initial commit"
+  moss watch;;
+watch)
+  command -v fswatch >/dev/null 2>&1 || { echo >&2 "Moss watch requires fswatch to be installed. Aborting."; exit;}
+
+  PIDFILE=.moss_watch.pid
+  if [ -f $PIDFILE ];
+  then
+    PID=$(cat $PIDFILE)
+    if ps -p $PID > /dev/null 2>&1;
+    then
+      # Moss watch is already running
+      kill $PID
+    fi
+  fi
+
+  if [ ! -d ./content ]; then
+    echo "There must be a content directory at the current path"
+    exit 1
+  fi
+
+  #######
+  fswatch -0 -o content | xargs -0 -n1 -I{} nohup moss build $2 > /dev/null 2>&1 &
+  #######
+
+  echo $(jobs -p | tail -1) > $PIDFILE
+  if [ $? -ne 0 ];
+  then
+    echo "Could not create PID file"
+    exit 1
+  fi
+
+  moss build $2;;
+unwatch)
+  kill $(cat .moss_watch.pid) > /dev/null 2>&1;
+  exit 1;;
+*)
+  echo unknown command;;
+esac
+

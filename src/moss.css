@@ -1,0 +1,55 @@
+body > :first-child {
+  padding-top: 25px;
+}
+
+h2.moss-title {
+  text-align: center;
+}
+
+#_moss > section:first-child {
+  padding-top: 5px;
+}
+
+#_moss > section {
+  padding-top: 5px;
+}
+
+#_moss p, div {
+  width: 420px;
+  margin: auto;
+  padding-bottom: 15px;
+}
+
+#_moss a {
+  text-decoration: none;
+  color: black;
+}
+
+#_moss a:hover {
+  text-decoration: underline;
+}
+
+#_moss .moss-alias-link:hover {
+  color: #4078c0;
+}
+
+#_moss .moss-url-link:hover {
+  color: #4078c0;
+}
+
+#_moss .moss-selected-link.moss-alias-link {
+  color: #4078c0;
+}
+
+#_moss .moss-selected-link.moss-url-link {
+  color: #4078c0;
+}
+
+#_moss .moss-selected-link {
+  text-decoration: underline;
+  text-shadow: .6px 0px 0px black;
+}
+
+a:focus {
+  outline:0;
+}

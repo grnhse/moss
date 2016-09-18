@@ -1,0 +1,23 @@
+{
+  "name": "moss",
+  "version": "0.1.0",
+  "private": false,
+  "dependencies": {
+  },
+  "devDependencies": {
+    "jasmine-core": "jasmine#^2.4.1"
+  },
+  "ignore": [
+    "src",
+    "spec",
+    "script",
+    ".gitignore",
+    "bower_components",
+    ".eslintrc.yml",
+    "bower.json",
+    "CONTRIBUTING",
+    "LICENSE",
+    "README.md",
+    "makefile"
+  ],
+}
