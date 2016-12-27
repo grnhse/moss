@@ -71,9 +71,9 @@ EOF
   </html>
 EOF
 
-  sed -i '' '/<script>/ r assets/moss.js' $PROJECT_NAME.html
-  sed -i '' '/<style>/ r assets/moss.css' $PROJECT_NAME.html
-  sed -i '' '/<pre>/ r assets/data.txt' $PROJECT_NAME.html;;
+  sed -i'' '/<script>/r assets/moss.js' $PROJECT_NAME.html
+  sed -i'' '/<style>/r assets/moss.css' $PROJECT_NAME.html
+  sed -i'' '/<pre>/r assets/data.txt' $PROJECT_NAME.html;;
 
 update)
   cd /usr/local/lib/moss
