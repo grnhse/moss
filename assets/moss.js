@@ -9,6 +9,7 @@ function ParagraphNodeTree(dataString) {
 
 function generateParagraphNodes(paragraphStrings) {
   var ics = icsOfParagraphStrings(paragraphStrings);
+  printIcsForDebugging(ics);
 
   return paragraphStrings.
     slice().
@@ -101,8 +102,10 @@ function assembleTreeFromNodes(rootIc, icParagraphNodes) {
 
 function printDebugInfo(rootNode, icParagraphNodes) {
   if (debugEnabled()) {
+    console.log('');
     console.log("AST:", rootNode);
     if (Object.keys(icParagraphNodes).length) {
+      console.log('');
       console.log("Orphan list:");
       for (var ic in icParagraphNodes) {
         console.log(icParagraphNodes[ic].text);
@@ -1081,6 +1084,13 @@ function checkForDuplicates(ic, ics, paragraphString) {
     console.log("Paragraphs with duplicate ic: " + ic);
     console.log("Paragraph 1: " + ics[ic]);
     console.log("Paragraph 2: " + paragraphString);
+  }
+}
+
+function printIcsForDebugging(ics) {
+  if (debugEnabled()) {
+    console.log("ICs: ");
+    console.log(ics);
   }
 }
 }());

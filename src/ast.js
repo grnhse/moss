@@ -8,6 +8,7 @@ function ParagraphNodeTree(dataString) {
 
 function generateParagraphNodes(paragraphStrings) {
   var ics = icsOfParagraphStrings(paragraphStrings);
+  printIcsForDebugging(ics);
 
   return paragraphStrings.
     slice().
@@ -100,8 +101,10 @@ function assembleTreeFromNodes(rootIc, icParagraphNodes) {
 
 function printDebugInfo(rootNode, icParagraphNodes) {
   if (debugEnabled()) {
+    console.log('');
     console.log("AST:", rootNode);
     if (Object.keys(icParagraphNodes).length) {
+      console.log('');
       console.log("Orphan list:");
       for (var ic in icParagraphNodes) {
         console.log(icParagraphNodes[ic].text);

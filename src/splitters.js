@@ -120,3 +120,10 @@ function checkForDuplicates(ic, ics, paragraphString) {
     console.log("Paragraph 2: " + paragraphString);
   }
 }
+
+function printIcsForDebugging(ics) {
+  if (debugEnabled()) {
+    console.log("ICs: ");
+    console.log(ics);
+  }
+}
