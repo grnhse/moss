@@ -122,8 +122,16 @@ function aliasClauseMatch(match, clause, isParentMatch, currentIc) {
   }
 }
 
-function secondAliasMatchInClause(isParentMatch, tokens) {
-  return !isParentMatch && tokens.filter(function(token){
-    return token.type === 'alias';
-  }).length > 0;
+function secondAliasMatchInClause(isParentMatch, tokens, match, clause) {
+  var secondAliasMatch = !isParentMatch &&
+    tokens.filter(function(token){
+      return token.type === 'alias';
+    }).length > 0;
+
+  if (debugEnabled() && secondAliasMatch) {
+    console.log("This clause has two alias matches: ", clause);
+    console.log("The second match, '" + match + "' will be ignored.");
+  }
+
+  return secondAliasMatch;
 }
