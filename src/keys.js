@@ -28,7 +28,9 @@ var keyNames = {
   89: 'y',
   188: ',',
   80: 'p',
-  186: ';'
+  186: ';',
+  219: '[',
+  221: ']'
 }
 
 var shortcutMovements = {
@@ -65,6 +67,8 @@ var shortcutMovements = {
   ',': goToBottom,
   ';': duplicateTab,
   '.': openTabToRoot,
+  '[': lateralBack,
+  ']': lateralNext
 }
 
 document.onkeydown = function(e) {

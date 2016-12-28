@@ -272,7 +272,9 @@ var keyNames = {
   89: 'y',
   188: ',',
   80: 'p',
-  186: ';'
+  186: ';',
+  219: '[',
+  221: ']'
 }
 
 var shortcutMovements = {
@@ -309,6 +311,8 @@ var shortcutMovements = {
   ',': goToBottom,
   ';': duplicateTab,
   '.': openTabToRoot,
+  '[': lateralBack,
+  ']': lateralNext
 }
 
 document.onkeydown = function(e) {
@@ -507,6 +511,20 @@ function rooksNext() {
     linkAfter(firstChildLinkOf(currentLink())) ||
     firstChildLinkOf(currentLink()) ||
     linkAfter(currentLink())
+  );
+}
+
+function lateralBack() {
+  setFragmentToHashOfLink(
+    firstChildLinkOf(linkBefore(parentLinkOf(currentLink()))) ||
+    linkBefore(parentLinkOf(currentLink()))
+  );
+}
+
+function lateralNext() {
+  setFragmentToHashOfLink(
+    firstChildLinkOf(linkAfter(parentLinkOf(currentLink()))) ||
+    linkAfter(parentLinkOf(currentLink()))
   );
 }
 

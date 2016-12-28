@@ -169,6 +169,20 @@ function rooksNext() {
   );
 }
 
+function lateralBack() {
+  setFragmentToHashOfLink(
+    firstChildLinkOf(linkBefore(parentLinkOf(currentLink()))) ||
+    linkBefore(parentLinkOf(currentLink()))
+  );
+}
+
+function lateralNext() {
+  setFragmentToHashOfLink(
+    firstChildLinkOf(linkAfter(parentLinkOf(currentLink()))) ||
+    linkAfter(parentLinkOf(currentLink()))
+  );
+}
+
 function duplicateTab() {
   window.open(
     window.location,

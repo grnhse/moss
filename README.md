@@ -54,8 +54,10 @@ Use `Space` to continue to the next adjacent paragraph.
 | i  | Go to IC of current paragraph or collapse it |
 | b | Go to bottom of paragraph |
 | , | Go to bottom of current paragraph |
-| Space  | Next Subject |
-| Shift-Space  | Previous Subject |
+| [ | Go to child of parent's previous sibling |
+| ] | Go to child of parent's next sibling |
+| Space  | Parent's next sibling |
+| Shift-Space  | Parent's previous sibling |
 | Return  | Burrow/open links |
 | Shift-Return  | Unburrow (close paragraph) |
 | Backspace  | Unburrow (close paragraph) |
