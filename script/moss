@@ -77,9 +77,10 @@ EOF
 
 update)
   cd /usr/local/lib/moss
-  git pull
+  git pull origin master
   make
-  ./script/install;;
+  cp script/moss /usr/local/bin/moss
+  echo Update success;;
 
 init)
   mkdir content
