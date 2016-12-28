@@ -156,7 +156,7 @@ function icOf(string) {
     }
   }
 
-  return ic;
+  return capitalize(ic);
 }
 
 function displayHashFor(string) {
