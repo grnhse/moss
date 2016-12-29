@@ -937,7 +937,7 @@ function show(linkElement) {
   deselectAllLinks();
   showPathTo(linkElement);
   showPreviewIfParentLink(linkElement);
-  window.scrollTo(0, document.body.scrollHeight);
+  window.scrollTo(0, mossContainer().scrollHeight);
 }
 
 function showPathTo(linkElement) {

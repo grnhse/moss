@@ -11,9 +11,10 @@
 }
 
 #_moss p, div {
-  width: 420px;
+  width: 450px;
   margin: auto;
   padding-bottom: 15px;
+  font-size: 25px;
 }
 
 #_moss a {
