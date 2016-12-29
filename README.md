@@ -190,4 +190,4 @@ Run the tests by opening `moss/spec/index.html` in your browser.
 
 ## Acknowledgements ##
 
-Moss was vastly improved by the suggestions of Tharsan Bhuvanendran, Aaron Gibralter, Bradley Griffith, Mike O'Neil, Dana Pieluszczak, and Rob Rosenbaum, the infrastructure support of Elena Washington, and the participation of the Greenhouse team.
+Moss was vastly improved by the code changes suggested by Tharsan Bhuvanendran, Aaron Gibralter, Bradley Griffith, Mike O'Neil, Dana Pieluszczak, and Rob Rosenbaum, the infrastructure support of Elena Washington, and the participation of the Greenhouse team.
