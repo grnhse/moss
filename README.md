@@ -1,7 +1,7 @@
 # Moss #
 Moss is a Javascript framework for creating explanation trees, interactive webpages generated from natural language plaintext.
 
-- [How to use a Moss webside](#how-to-use-a-moss-website)
+- [How to use a Moss website](#how-to-use-a-moss-website)
   - [Using the Moss keyboard shortcuts](#using-the-moss-keyboard-shortcuts)
 - [How to start a Moss project](#how-to-start-a-moss-project)
   - [Install the command line build tools](#install-the-command-line-build-tools)
