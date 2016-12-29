@@ -1,9 +1,5 @@
-body > :first-child {
-  padding-top: 25px;
-}
-
-h2.moss-title {
-  text-align: center;
+#_moss {
+  padding-top: 15px;
 }
 
 #_moss > section:first-child {
