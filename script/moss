@@ -43,12 +43,12 @@ build)
   cat << EOF > assets/index.html
   <html>
   <head>
-  <script src="/moss.js"></script>
+  <script src="moss.js"></script>
   <link rel="stylesheet" type="text/css" href="moss.css">
   <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
   <body>
-  <div id="_moss" data-source_url="/data.txt">
+  <div id="_moss" data-source_url="data.txt">
   </div>
   </body>
   </html>
