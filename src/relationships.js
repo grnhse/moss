@@ -51,6 +51,10 @@ function icLinkOf(linkElement) {
 }
 
 function parentLinkOf(linkElement) {
+  if (linkElement === null) {
+    return null;
+  }
+
   if (isInRootSection(linkElement)) {
     return null;
   }

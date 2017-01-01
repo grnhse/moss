@@ -274,7 +274,8 @@ var keyNames = {
   80: 'p',
   186: ';',
   219: '[',
-  221: ']'
+  221: ']',
+  220: '\\'
 }
 
 var shortcutMovements = {
@@ -303,9 +304,11 @@ var shortcutMovements = {
   'backspace': unburrow,
   'n': rooksNext,
   't': goToTop,
-  'y': goToParentsIc,
-  'o': goToParentsIc,
-  'u': unburrow,
+  'p': goToParentsIc,
+  'y': goToParentsParent,
+  '\\': goToParentsParent,
+  'o': unburrow,
+  'u': goToParentsIc,
   'i': goToTopOrCollapse,
   'b': goToBottom,
   'm': more,
@@ -732,6 +735,10 @@ function icLinkOf(linkElement) {
 }
 
 function parentLinkOf(linkElement) {
+  if (linkElement === null) {
+    return null;
+  }
+
   if (isInRootSection(linkElement)) {
     return null;
   }

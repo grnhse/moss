@@ -49,8 +49,6 @@ Use `Space` to continue to the next adjacent paragraph.
 | h, a, Left  | Close bottom paragraph |
 | l, d, Right, m  | Open paragraph |
 | n  | Open paragraph and jump foward |
-| y  | Go to parent's IC |
-| u  | Go to parent |
 | i  | Go to IC of current paragraph or collapse it |
 | b | Go to bottom of paragraph |
 | , | Go to bottom of current paragraph |
