@@ -10,11 +10,11 @@
   padding-top: 5px;
 }
 
-#_moss p, div {
+#_moss p {
+  padding-bottom: 20px;
+  font-size: 25px;
   width: 450px;
   margin: auto;
-  padding-bottom: 15px;
-  font-size: 25px;
 }
 
 #_moss a {
