@@ -60,6 +60,7 @@ var shortcutMovements = {
   'n': rooksNext,
   't': goToTop,
   'y': goToParentsIc,
+  'o': goToParentsIc,
   'u': unburrow,
   'i': goToTopOrCollapse,
   'b': goToBottom,
