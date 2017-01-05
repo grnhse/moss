@@ -283,7 +283,7 @@ var shortcutMovements = {
   's': goDown,
   'down': call(goDown).with({ cycle: false }),
   'k': goUp,
-  'up': call(goDown).with({ cycle: false }),
+  'up': call(goUp).with({ cycle: false }),
   'w': goUp,
   'h': closeParagraph,
   'a': closeParagraph,
