@@ -99,6 +99,30 @@ function goDfsBack(options) {
   }
 }
 
+function goToAnIcLink(options) {
+  var level = (options||{}).level || 0;
+  var link = getNthAncestor(level);
+  openLink(icLinkOf(link));
+}
+
+function goToAPreviousLink(options) {
+  var level = (options||{}).level || 0;
+  var link = getNthAncestor(level);
+  openLink(linkBefore(link));
+}
+
+function goToASelectedLink(options) {
+  var level = (options||{}).level || 0;
+  var link = getNthAncestor(level);
+  openLink(link);
+}
+
+function goToANextLink(options) {
+  var level = (options||{}).level || 0;
+  var link = getNthAncestor(level);
+  openLink(linkAfter(link));
+}
+
 function goToRoot() {
   setFragmentToHashOfLink(rootLink());
 }

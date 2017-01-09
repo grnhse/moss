@@ -1,8 +1,4 @@
 var keyNames = {
-  87: 'w',
-  65: 'a',
-  83: 's',
-  68: 'd',
   37: 'left',
   39: 'right',
   38: 'up',
@@ -31,7 +27,23 @@ var keyNames = {
   186: ';',
   219: '[',
   221: ']',
-  220: '\\'
+  220: '\\',
+  49: '1',
+  50: '2',
+  51: '3',
+  52: '4',
+  81: 'q',
+  87: 'w',
+  69: 'e',
+  82: 'r',
+  65: 'a',
+  83: 's',
+  68: 'd',
+  70: 'f',
+  90: 'z',
+  88: 'x',
+  67: 'c',
+  86: 'v'
 }
 
 var shortcutMovements = {
@@ -65,14 +77,30 @@ var shortcutMovements = {
   'o': unburrow,
   'u': goToParentsIc,
   'i': unburrow,
-  'b': dfsBack,
+  'b': goDfsBack,
   'm': goDfsForward,
   'n': call(goDfsForward).with({skipChildren: true}),
   ',': goDfsBack,
   ';': duplicateTab,
   '.': openTabToRoot,
   '[': lateralBack,
-  ']': lateralNext
+  ']': lateralNext,
+  '1': call(goToAnIcLink).with({ level: 3 }),
+  '2': call(goToAnIcLink).with({ level: 2 }),
+  '3': call(goToAnIcLink).with({ level: 1 }),
+  '4': call(goToAnIcLink).with({ level: 0 }),
+  'q': call(goToAPreviousLink).with({ level: 3 }),
+  'w': call(goToAPreviousLink).with({ level: 2 }),
+  'e': call(goToAPreviousLink).with({ level: 1 }),
+  'r': call(goToAPreviousLink).with({ level: 0 }),
+  'a': call(goToASelectedLink).with({ level: 3 }),
+  's': call(goToASelectedLink).with({ level: 2 }),
+  'd': call(goToASelectedLink).with({ level: 1 }),
+  'f': call(goToASelectedLink).with({ level: 0 }),
+  'z': call(goToANextLink).with({ level: 3 }),
+  'x': call(goToANextLink).with({ level: 2 }),
+  'c': call(goToANextLink).with({ level: 1 }),
+  'v': call(goToANextLink).with({ level: 0 })
 }
 
 document.onkeydown = function(e) {

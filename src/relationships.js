@@ -64,6 +64,14 @@ function parentLinkOf(linkElement) {
   return linkWithDisplayHash(icLink.dataset.displayHash.slice(0, -1));
 }
 
+function getNthAncestor(level) {
+  var link = currentLink();
+  for (var i = 0; i < level; i++) {
+    link = parentLinkOf(link) || link;
+  }
+  return link;
+}
+
 function lastChildLinkOf(linkElement) {
   if (linkElement === null){
     return null;
