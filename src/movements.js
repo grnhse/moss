@@ -25,9 +25,9 @@ function goUp(options) {
 
   var nextLink =
     linkBefore(currentLink()) ||
-    (cycle ? lastSiblingOf(currentLink()) : null);
     (collapse ? parentLinkOf(currentLink()) : null) ||
     (collapse ? rootLink() : null) ||
+    (cycle ? lastSiblingOf(currentLink()) : null);
 
   setFragmentToHashOfLink(nextLink);
 }
@@ -76,8 +76,10 @@ function goToPreviousSubject() {
 
 function goDfsForward(options) {
   var newTab = (options||{}).newTab;
+  var skipChildren = (options||{}).skipChildren;
+
   var nextLink =
-    firstChildLinkOf(currentLink()) ||
+    (!skipChildren ? firstChildLinkOf(currentLink()) : null) ||
     linkAfter(currentLink()) ||
     nextCousinOf(currentLink()) ||
     rootLink();
@@ -87,6 +89,7 @@ function goDfsForward(options) {
 
 function goDfsBack(options) {
   var newTab = (options||{}).newTab;
+
   if (currentLink() === rootLink()) {
     openLink(lastDescendantLinkOf(lastSiblingOf(rootLink())), newTab);
   } else if (isIcLink(currentLink())) {
@@ -180,6 +183,20 @@ function lateralNext() {
   setFragmentToHashOfLink(
     firstChildLinkOf(linkAfter(parentLinkOf(currentLink()))) ||
     linkAfter(parentLinkOf(currentLink()))
+  );
+}
+
+function nextWithJump() {
+  setFragmentToHashOfLink(
+    linkAfter(currentLink()) ||
+    firstChildLinkOf(linkBefore(currentLink()))
+  );
+}
+
+function backWithJump() {
+  setFragmentToHashOfLink(
+    linkBefore(currentLink()) ||
+    lastChildLinkOf(linkBefore(currentLink()))
   );
 }
 
