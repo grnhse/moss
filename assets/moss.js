@@ -248,30 +248,27 @@ var keyNames = {
   38: 'up',
   40: 'down',
   72: 'h',
-  76: 'l',
   75: 'k',
   74: 'j',
+  76: 'l',
+
+  186: ';',
+  222: '\'',
+
+  85: 'u',
   73: 'i',
-  32: 'space',
+  79: 'o',
+
   13: 'return',
   9: 'tab',
   27: 'escape',
   8: 'backspace',
-  78: 'n',
-  66: 'b',
-  84: 't',
-  71: 'g',
+  32: 'space',
+
   77: 'm',
-  190: '.',
-  85: 'u',
-  79: 'o',
-  89: 'y',
   188: ',',
-  80: 'p',
-  186: ';',
-  219: '[',
-  221: ']',
-  220: '\\',
+  190: '.',
+
   49: '1',
   50: '2',
   51: '3',
@@ -287,24 +284,37 @@ var keyNames = {
   90: 'z',
   88: 'x',
   67: 'c',
-  86: 'v'
+  86: 'v',
+  53: '5',
+  84: 't',
+  71: 'g',
+  66: 'b',
+  54: '6',
+  89: 'y',
+  72: 'h',
+  78: 'n',
+
+  55: '7',
+  56: '8',
+  57: '9',
+  48: '0',
+
+  189: '-',
+  187: '='
 }
 
 var shortcutMovements = {
-  'j': call(goDown).with({ cycle: true, collapse: false }),
-  's': goDown,
   'down': call(goDown).with({ cycle: false }),
-  'k': call(goUp).with({ cycle: false, collapse: true }),
   'up': call(goUp).with({ cycle: false }),
-  'w': goUp,
-  'h': closeParagraph,
-  'a': closeParagraph,
-  'left': closeParagraph,
-  'l': openParagraph,
-  'd': openParagraph,
   'right': openParagraph,
-  'space': nextWithJump,
-  'shift-space': backWithJump,
+  'left': closeParagraph,
+
+  'h': closeParagraph,
+  'j': call(goDown).with({ cycle: true, collapse: false }),
+  'k': call(goUp).with({ cycle: false, collapse: true }),
+  'l': openParagraph,
+
+  'shift-space': call(goDfsBack).with({ skipChildren: true }),
   'return': burrow,
   'shift-return': unburrow,
   'command-return': call(burrow).with({ newTab: true }),
@@ -314,25 +324,24 @@ var shortcutMovements = {
   'shift-tab': goDfsBack,
   'escape': goToRoot,
   'backspace': unburrow,
-  't': goToTop,
-  'p': goToParentsIc,
-  'y': goToParentsParent,
-  '\\': goToParentsParent,
-  'o': unburrow,
+
+  '\'': openTabToRoot,
+  ';': duplicateTab,
+
   'u': goToParentsIc,
   'i': unburrow,
-  'b': goDfsBack,
+  'o': goToTop,
+
+  'space': call(goDfsForward).with({ skipChildren: true }),
   'm': goDfsForward,
-  'n': call(goDfsForward).with({skipChildren: true}),
   ',': goDfsBack,
-  ';': duplicateTab,
-  '.': openTabToRoot,
-  '[': lateralBack,
-  ']': lateralNext,
+  '.': call(goDfsBack).with({ skipChildren: true }),
+
   '1': call(goToAnIcLink).with({ level: 3 }),
   '2': call(goToAnIcLink).with({ level: 2 }),
   '3': call(goToAnIcLink).with({ level: 1 }),
   '4': call(goToAnIcLink).with({ level: 0 }),
+
   'q': call(goToAPreviousLink).with({ level: 3 }),
   'w': call(goToAPreviousLink).with({ level: 2 }),
   'e': call(goToAPreviousLink).with({ level: 1 }),
@@ -341,10 +350,29 @@ var shortcutMovements = {
   's': call(goToASelectedLink).with({ level: 2 }),
   'd': call(goToASelectedLink).with({ level: 1 }),
   'f': call(goToASelectedLink).with({ level: 0 }),
+
   'z': call(goToANextLink).with({ level: 3 }),
   'x': call(goToANextLink).with({ level: 2 }),
   'c': call(goToANextLink).with({ level: 1 }),
-  'v': call(goToANextLink).with({ level: 0 })
+  'v': call(goToANextLink).with({ level: 0 }),
+
+  '6': call(goToChild).with({ number: 0 }),
+  'y': call(goToChild).with({ number: 1 }),
+  'h': call(goToChild).with({ number: 2 }),
+  'n': call(goToChild).with({ number: 3 }),
+
+  '5': call(goToSibling).with({ number: 0 }),
+  't': call(goToSibling).with({ number: 1 }),
+  'g': call(goToSibling).with({ number: 2 }),
+  'b': call(goToSibling).with({ number: 3 }),
+
+  '7': call(scrollTo).with({ location: 0 }),
+  '8': call(scrollTo).with({ location: 1 }),
+  '9': call(scrollTo).with({ location: 2 }),
+  '0': call(scrollTo).with({ location: 3 }),
+
+  '-': scrollUp,
+  '=': scrollDown,
 }
 
 document.onkeydown = function(e) {
@@ -466,11 +494,14 @@ function goDfsForward(options) {
 
 function goDfsBack(options) {
   var newTab = (options||{}).newTab;
+  var skipChildren = (options||{}).skipChildren;
 
   if (currentLink() === rootLink()) {
     openLink(lastDescendantLinkOf(lastSiblingOf(rootLink())), newTab);
   } else if (isIcLink(currentLink())) {
     openLink(parentLinkOf(currentLink()), newTab);
+  } else if (skipChildren) {
+    openLink(linkBefore(currentLink()), newTab);
   } else {
     openLink(lastDescendantLinkOf(linkBefore(currentLink())), newTab);
   }
@@ -498,6 +529,38 @@ function goToANextLink(options) {
   var level = (options||{}).level || 0;
   var link = getNthAncestor(level);
   openLink(linkAfter(link));
+}
+
+function goToChild(options) {
+  var number = (options||{}).number || 0;
+  var link = firstChildLinkOf(currentLink());
+  for (var i = 0; i < number; i++) {
+    link = linkAfter(link) || link;
+  }
+  openLink(link || currentLink());
+}
+
+function goToSibling(options) {
+  var number = (options||{}).number || 0;
+  var link = icLinkOf(currentLink());
+  for (var i = 0; i < number; i++) {
+    link = linkAfter(link) || link;
+  }
+  openLink(link || icLinkOf(currentLink()));
+}
+
+function scrollTo(options) {
+  var location = (options||{}).location || 0;
+
+  window.scrollTo(0, (location/3) * mossContainer().scrollHeight);
+}
+
+function scrollUp(options) {
+  window.scrollBy(0, -150);
+}
+
+function scrollDown(options) {
+  window.scrollBy(0, 150);
 }
 
 function goToRoot() {
@@ -609,6 +672,7 @@ function duplicateTab() {
 }
 
 function openTabToRoot() {
+  debugger;
   window.open(
     window.location.href.split('#')[0],
     '_blank'

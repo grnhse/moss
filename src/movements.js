@@ -89,11 +89,14 @@ function goDfsForward(options) {
 
 function goDfsBack(options) {
   var newTab = (options||{}).newTab;
+  var skipChildren = (options||{}).skipChildren;
 
   if (currentLink() === rootLink()) {
     openLink(lastDescendantLinkOf(lastSiblingOf(rootLink())), newTab);
   } else if (isIcLink(currentLink())) {
     openLink(parentLinkOf(currentLink()), newTab);
+  } else if (skipChildren) {
+    openLink(linkBefore(currentLink()), newTab);
   } else {
     openLink(lastDescendantLinkOf(linkBefore(currentLink())), newTab);
   }
@@ -121,6 +124,38 @@ function goToANextLink(options) {
   var level = (options||{}).level || 0;
   var link = getNthAncestor(level);
   openLink(linkAfter(link));
+}
+
+function goToChild(options) {
+  var number = (options||{}).number || 0;
+  var link = firstChildLinkOf(currentLink());
+  for (var i = 0; i < number; i++) {
+    link = linkAfter(link) || link;
+  }
+  openLink(link || currentLink());
+}
+
+function goToSibling(options) {
+  var number = (options||{}).number || 0;
+  var link = icLinkOf(currentLink());
+  for (var i = 0; i < number; i++) {
+    link = linkAfter(link) || link;
+  }
+  openLink(link || icLinkOf(currentLink()));
+}
+
+function scrollTo(options) {
+  var location = (options||{}).location || 0;
+
+  window.scrollTo(0, (location/3) * mossContainer().scrollHeight);
+}
+
+function scrollUp(options) {
+  window.scrollBy(0, -150);
+}
+
+function scrollDown(options) {
+  window.scrollBy(0, 150);
 }
 
 function goToRoot() {
@@ -232,6 +267,7 @@ function duplicateTab() {
 }
 
 function openTabToRoot() {
+  debugger;
   window.open(
     window.location.href.split('#')[0],
     '_blank'
