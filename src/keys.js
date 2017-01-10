@@ -60,8 +60,8 @@ var keyNames = {
 }
 
 var shortcutMovements = {
-  'down': call(goDown).with({ cycle: false }),
-  'up': call(goUp).with({ cycle: false }),
+  'down': call(goDown).with({ cycle: true, collapse: false }),
+  'up': call(goUp).with({ cycle: false, collapse: true }),
   'right': openParagraph,
   'left': closeParagraph,
 

@@ -44,29 +44,64 @@ Use `Space` to continue to the next adjacent paragraph.
 
 | Key  | Action |
 | ---- | ------ |
-| s, Down, j  | Down |
-| w, Up, k  | Up  |
-| h, a, Left  | Close bottom paragraph |
-| l, d, Right, m  | Open paragraph |
-| n  | Open paragraph and jump foward |
-| i  | Go to IC of current paragraph or collapse it |
-| b | Go to bottom of paragraph |
-| , | Go to bottom of current paragraph |
-| [ | Go to child of parent's previous sibling |
-| ] | Go to child of parent's next sibling |
-| Space  | Parent's next sibling |
-| Shift-Space  | Parent's previous sibling |
-| Return  | Burrow/open links |
-| Shift-Return  | Unburrow (close paragraph) |
-| Backspace  | Unburrow (close paragraph) |
-| [Command/Ctrl]-Return  | Burrow/open links in new tab |
-| Shift-[Command/Ctrl]-Return  | Unburrow in new tab |
-| Shift-[Command/Ctrl]-Return  | Unburrow in new tab |
-| Tab  | Depth-First Search forward |
-| Shift-Tab  | Depth-First Search backwards |
-| Escape  | Go to root |
-| ; | Duplicate window in new tab |
-| . | Open new tab to root |
+| down, j | Go down |
+| up, k | Go up |
+| right, l | openParagraph |
+| left, h | closeParagrap |
+
+| \' | openTabToRoot |
+| ; | duplicateTa |
+
+| space | call(goDfsForward).with({ skipChildren: true }) |
+| m | goDfsForward |
+| , | goDfsBack |
+| . | call(goDfsBack).with({ skipChildren: true } |
+
+| shift-space | call(goDfsBack).with({ skipChildren: true }) |
+| return | burrow |
+| shift-return | unburrow |
+| command-return | call(burrow).with({ newTab: true }) |
+| ctrl-return | call(burrow).with({ newTab: true }) |
+| command-shift-return | call(unburrow).with({ newTab: true }) |
+| tab | goDfsForward |
+| shift-tab | goDfsBack |
+| escape | goToRoot |
+| backspace | unburrow |
+
+| u | goToParentsIc |
+| i | unburrow |
+| o | goToTop |
+
+| 1 | Go to IC of current link's great-grandparent |
+| 2 | Go to IC of current link's grandparent |
+| 3 | Go to IC of current link's parent |
+| 4 | Go to IC of current link |
+| q | Go to link before current link's great grandparent |
+| w | Go to link before current link's grandparent |
+| e | Go to link before current link's parent |
+| r | Go to link before current link |
+| a | Go to current link's great grandparent |
+| s | Go to current link's grandparent |
+| d | Go to current link's parent |
+| f | Go to current link (no-op) |
+| z | Go to link after current link's great grandparent |
+| x | Go to link after current link's grandparent |
+| c | Go to link after current link's parent |
+| v | Go to link after current link |
+| 5 | Go to first link of the current paragraph |
+| t | Go to second link of the current paragraph |
+| g | Go to third link of the current paragraph |
+| b | Go to fourth link of the current paragraph |
+| 6 | Go to first link of the previewed paragraph |
+| y | Go to second link of the previewed paragraph |
+| h | Go to third link of the previewed paragraph |
+| n | Go to fourth link of the previewed paragraph |
+| 7 | Scroll to top |
+| 8 | Scroll to first third |
+| 9 | Scroll to second third |
+| 0 | Scroll to bottom |
+| - | scroll up |
+| = | scroll down |
 
 ## How to start a Moss project ##
 
