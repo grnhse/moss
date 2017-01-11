@@ -533,7 +533,7 @@ function goToANextLink(options) {
 
 function goToChild(options) {
   var number = (options||{}).number || 0;
-  var link = firstChildLinkOf(currentLink());
+  var link = firstChildLinkOf(currentLink()) || currentLink();
   for (var i = 0; i < number; i++) {
     link = linkAfter(link) || link;
   }
