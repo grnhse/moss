@@ -41,7 +41,7 @@ Every paragraph has its own fragment identifier, so if you navigate to a particu
 | right, l | openParagraph |
 | left, h | closeParagrap |
 ||
-| \' | Open new tab to root |
+| ' | Open new tab to root |
 | ; | Duplicate current tab |
 ||
 | space | Depth first search forward, skipping children |
