@@ -38,8 +38,8 @@ Every paragraph has its own fragment identifier, so if you navigate to a particu
 | ---- | ------ |
 | down, j | Go down |
 | up, k | Go up |
-| right, l | openParagraph |
-| left, h | closeParagrap |
+| right, l | Open paragraph |
+| left, h | Close paragraph |
 ||
 | ' | Open new tab to root |
 | ; | Duplicate current tab |
@@ -92,8 +92,8 @@ Every paragraph has its own fragment identifier, so if you navigate to a particu
 | 8 | Scroll to first third |
 | 9 | Scroll to second third |
 | 0 | Scroll to bottom |
-| - | scroll up |
-| = | scroll down |
+| - | Scroll up |
+| = | Scroll down |
 
 ## How to start a Moss project ##
 
