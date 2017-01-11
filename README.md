@@ -62,7 +62,7 @@ Every paragraph has its own fragment identifier, so if you navigate to a particu
 ||
 | u | Go to parent's IC |
 | i | Unburrow |
-| o | Go to top |
+| o | Go to IC |
 ||
 | 1 | Go to IC of current link's great-grandparent |
 | 2 | Go to IC of current link's grandparent |
