@@ -46,13 +46,13 @@ Every paragraph has its own fragment identifier, so if you navigate to a particu
 ||
 | space | Depth first search forward, skipping children |
 | m | Depth first search forward |
-| , | goDfsBack |
+| , | Depth first search backwards |
 | . | Depth first search backwards, skipping children |
 ||
 | tab | Depth first search forward |
 | return | Burrow, open links |
 | escape | Go to root |
-| backspace | unburrow |
+| backspace | Unburrow |
 | shift-tab | Depth first search back |
 | shift-space | Depth first search backwards, skipping children |
 | shift-return | Unburrow |
@@ -60,9 +60,9 @@ Every paragraph has its own fragment identifier, so if you navigate to a particu
 | ctrl-return | Burrow with new tab |
 | command-shift-return | Unburrow with new tab |
 ||
-| u | goToParentsIc |
-| i | unburrow |
-| o | goToTop |
+| u | Go to parent's IC |
+| i | Unburrow |
+| o | Go to top |
 ||
 | 1 | Go to IC of current link's great-grandparent |
 | 2 | Go to IC of current link's grandparent |
