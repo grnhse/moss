@@ -146,8 +146,8 @@ function goToSibling(options) {
 
 function scrollTo(options) {
   var location = (options||{}).location || 0;
-
-  window.scrollTo(0, (location/3) * mossContainer().scrollHeight);
+  var bottom = window.scrollY + mossContainer().getBoundingClientRect().bottom;
+  window.scrollTo(0, (location/3) * (bottom - window.innerHeight));
 }
 
 function scrollUp(options) {
