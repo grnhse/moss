@@ -34,44 +34,36 @@ Every paragraph has its own fragment identifier, so if you navigate to a particu
 
 #### Keyboard Shortcuts ####
 
-Use the arrow keys. `Left` opens a parent link, `Right` closes it, and `Up` and `Down` go between the links of a paragraph.
-
-Use Return to burrow into a node's children or to open an alias or URL link, and `Shift-Return`, `Escape`, `Backspace`, or `o` to retrace back up the tree from each link to its parent.
-
-Use `Tab` to iterate through every node in the tree depth-first, or shift-Tab to do the same in reverse.
-
-Use `Space` to continue to the next adjacent paragraph.
-
 | Key  | Action |
 | ---- | ------ |
 | down, j | Go down |
 | up, k | Go up |
 | right, l | openParagraph |
 | left, h | closeParagrap |
-
-| \' | openTabToRoot |
-| ; | duplicateTa |
-
-| space | call(goDfsForward).with({ skipChildren: true }) |
-| m | goDfsForward |
+||
+| \' | Open new tab to root |
+| ; | Duplicate current tab |
+||
+| space | Depth first search forward, skipping children |
+| m | Depth first search forward |
 | , | goDfsBack |
-| . | call(goDfsBack).with({ skipChildren: true } |
-
-| shift-space | call(goDfsBack).with({ skipChildren: true }) |
-| return | burrow |
-| shift-return | unburrow |
-| command-return | call(burrow).with({ newTab: true }) |
-| ctrl-return | call(burrow).with({ newTab: true }) |
-| command-shift-return | call(unburrow).with({ newTab: true }) |
-| tab | goDfsForward |
-| shift-tab | goDfsBack |
-| escape | goToRoot |
+| . | Depth first search backwards, skipping children |
+||
+| tab | Depth first search forward |
+| return | Burrow, open links |
+| escape | Go to root |
 | backspace | unburrow |
-
+| shift-tab | Depth first search back |
+| shift-space | Depth first search backwards, skipping children |
+| shift-return | Unburrow |
+| command-return | Burrow with new tab |
+| ctrl-return | Burrow with new tab |
+| command-shift-return | Unburrow with new tab |
+||
 | u | goToParentsIc |
 | i | unburrow |
 | o | goToTop |
-
+||
 | 1 | Go to IC of current link's great-grandparent |
 | 2 | Go to IC of current link's grandparent |
 | 3 | Go to IC of current link's parent |
