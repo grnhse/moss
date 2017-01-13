@@ -14,6 +14,7 @@ var keyNames = {
   85: 'u',
   73: 'i',
   79: 'o',
+  80: 'p',
 
   13: 'return',
   9: 'tab',
@@ -84,9 +85,10 @@ var shortcutMovements = {
   '\'': openTabToRoot,
   ';': duplicateTab,
 
-  'u': goToParentsIc,
+  'u': goToParentsParent,
   'i': unburrow,
   'o': goToTop,
+  'p': goToBottom,
 
   'space': call(goDfsForward).with({ skipChildren: true }),
   'm': goDfsForward,

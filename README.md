@@ -52,17 +52,18 @@ Every paragraph has its own fragment identifier, so if you navigate to a particu
 | tab | Depth first search forward |
 | return | Burrow, open links |
 | escape | Go to root |
-| backspace | Unburrow |
+| backspace | Go to parent |
 | shift-tab | Depth first search back |
 | shift-space | Depth first search backwards, skipping children |
-| shift-return | Unburrow |
+| shift-return | Go to parent |
 | command-return | Burrow with new tab |
 | ctrl-return | Burrow with new tab |
-| command-shift-return | Unburrow with new tab |
+| command-shift-return | Go to parent with new tab |
 ||
-| u | Go to parent's IC |
-| i | Unburrow |
-| o | Go to IC |
+| u | Go to parent's parent |
+| i | Go to parent |
+| o | Go to top of current paragraph |
+| p | Go to bottom of current paragraph |
 ||
 | 1 | Go to IC of current link's great-grandparent |
 | 2 | Go to IC of current link's grandparent |
