@@ -73,30 +73,37 @@ Every paragraph has its own fragment identifier, so if you navigate to a particu
 | 2 | Go to IC of current link's grandparent |
 | 3 | Go to IC of current link's parent |
 | 4 | Go to IC of current link |
+||
 | q | Go to link before current link's great grandparent |
 | w | Go to link before current link's grandparent |
 | e | Go to link before current link's parent |
 | r | Go to link before current link |
+||
 | a | Go to current link's great grandparent |
 | s | Go to current link's grandparent |
 | d | Go to current link's parent |
 | f | Go to current link (no-op) |
+||
 | z | Go to link after current link's great grandparent |
 | x | Go to link after current link's grandparent |
 | c | Go to link after current link's parent |
 | v | Go to link after current link |
+||
 | 5 | Go to first link of the current paragraph |
 | t | Go to second link of the current paragraph |
 | g | Go to third link of the current paragraph |
 | b | Go to fourth link of the current paragraph |
+||
 | 6 | Go to first link of the previewed paragraph |
 | y | Go to second link of the previewed paragraph |
 | h | Go to third link of the previewed paragraph |
 | n | Go to fourth link of the previewed paragraph |
-| 7 | Scroll to top |
-| 8 | Scroll to first third |
-| 9 | Scroll to second third |
-| 0 | Scroll to bottom |
+||
+| 7 | Scroll to top of page |
+| 8 | Scroll to first third of page |
+| 9 | Scroll to second third of page |
+| 0 | Scroll to bottom of page |
+||
 | - | Scroll up |
 | = | Scroll down |
 
