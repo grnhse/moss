@@ -117,6 +117,7 @@ function printDebugInfo(rootNode, icParagraphNodes) {
 function addToArray(array, newItems) {
   return Array.prototype.push.apply(array, newItems);
 }
+
 function rootLink() {
   return document.querySelector('#_moss a');
 }
@@ -318,8 +319,8 @@ var shortcutMovements = {
   'k': call(goUp).with({ cycle: false, collapse: true }),
   'l': openParagraph,
 
-  'space': goToParentsNextSibling,
-  'shift-space': goToParentsPreviousSibling,
+  'space': call(goDfsForward).with({ skipChildren: true }),
+  'shift-space': call(goDfsBack).with({ skipChildren: true }),
   'return': burrow,
   'shift-return': unburrow,
   'command-return': call(burrow).with({ newTab: true }),
@@ -341,10 +342,10 @@ var shortcutMovements = {
   '[': lateralBack,
   ']': lateralNext,
 
-  'm': goDfsForward,
-  ',': call(goDfsForward).with({ skipChildren: true }),
-  '.': call(goDfsBack).with({ skipChildren: true }),
-  '/': goDfsBack,
+  'm': goDfsBack,
+  ',': call(goDfsBack).with({ skipChildren: true }),
+  '.': call(goDfsForward).with({ skipChildren: true }),
+  '/': goDfsForward,
 
   '1': call(goToAnIcLink).with({ level: 3 }),
   '2': call(goToAnIcLink).with({ level: 2 }),
@@ -392,6 +393,7 @@ document.onkeydown = function(e) {
     (e.shiftKey ? 'shift-' : '');
 
   var keyName = keyNames[e.keyCode];
+  if (!keyName) { return; }
   var shortcutName = modifiers + keyName;
 
   var preventDefaultList = ['space', 'tab'];
@@ -492,13 +494,29 @@ function goDfsForward(options) {
   var newTab = (options||{}).newTab;
   var skipChildren = (options||{}).skipChildren;
 
-  var nextLink =
+  if (isLastIcChildOfParagraph(currentLink())) {
+    return openLink(
+      icLinkOf(parentLinkOf(currentLink())),
+      newTab
+    );
+  }
+
+  if (isIcLink(currentLink())) {
+    return openLink(
+      nextCousinOf(currentLink()) ||
+      icLinkOf(parentLinkOf(currentLink())) ||
+      linkAfter(currentLink()),
+      newTab
+    );
+  }
+
+  openLink(
+    (!skipChildren ? linkAfter(firstChildLinkOf(currentLink())) : null) ||
     (!skipChildren ? firstChildLinkOf(currentLink()) : null) ||
     linkAfter(currentLink()) ||
-    nextCousinOf(currentLink()) ||
-    rootLink();
-
-  openLink(nextLink, newTab);
+    icLinkOf(currentLink()),
+    newTab
+  );
 }
 
 function goDfsBack(options) {
@@ -506,13 +524,32 @@ function goDfsBack(options) {
   var skipChildren = (options||{}).skipChildren;
 
   if (currentLink() === rootLink()) {
-    openLink(lastDescendantLinkOf(lastSiblingOf(rootLink())), newTab);
+    openLink(
+      (!skipChildren ? firstChildLinkOf(lastSiblingOf(rootLink())) : null) ||
+      lastSiblingOf(rootLink())
+    , newTab);
   } else if (isIcLink(currentLink())) {
-    openLink(parentLinkOf(currentLink()), newTab);
-  } else if (skipChildren) {
-    openLink(linkBefore(currentLink()), newTab);
+    openLink(
+      (isLastChild(currentLink()) ? parentLinkOf(currentLink()): null) ||
+      firstChildLinkOf(lastSiblingOf(currentLink())) ||
+      lastSiblingOf(currentLink()),
+      newTab
+    );
+  } else if(isFirstChild(currentLink())) {
+    openLink(
+      parentLinkOf(currentLink()) ||
+      rootLink(),
+      newTab
+    );
   } else {
-    openLink(lastDescendantLinkOf(linkBefore(currentLink())), newTab);
+    openLink(
+      (!skipChildren ? firstChildLinkOf(linkBefore(currentLink())) : null) ||
+      (!skipChildren ? lastChildLinkOf(linkBefore(parentLinkOf(currentLink()))) : null) ||
+      (skipChildren ? linkBefore(currentLink()) : null) ||
+      linkBefore(parentLinkOf(currentLink())) ||
+      linkBefore(currentLink()),
+      newTab
+    );
   }
 }
 
@@ -866,6 +903,18 @@ function isInRootSection(linkElement) {
   return parentSectionOf(linkElement) === rootSection();
 }
 
+function isLastIcChildOfParagraph (linkElement) {
+  return linkElement === firstChildLinkOf(lastSiblingOf(parentLinkOf(currentLink())));
+}
+
+function isFirstChild(linkElement) {
+  return linkElement === linkAfter(icLinkOf(linkElement));
+}
+
+function isLastChild(linkElement) {
+  return linkElement === lastSiblingOf(linkElement);
+}
+
 function firstChildLinkOf(linkElement) {
   if (linkElement === null){
     return null;
@@ -875,6 +924,10 @@ function firstChildLinkOf(linkElement) {
 }
 
 function icLinkOf(linkElement) {
+  if (linkElement === null){
+    return null;
+  }
+
   if (isIcLink(linkElement)) {
     return linkElement;
   }
@@ -966,8 +1019,16 @@ function nextCousinOf(linkElement) {
     return null;
   }
 
-  return linkAfter(linkElement) ||
-    nextCousinOf(parentLinkOf(linkElement));
+  return nextExtendedSiblingOf(parentLinkOf(linkElement));
+
+  function nextExtendedSiblingOf(linkElement) {
+    if (linkElement === null) {
+      return null;
+    }
+
+    return linkAfter(linkElement) ||
+      nextExtendedSiblingOf(parentLinkOf(linkElement));
+  }
 }
 
 function lastDescendantLinkOf(linkElement) {

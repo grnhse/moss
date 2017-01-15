@@ -44,13 +44,15 @@ Every paragraph has its own fragment identifier, so if you navigate to a particu
 | ' | Open new tab to root |
 | ; | Duplicate current tab |
 ||
-| m | Depth first search forward |
-| , | Depth first search forward, skipping children |
-| . | Depth first search backwards, skipping children |
-| / | Depth first search backwards |
+| m | Depth first search backwards |
+| , | Depth first search backwards, skipping children |
+| . | Depth first search forwards, skipping children |
+| / | Depth first search forwards |
 ||
 | tab | Depth first search forward |
 | shift-tab | Depth first search back |
+| alt-tab | Depth first search forward skipping children |
+| alt-shift-tab | Depth first search back skipping children |
 | return | Burrow, open links |
 | shift-return | Go to parent |
 | backspace | Go to parent |

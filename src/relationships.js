@@ -34,6 +34,18 @@ function isInRootSection(linkElement) {
   return parentSectionOf(linkElement) === rootSection();
 }
 
+function isLastIcChildOfParagraph (linkElement) {
+  return linkElement === firstChildLinkOf(lastSiblingOf(parentLinkOf(currentLink())));
+}
+
+function isFirstChild(linkElement) {
+  return linkElement === linkAfter(icLinkOf(linkElement));
+}
+
+function isLastChild(linkElement) {
+  return linkElement === lastSiblingOf(linkElement);
+}
+
 function firstChildLinkOf(linkElement) {
   if (linkElement === null){
     return null;
@@ -43,6 +55,10 @@ function firstChildLinkOf(linkElement) {
 }
 
 function icLinkOf(linkElement) {
+  if (linkElement === null){
+    return null;
+  }
+
   if (isIcLink(linkElement)) {
     return linkElement;
   }
@@ -134,8 +150,16 @@ function nextCousinOf(linkElement) {
     return null;
   }
 
-  return linkAfter(linkElement) ||
-    nextCousinOf(parentLinkOf(linkElement));
+  return nextExtendedSiblingOf(parentLinkOf(linkElement));
+
+  function nextExtendedSiblingOf(linkElement) {
+    if (linkElement === null) {
+      return null;
+    }
+
+    return linkAfter(linkElement) ||
+      nextExtendedSiblingOf(parentLinkOf(linkElement));
+  }
 }
 
 function lastDescendantLinkOf(linkElement) {

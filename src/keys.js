@@ -75,8 +75,8 @@ var shortcutMovements = {
   'k': call(goUp).with({ cycle: false, collapse: true }),
   'l': openParagraph,
 
-  'space': goToParentsNextSibling,
-  'shift-space': goToParentsPreviousSibling,
+  'space': call(goDfsForward).with({ skipChildren: true }),
+  'shift-space': call(goDfsBack).with({ skipChildren: true }),
   'return': burrow,
   'shift-return': unburrow,
   'command-return': call(burrow).with({ newTab: true }),
@@ -98,10 +98,10 @@ var shortcutMovements = {
   '[': lateralBack,
   ']': lateralNext,
 
-  'm': goDfsForward,
-  ',': call(goDfsForward).with({ skipChildren: true }),
-  '.': call(goDfsBack).with({ skipChildren: true }),
-  '/': goDfsBack,
+  'm': goDfsBack,
+  ',': call(goDfsBack).with({ skipChildren: true }),
+  '.': call(goDfsForward).with({ skipChildren: true }),
+  '/': goDfsForward,
 
   '1': call(goToAnIcLink).with({ level: 3 }),
   '2': call(goToAnIcLink).with({ level: 2 }),
@@ -149,6 +149,7 @@ document.onkeydown = function(e) {
     (e.shiftKey ? 'shift-' : '');
 
   var keyName = keyNames[e.keyCode];
+  if (!keyName) { return; }
   var shortcutName = modifiers + keyName;
 
   var preventDefaultList = ['space', 'tab'];
