@@ -260,6 +260,9 @@ var keyNames = {
   79: 'o',
   80: 'p',
 
+  219: '[',
+  221: ']',
+
   13: 'return',
   9: 'tab',
   27: 'escape',
@@ -333,6 +336,9 @@ var shortcutMovements = {
   'i': unburrow,
   'o': goToTop,
   'p': goToBottom,
+
+  '[': lateralBack,
+  ']': lateralNext,
 
   'space': call(goDfsForward).with({ skipChildren: true }),
   'm': goDfsForward,

@@ -65,6 +65,9 @@ Every paragraph has its own fragment identifier, so if you navigate to a particu
 | o | Go to top of current paragraph |
 | p | Go to bottom of current paragraph |
 ||
+| [ | First child of link before parent |
+| ] | First child of link after parent |
+||
 | 1 | Go to IC of current link's great-grandparent |
 | 2 | Go to IC of current link's grandparent |
 | 3 | Go to IC of current link's parent |
