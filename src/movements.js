@@ -223,11 +223,17 @@ function more () {
   );
 }
 
-function rooksNext() {
+function goToParentsPreviousSibling() {
   setFragmentToHashOfLink(
-    linkAfter(firstChildLinkOf(currentLink())) ||
-    firstChildLinkOf(currentLink()) ||
-    linkAfter(currentLink())
+    linkAfter(parentLinkOf(currentLink())) ||
+    parentLinkOf(currentLink())
+  );
+}
+
+function goToParentsNextSibling() {
+  setFragmentToHashOfLink(
+    linkBefore(parentLinkOf(currentLink())) ||
+    parentLinkOf(currentLink())
   );
 }
 

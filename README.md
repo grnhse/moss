@@ -44,18 +44,19 @@ Every paragraph has its own fragment identifier, so if you navigate to a particu
 | ' | Open new tab to root |
 | ; | Duplicate current tab |
 ||
-| space | Depth first search forward, skipping children |
 | m | Depth first search forward |
-| , | Depth first search backwards |
+| , | Depth first search forward, skipping children |
 | . | Depth first search backwards, skipping children |
+| / | Depth first search backwards |
 ||
 | tab | Depth first search forward |
-| return | Burrow, open links |
-| escape | Go to root |
-| backspace | Go to parent |
 | shift-tab | Depth first search back |
-| shift-space | Depth first search backwards, skipping children |
+| return | Burrow, open links |
 | shift-return | Go to parent |
+| backspace | Go to parent |
+| escape | Go to root |
+| space | Go to link after parent |
+| shift-space | Go to link before parent |
 | command-return | Burrow with new tab |
 | ctrl-return | Burrow with new tab |
 | command-shift-return | Go to parent with new tab |

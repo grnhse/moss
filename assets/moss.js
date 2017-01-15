@@ -117,7 +117,6 @@ function printDebugInfo(rootNode, icParagraphNodes) {
 function addToArray(array, newItems) {
   return Array.prototype.push.apply(array, newItems);
 }
-
 function rootLink() {
   return document.querySelector('#_moss a');
 }
@@ -272,6 +271,7 @@ var keyNames = {
   77: 'm',
   188: ',',
   190: '.',
+  191: '/',
 
   49: '1',
   50: '2',
@@ -318,7 +318,8 @@ var shortcutMovements = {
   'k': call(goUp).with({ cycle: false, collapse: true }),
   'l': openParagraph,
 
-  'shift-space': call(goDfsBack).with({ skipChildren: true }),
+  'space': goToParentsNextSibling,
+  'shift-space': goToParentsPreviousSibling,
   'return': burrow,
   'shift-return': unburrow,
   'command-return': call(burrow).with({ newTab: true }),
@@ -340,10 +341,10 @@ var shortcutMovements = {
   '[': lateralBack,
   ']': lateralNext,
 
-  'space': call(goDfsForward).with({ skipChildren: true }),
   'm': goDfsForward,
-  ',': goDfsBack,
+  ',': call(goDfsForward).with({ skipChildren: true }),
   '.': call(goDfsBack).with({ skipChildren: true }),
+  '/': goDfsBack,
 
   '1': call(goToAnIcLink).with({ level: 3 }),
   '2': call(goToAnIcLink).with({ level: 2 }),
@@ -636,11 +637,17 @@ function more () {
   );
 }
 
-function rooksNext() {
+function goToParentsPreviousSibling() {
   setFragmentToHashOfLink(
-    linkAfter(firstChildLinkOf(currentLink())) ||
-    firstChildLinkOf(currentLink()) ||
-    linkAfter(currentLink())
+    linkAfter(parentLinkOf(currentLink())) ||
+    parentLinkOf(currentLink())
+  );
+}
+
+function goToParentsNextSibling() {
+  setFragmentToHashOfLink(
+    linkBefore(parentLinkOf(currentLink())) ||
+    parentLinkOf(currentLink())
   );
 }
 
