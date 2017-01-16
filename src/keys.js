@@ -149,7 +149,6 @@ document.onkeydown = function(e) {
     (e.shiftKey ? 'shift-' : '');
 
   var keyName = keyNames[e.keyCode];
-  if (!keyName) { return; }
   var shortcutName = modifiers + keyName;
 
   var preventDefaultList = ['space', 'tab'];
