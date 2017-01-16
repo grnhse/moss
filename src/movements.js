@@ -53,9 +53,11 @@ function closeParagraph() {
 }
 
 function openParagraph() {
-  if (isParentLink(currentLink())) {
-    setFragmentToHashOfLink(firstChildLinkOf(currentLink()));
-  }
+  setFragmentToHashOfLink(
+    firstChildLinkOf(currentLink()) ||
+    linkAfter(currentLink()) ||
+    currentLink()
+  );
 }
 
 function goToNextSubject() {
