@@ -34,26 +34,21 @@ var keyNames = {
   50: '2',
   51: '3',
   52: '4',
+
   81: 'q',
   87: 'w',
   69: 'e',
   82: 'r',
+
   65: 'a',
   83: 's',
   68: 'd',
   70: 'f',
+
   90: 'z',
   88: 'x',
   67: 'c',
   86: 'v',
-  53: '5',
-  84: 't',
-  71: 'g',
-  66: 'b',
-  54: '6',
-  89: 'y',
-  72: 'h',
-  78: 'n',
 
   55: '7',
   56: '8',
@@ -121,16 +116,6 @@ var shortcutMovements = {
   'x': call(goToANextLink).with({ level: 2 }),
   'c': call(goToANextLink).with({ level: 1 }),
   'v': call(goToANextLink).with({ level: 0 }),
-
-  '6': call(goToChild).with({ number: 0 }),
-  'y': call(goToChild).with({ number: 1 }),
-  'h': call(goToChild).with({ number: 2 }),
-  'n': call(goToChild).with({ number: 3 }),
-
-  '5': call(goToSibling).with({ number: 0 }),
-  't': call(goToSibling).with({ number: 1 }),
-  'g': call(goToSibling).with({ number: 2 }),
-  'b': call(goToSibling).with({ number: 3 }),
 
   '7': call(scrollTo).with({ location: 0 }),
   '8': call(scrollTo).with({ location: 1 }),
