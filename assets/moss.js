@@ -252,6 +252,8 @@ var keyNames = {
   74: 'j',
   76: 'l',
 
+  78: 'n',
+
   186: ';',
   222: '\'',
 
@@ -313,6 +315,8 @@ var shortcutMovements = {
   'j': call(goDown).with({ cycle: true, collapse: false }),
   'k': call(goUp).with({ cycle: false, collapse: true }),
   'l': openParagraph,
+
+  'n': openParagraph,
 
   'space': call(goDfsForward).with({ skipChildren: true }),
   'shift-space': call(goDfsBack).with({ skipChildren: true }),
