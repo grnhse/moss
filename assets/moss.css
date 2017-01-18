@@ -12,8 +12,8 @@
 
 #_moss p {
   padding-bottom: 20px;
-  font-size: 25px;
-  width: 430px;
+  font-size: 32px;
+  width: 450px;
   margin: auto;
 }
 
@@ -28,6 +28,10 @@
 
 #_moss .moss-alias-link:hover {
   color: #4078c0;
+}
+
+#_moss .moss-url-link {
+  word-break: break-all;
 }
 
 #_moss .moss-url-link:hover {
