@@ -468,6 +468,7 @@ function closeParagraph() {
 
 function openParagraph() {
   setFragmentToHashOfLink(
+    linkAfter(firstChildLinkOf(currentLink())) ||
     firstChildLinkOf(currentLink()) ||
     linkAfter(currentLink()) ||
     currentLink()
