@@ -146,6 +146,18 @@ function linkWithDisplayHash(hash) {
   var linkHtmlId = htmlIdForDisplayHash(hash);
   return document.getElementById(linkHtmlId);
 }
+
+function deepestLink() {
+  var deepestLevel = Array.prototype.slice.
+    call(document.querySelectorAll('a')).
+    reduce(function(max, link) {
+      return Math.max(max, link.dataset.level);
+    }, 0);
+
+  var linksOfDeepestLevel = document.querySelectorAll('.level-' + deepestLevel);
+
+  return linksOfDeepestLevel[linksOfDeepestLevel.length - 1];
+}
 function icOf(string) {
   var ic = clausesWithPunctuationOf(string, true)[0] || '';
 
@@ -220,7 +232,7 @@ function init(dataString) {
   }
 
   var paragraphNodeTree = ParagraphNodeTree(dataString);
-  var sectionElementTree = SectionElementTree(paragraphNodeTree);
+  var sectionElementTree = SectionElementTree(paragraphNodeTree, 0);
 
   mossContainer().innerHTML = '';
   mossContainer().appendChild(sectionElementTree);
@@ -318,8 +330,8 @@ var shortcutMovements = {
 
   'n': openParagraph,
 
-  'space': call(goDfsForward).with({ skipChildren: true }),
-  'shift-space': call(goDfsBack).with({ skipChildren: true }),
+  'space': goBfsForward,
+  'shift-space': goBfsBack,
   'return': burrow,
   'shift-return': unburrow,
   'command-return': call(burrow).with({ newTab: true }),
@@ -333,18 +345,16 @@ var shortcutMovements = {
   '\'': openTabToRoot,
   ';': duplicateTab,
 
+  'y': goToParentsParent,
   'u': goToParentsParent,
   'i': unburrow,
   'o': goToTop,
   'p': goToBottom,
 
-  '[': lateralBack,
-  ']': lateralNext,
-
-  'm': goDfsBack,
-  ',': call(goDfsBack).with({ skipChildren: true }),
-  '.': call(goDfsForward).with({ skipChildren: true }),
-  '/': goDfsForward,
+  'm': goBfsBack,
+  ',': goDfsBack,
+  '.': goDfsForward,
+  '/': goBfsForward,
 
   '1': call(goToAnIcLink).with({ level: 3 }),
   '2': call(goToAnIcLink).with({ level: 2 }),
@@ -542,6 +552,39 @@ function goDfsBack(options) {
     );
   }
 }
+
+function goBfsForward(options) {
+  var newTab = (options||{}).newTab;
+  var level = currentLink().dataset.level;
+  var levelArray = Array.prototype.slice.call(document.getElementsByClassName('level-' + level));
+  var nextLevelArray = Array.prototype.slice.call(document.getElementsByClassName('level-' + (Number(level) + 1)));
+  var index = levelArray.indexOf(currentLink());
+
+  openLink(
+    levelArray[index + 1] ||
+    nextLevelArray[0] ||
+    rootLink(),
+    newTab
+  );
+}
+
+function goBfsBack(options) {
+  var newTab = (options||{}).newTab;
+  var level = currentLink().dataset.level;
+  var levelArray = Array.prototype.slice.call(document.getElementsByClassName('level-' + level));
+  var levelCount = levelArray.length - 1;
+  var previousLevelArray = Array.prototype.slice.call(document.getElementsByClassName('level-' + (Number(level - 1))));
+  var previousLevelCount = previousLevelArray.length - 1;
+  var index = levelArray.indexOf(currentLink());
+
+  openLink(
+    levelArray[index - 1] ||
+    previousLevelArray[previousLevelCount] ||
+    deepestLink(),
+    newTab
+  );
+}
+
 
 function goToAnIcLink(options) {
   var level = (options||{}).level || 0;
@@ -995,6 +1038,15 @@ function linkBefore(linkElement) {
   }
 }
 
+function firstSiblingOf(linkElement) {
+  if (linkElement === null){
+    return null;
+  }
+
+  var links = linkElement.parentNode.querySelectorAll('a');
+  return links[1] || linkElement;
+}
+
 function lastSiblingOf(linkElement) {
   if (linkElement === null){
     return null;
@@ -1036,7 +1088,7 @@ function lastDescendantLinkOf(linkElement) {
 
   return lastDescendantLinkOf(lastChildLinkOf(linkElement));
 }
-function SectionElementTree(paragraphNode) {
+function SectionElementTree(paragraphNode, level) {
   var section = document.createElement('section');
   var paragraph = document.createElement('p');
   section.appendChild(paragraph);
@@ -1044,7 +1096,7 @@ function SectionElementTree(paragraphNode) {
 
   paragraphNode.lines.forEach(function(line) {
     line.tokens.forEach(function(token) {
-      var element = linkConstructorForTokenType[token.type](token);
+      var element = linkConstructorForTokenType[token.type](token, level);
       paragraph.appendChild(element);
     });
 
@@ -1052,7 +1104,7 @@ function SectionElementTree(paragraphNode) {
   });
 
   paragraphNode.children.forEach(function(childParagraphNode) {
-    var childElement = SectionElementTree(childParagraphNode);
+    var childElement = SectionElementTree(childParagraphNode, level + 1);
     section.appendChild(childElement);
   });
 
@@ -1074,49 +1126,59 @@ function SpanElement(token) {
   return spanElement;
 }
 
-function IcLinkElement(token) {
+function IcLinkElement(token, level) {
   var linkElement = document.createElement('a');
   linkElement.appendChild(document.createTextNode(token.text));
   linkElement.id = htmlIdFor(token.text) + '/';
   linkElement.href = '#' + displayHashFor(token.text) + '/';
   linkElement.dataset.displayHash = displayHashFor(token.text) + '/';
   linkElement.dataset.type = 'ic';
+  linkElement.dataset.level = level;
   linkElement.classList.add('moss-ic-link');
+  linkElement.classList.add('level-' + level);
   return linkElement;
 }
 
-function ParentLinkElement(token) {
+function ParentLinkElement(token, level) {
   var linkElement = document.createElement('a');
   linkElement.appendChild(document.createTextNode(token.text));
   linkElement.id = htmlIdFor(token.text);
   linkElement.href = '#' + displayHashFor(token.text);
   linkElement.dataset.displayHash = displayHashFor(token.text);
   linkElement.dataset.type = 'parent';
+  linkElement.dataset.level = level;
   linkElement.classList.add('moss-parent-link');
+  linkElement.classList.add('level-' + level);
 
   return linkElement;
 }
 
-function AliasLinkElement(token) {
+function AliasLinkElement(token, level) {
   var linkElement = document.createElement('a');
   linkElement.appendChild(document.createTextNode(token.text));
   linkElement.id = htmlIdFor(token.clause);
   linkElement.dataset.displayHash = displayHashFor(capitalize(token.clause));
   linkElement.href = '#' + displayHashFor(capitalize(token.text));
   linkElement.dataset.type = 'alias';
+  linkElement.dataset.level = level;
   linkElement.classList.add('moss-alias-link');
+  linkElement.classList.add('level-' + level);
+
   return linkElement;
 }
 
-function UrlLinkElement(token) {
+function UrlLinkElement(token, level) {
   var linkElement = document.createElement('a');
   linkElement.appendChild(document.createTextNode(token.url));
   linkElement.id = htmlIdFor(token.text);
   linkElement.href = token.url;
   linkElement.setAttribute('target', '_blank');
   linkElement.dataset.type = 'url';
+  linkElement.dataset.level = level;
   linkElement.dataset.displayHash = displayHashFor(icOf(token.text));
   linkElement.classList.add('moss-url-link');
+  linkElement.classList.add('level-' + level);
+
   return linkElement;
 }
 function sendRequestTo(url, success){

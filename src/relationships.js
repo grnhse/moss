@@ -136,6 +136,15 @@ function linkBefore(linkElement) {
   }
 }
 
+function firstSiblingOf(linkElement) {
+  if (linkElement === null){
+    return null;
+  }
+
+  var links = linkElement.parentNode.querySelectorAll('a');
+  return links[1] || linkElement;
+}
+
 function lastSiblingOf(linkElement) {
   if (linkElement === null){
     return null;

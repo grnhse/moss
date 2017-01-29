@@ -20,7 +20,7 @@ function init(dataString) {
   }
 
   var paragraphNodeTree = ParagraphNodeTree(dataString);
-  var sectionElementTree = SectionElementTree(paragraphNodeTree);
+  var sectionElementTree = SectionElementTree(paragraphNodeTree, 0);
 
   mossContainer().innerHTML = '';
   mossContainer().appendChild(sectionElementTree);

@@ -74,8 +74,8 @@ var shortcutMovements = {
 
   'n': openParagraph,
 
-  'space': call(goDfsForward).with({ skipChildren: true }),
-  'shift-space': call(goDfsBack).with({ skipChildren: true }),
+  'space': goBfsForward,
+  'shift-space': goBfsBack,
   'return': burrow,
   'shift-return': unburrow,
   'command-return': call(burrow).with({ newTab: true }),
@@ -89,18 +89,16 @@ var shortcutMovements = {
   '\'': openTabToRoot,
   ';': duplicateTab,
 
+  'y': goToParentsParent,
   'u': goToParentsParent,
   'i': unburrow,
   'o': goToTop,
   'p': goToBottom,
 
-  '[': lateralBack,
-  ']': lateralNext,
-
-  'm': goDfsBack,
-  ',': call(goDfsBack).with({ skipChildren: true }),
-  '.': call(goDfsForward).with({ skipChildren: true }),
-  '/': goDfsForward,
+  'm': goBfsBack,
+  ',': goDfsBack,
+  '.': goDfsForward,
+  '/': goBfsForward,
 
   '1': call(goToAnIcLink).with({ level: 3 }),
   '2': call(goToAnIcLink).with({ level: 2 }),

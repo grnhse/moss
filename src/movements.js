@@ -139,6 +139,39 @@ function goDfsBack(options) {
   }
 }
 
+function goBfsForward(options) {
+  var newTab = (options||{}).newTab;
+  var level = currentLink().dataset.level;
+  var levelArray = Array.prototype.slice.call(document.getElementsByClassName('level-' + level));
+  var nextLevelArray = Array.prototype.slice.call(document.getElementsByClassName('level-' + (Number(level) + 1)));
+  var index = levelArray.indexOf(currentLink());
+
+  openLink(
+    levelArray[index + 1] ||
+    nextLevelArray[0] ||
+    rootLink(),
+    newTab
+  );
+}
+
+function goBfsBack(options) {
+  var newTab = (options||{}).newTab;
+  var level = currentLink().dataset.level;
+  var levelArray = Array.prototype.slice.call(document.getElementsByClassName('level-' + level));
+  var levelCount = levelArray.length - 1;
+  var previousLevelArray = Array.prototype.slice.call(document.getElementsByClassName('level-' + (Number(level - 1))));
+  var previousLevelCount = previousLevelArray.length - 1;
+  var index = levelArray.indexOf(currentLink());
+
+  openLink(
+    levelArray[index - 1] ||
+    previousLevelArray[previousLevelCount] ||
+    deepestLink(),
+    newTab
+  );
+}
+
+
 function goToAnIcLink(options) {
   var level = (options||{}).level || 0;
   var link = getNthAncestor(level);

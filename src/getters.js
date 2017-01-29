@@ -26,3 +26,15 @@ function linkWithDisplayHash(hash) {
   var linkHtmlId = htmlIdForDisplayHash(hash);
   return document.getElementById(linkHtmlId);
 }
+
+function deepestLink() {
+  var deepestLevel = Array.prototype.slice.
+    call(document.querySelectorAll('a')).
+    reduce(function(max, link) {
+      return Math.max(max, link.dataset.level);
+    }, 0);
+
+  var linksOfDeepestLevel = document.querySelectorAll('.level-' + deepestLevel);
+
+  return linksOfDeepestLevel[linksOfDeepestLevel.length - 1];
+}

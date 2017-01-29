@@ -44,21 +44,19 @@ Every paragraph has its own fragment identifier, so if you navigate to a particu
 | ' | Open new tab to root |
 | ; | Duplicate current tab |
 ||
-| m | Depth first search backwards |
-| , | Depth first search backwards, skipping children |
-| . | Depth first search forwards, skipping children |
-| / | Depth first search forwards |
+| m | Breath-first-search backwards |
+| , | Depth-first search backwards |
+| . | Depth first search forwards |
+| / | Breath-first-search forwards |
 ||
-| tab | Depth first search forward |
-| shift-tab | Depth first search back |
-| alt-tab | Depth first search forward skipping children |
-| alt-shift-tab | Depth first search back skipping children |
+| tab | Depth-first search forward |
+| shift-tab | Depth-first search backward |
+| space | Breath-first search forward |
+| shift-space | Breath-first search backward |
 | return | Burrow, open links |
 | shift-return | Go to parent |
 | backspace | Go to parent |
 | escape | Go to root |
-| space | Go to link after parent |
-| shift-space | Go to link before parent |
 | command-return | Burrow with new tab |
 | ctrl-return | Burrow with new tab |
 | command-shift-return | Go to parent with new tab |
@@ -90,16 +88,6 @@ Every paragraph has its own fragment identifier, so if you navigate to a particu
 | x | Go to link after current link's grandparent |
 | c | Go to link after current link's parent |
 | v | Go to link after current link |
-||
-| 5 | Go to first link of the current paragraph |
-| t | Go to second link of the current paragraph |
-| g | Go to third link of the current paragraph |
-| b | Go to fourth link of the current paragraph |
-||
-| 6 | Go to first link of the previewed paragraph |
-| y | Go to second link of the previewed paragraph |
-| h | Go to third link of the previewed paragraph |
-| n | Go to fourth link of the previewed paragraph |
 ||
 | 7 | Scroll to top of page |
 | 8 | Scroll to first third of page |
