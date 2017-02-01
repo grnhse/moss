@@ -318,14 +318,14 @@ var keyNames = {
 }
 
 var shortcutMovements = {
-  'down': call(goDown).with({ cycle: true, collapse: false }),
-  'up': call(goUp).with({ cycle: false, collapse: true }),
+  'down': call(goDown).with({ cycle: false, collapse: false }),
+  'up': call(goUp).with({ cycle: false, collapse: false }),
   'right': openParagraph,
   'left': closeParagraph,
 
   'h': closeParagraph,
-  'j': call(goDown).with({ cycle: true, collapse: false }),
-  'k': call(goUp).with({ cycle: false, collapse: true }),
+  'j': call(goDown).with({ cycle: false, collapse: false }),
+  'k': call(goUp).with({ cycle: false, collapse: false }),
   'l': openParagraph,
 
   'n': openParagraph,
@@ -350,11 +350,6 @@ var shortcutMovements = {
   'i': unburrow,
   'o': goToTop,
   'p': goToBottom,
-
-  'm': goBfsBack,
-  ',': goDfsBack,
-  '.': goDfsForward,
-  '/': goBfsForward,
 
   '1': call(goToAnIcLink).with({ level: 3 }),
   '2': call(goToAnIcLink).with({ level: 2 }),
@@ -435,7 +430,7 @@ function openInNewTab(url) {
 
 function goUp(options) {
   var collapse = (options||{}).collapse || false;
-  var cycle = (options||{}).cycle || true;
+  var cycle = (options||{}).cycle || false;
 
   var nextLink =
     linkBefore(currentLink()) ||
@@ -448,7 +443,7 @@ function goUp(options) {
 
 function goDown(options) {
   var collapse = (options||{}).collapse || false;
-  var cycle = (options||{}).cycle || true;
+  var cycle = (options||{}).cycle || false;
 
   var nextLink =
     linkAfter(currentLink()) ||

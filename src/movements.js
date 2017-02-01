@@ -21,7 +21,7 @@ function openInNewTab(url) {
 
 function goUp(options) {
   var collapse = (options||{}).collapse || false;
-  var cycle = (options||{}).cycle || true;
+  var cycle = (options||{}).cycle || false;
 
   var nextLink =
     linkBefore(currentLink()) ||
@@ -34,7 +34,7 @@ function goUp(options) {
 
 function goDown(options) {
   var collapse = (options||{}).collapse || false;
-  var cycle = (options||{}).cycle || true;
+  var cycle = (options||{}).cycle || false;
 
   var nextLink =
     linkAfter(currentLink()) ||
