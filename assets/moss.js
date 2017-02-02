@@ -264,8 +264,6 @@ var keyNames = {
   74: 'j',
   76: 'l',
 
-  78: 'n',
-
   186: ';',
   222: '\'',
 
@@ -283,6 +281,7 @@ var keyNames = {
   8: 'backspace',
   32: 'space',
 
+  78: 'n',
   77: 'm',
   188: ',',
   190: '.',
@@ -351,6 +350,12 @@ var shortcutMovements = {
   'i': unburrow,
   'o': goToTop,
   'p': goToBottom,
+
+  'n': call(goToSibling).with({ number: 0 }),
+  'm': call(goToSibling).with({ number: 1 }),
+  ',': call(goToSibling).with({ number: 2 }),
+  '.': call(goToSibling).with({ number: 3 }),
+  '/': call(goToSibling).with({ number: 4 }),
 
   '1': call(goToAnIcLink).with({ level: 3 }),
   '2': call(goToAnIcLink).with({ level: 2 }),
