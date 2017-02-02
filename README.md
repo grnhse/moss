@@ -36,8 +36,8 @@ Every paragraph has its own fragment identifier, so if you navigate to a particu
 
 | Key  | Action |
 | ---- | ------ |
-| down, j | Go down |
-| up, k | Go up |
+| down, j | Go down, cycling if at bottom |
+| up, k | Go up, collapsing if at top |
 | right, l | Open paragraph |
 | left, h | Close paragraph |
 ||
