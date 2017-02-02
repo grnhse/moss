@@ -62,7 +62,8 @@ Every paragraph has its own fragment identifier, so if you navigate to a particu
 | ctrl-return | Burrow with new tab |
 | command-shift-return | Go to parent with new tab |
 ||
-| u | Go to parent's parent |
+| y | Go to parent's parent |
+| u | Go to parent's IC |
 | i | Go to parent |
 | o | Go to top of current paragraph |
 | p | Go to bottom of current paragraph |

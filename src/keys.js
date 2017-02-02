@@ -90,7 +90,7 @@ var shortcutMovements = {
   ';': duplicateTab,
 
   'y': goToParentsParent,
-  'u': goToParentsParent,
+  'u': goToParentsIc,
   'i': unburrow,
   'o': goToTop,
   'p': goToBottom,
