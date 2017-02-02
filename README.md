@@ -44,15 +44,16 @@ Every paragraph has its own fragment identifier, so if you navigate to a particu
 | ' | Open new tab to root |
 | ; | Duplicate current tab |
 ||
-| m | Breath-first-search backwards |
-| , | Depth-first search backwards |
-| . | Depth first search forwards |
-| / | Breath-first-search forwards |
+| n | IC of current paragraph |
+| m | First parent link of current paragraph |
+| , | second parent link of current paragraph |
+| . | third parent link of current paragraph |
+| / | fourth parent link of current paragraph |
 ||
 | tab | Depth-first search forward |
 | shift-tab | Depth-first search backward |
-| space | Breath-first search forward |
-| shift-space | Breath-first search backward |
+| space | Exit depth first search forward |
+| shift-space | Exit depth first search backward |
 | return | Burrow, open links |
 | shift-return | Go to parent |
 | backspace | Go to parent |
@@ -66,8 +67,8 @@ Every paragraph has its own fragment identifier, so if you navigate to a particu
 | o | Go to top of current paragraph |
 | p | Go to bottom of current paragraph |
 ||
-| [ | First child of link before parent |
-| ] | First child of link after parent |
+| [ | Breath first search forward |
+| ] | Breath first search backwards |
 ||
 | 1 | Go to IC of current link's great-grandparent |
 | 2 | Go to IC of current link's grandparent |
