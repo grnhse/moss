@@ -657,6 +657,7 @@ function burrow(options) {
     openInNewTab(currentLink().href)
   } else {
     var nextLink =
+      linkAfter(firstChildLinkOf(currentLink())) ||
       firstChildLinkOf(currentLink()) ||
       linkAfter(currentLink());
 
