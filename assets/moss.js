@@ -376,6 +376,21 @@ var shortcutMovements = {
   'c': call(goToANextLink).with({ level: 1 }),
   'v': call(goToANextLink).with({ level: 0 }),
 
+  'shift-q': call(goToAPreviousLink).with({ level: 3, firstChild: true }),
+  'shift-w': call(goToAPreviousLink).with({ level: 2, firstChild: true }),
+  'shift-e': call(goToAPreviousLink).with({ level: 1, firstChild: true }),
+  'shift-r': call(goToAPreviousLink).with({ level: 0, firstChild: true }),
+
+  'shift-a': call(goToASelectedLink).with({ level: 3, firstChild: true }),
+  'shift-s': call(goToASelectedLink).with({ level: 2, firstChild: true }),
+  'shift-d': call(goToASelectedLink).with({ level: 1, firstChild: true }),
+  'shift-f': call(goToASelectedLink).with({ level: 0, firstChild: true }),
+
+  'shift-z': call(goToANextLink).with({ level: 3, firstChild: true }),
+  'shift-x': call(goToANextLink).with({ level: 2, firstChild: true }),
+  'shift-c': call(goToANextLink).with({ level: 1, firstChild: true }),
+  'shift-v': call(goToANextLink).with({ level: 0, firstChild: true }),
+
   '7': call(scrollTo).with({ location: 0 }),
   '8': call(scrollTo).with({ location: 1 }),
   '9': call(scrollTo).with({ location: 2 }),
@@ -596,20 +611,31 @@ function goToAnIcLink(options) {
 
 function goToAPreviousLink(options) {
   var level = (options||{}).level || 0;
+  var firstChild = (options||{}).firstChild || false;
   var link = getNthAncestor(level);
-  openLink(linkBefore(link));
+  openLink(
+    firstChild ? firstChildLinkOf(linkBefore(link)) : linkBefore(link)
+  );
 }
 
 function goToASelectedLink(options) {
   var level = (options||{}).level || 0;
   var link = getNthAncestor(level);
-  openLink(link);
+  var firstChild = (options||{}).firstChild || false;
+
+  openLink(
+    firstChild ? firstChildLinkOf(link) : link
+  );
 }
 
 function goToANextLink(options) {
   var level = (options||{}).level || 0;
   var link = getNthAncestor(level);
-  openLink(linkAfter(link));
+  var firstChild = (options||{}).firstChild || false;
+
+  openLink(
+    firstChild ? firstChildLinkOf(linkAfter(link)) : linkAfter(link)
+  );
 }
 
 function goToChild(options) {

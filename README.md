@@ -80,16 +80,20 @@ Every paragraph has its own fragment identifier, so if you navigate to a particu
 | w | Go to link before current link's grandparent |
 | e | Go to link before current link's parent |
 | r | Go to link before current link |
+| shift-[q/w/e/r] | Go to first child of given link |
 ||
 | a | Go to current link's great grandparent |
 | s | Go to current link's grandparent |
 | d | Go to current link's parent |
 | f | Go to current link (no-op) |
+| shift-[a/s/d/f] | Go to first child of given link |
 ||
+| shift-[key] | Go to first child of [link] |
 | z | Go to link after current link's great grandparent |
 | x | Go to link after current link's grandparent |
 | c | Go to link after current link's parent |
 | v | Go to link after current link |
+| shift-[z/x/c/v] | Go to first child of given link |
 ||
 | 7 | Scroll to top of page |
 | 8 | Scroll to first third of page |

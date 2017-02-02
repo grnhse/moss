@@ -181,20 +181,31 @@ function goToAnIcLink(options) {
 
 function goToAPreviousLink(options) {
   var level = (options||{}).level || 0;
+  var firstChild = (options||{}).firstChild || false;
   var link = getNthAncestor(level);
-  openLink(linkBefore(link));
+  openLink(
+    firstChild ? firstChildLinkOf(linkBefore(link)) : linkBefore(link)
+  );
 }
 
 function goToASelectedLink(options) {
   var level = (options||{}).level || 0;
   var link = getNthAncestor(level);
-  openLink(link);
+  var firstChild = (options||{}).firstChild || false;
+
+  openLink(
+    firstChild ? firstChildLinkOf(link) : link
+  );
 }
 
 function goToANextLink(options) {
   var level = (options||{}).level || 0;
   var link = getNthAncestor(level);
-  openLink(linkAfter(link));
+  var firstChild = (options||{}).firstChild || false;
+
+  openLink(
+    firstChild ? firstChildLinkOf(linkAfter(link)) : linkAfter(link)
+  );
 }
 
 function goToChild(options) {
