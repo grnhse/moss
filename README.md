@@ -88,7 +88,6 @@ Every paragraph has its own fragment identifier, so if you navigate to a particu
 | f | Go to current link (no-op) |
 | shift-[a/s/d/f] | Go to first child of given link |
 ||
-| shift-[key] | Go to first child of [link] |
 | z | Go to link after current link's great grandparent |
 | x | Go to link after current link's grandparent |
 | c | Go to link after current link's parent |
