@@ -328,17 +328,18 @@ var shortcutMovements = {
   'k': call(goUp).with({ cycle: false, collapse: false }),
   'l': openParagraph,
 
-  'n': openParagraph,
+  '[': goBfsBack,
+  ']': goBfsForward,
 
-  'space': goBfsForward,
-  'shift-space': goBfsBack,
+  'space': call(goDfsForward).with({ skipChildren: true }),
+  'shift-space': call(goDfsBackward).with({ skipChildren: true }),
   'return': burrow,
   'shift-return': unburrow,
   'command-return': call(burrow).with({ newTab: true }),
   'ctrl-return': call(burrow).with({ newTab: true }),
   'command-shift-return': call(unburrow).with({ newTab: true }),
   'tab': goDfsForward,
-  'shift-tab': goDfsBack,
+  'shift-tab': goDfsBackward,
   'escape': goToRoot,
   'backspace': unburrow,
 
@@ -515,7 +516,7 @@ function goDfsForward(options) {
   );
 }
 
-function goDfsBack(options) {
+function goDfsBackward(options) {
   var newTab = (options||{}).newTab;
   var skipChildren = (options||{}).skipChildren;
 
@@ -1199,7 +1200,7 @@ window.addEventListener('wheel', function(e) {
   if (e.metaKey || e.altKey || e.ctrlKey) {
     e.preventDefault();
     if (e.deltaY > 10) {
-      goDfsBack();
+      goDfsBackward();
     } else if (e.deltaY < -10) {
       goDfsForward();
     }

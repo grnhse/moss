@@ -106,7 +106,7 @@ function goDfsForward(options) {
   );
 }
 
-function goDfsBack(options) {
+function goDfsBackward(options) {
   var newTab = (options||{}).newTab;
   var skipChildren = (options||{}).skipChildren;
 
