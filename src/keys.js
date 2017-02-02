@@ -61,14 +61,14 @@ var keyNames = {
 }
 
 var shortcutMovements = {
-  'down': call(goDown).with({ cycle: false, collapse: false }),
-  'up': call(goUp).with({ cycle: false, collapse: false }),
+  'down': call(goDown).with({ cycle: true, collapse: false }),
+  'up': call(goUp).with({ cycle: false, collapse: true }),
   'right': openParagraph,
   'left': closeParagraph,
 
   'h': closeParagraph,
-  'j': call(goDown).with({ cycle: false, collapse: false }),
-  'k': call(goUp).with({ cycle: false, collapse: false }),
+  'j': call(goDown).with({ cycle: true, collapse: false }),
+  'k': call(goUp).with({ cycle: false, collapse: true }),
   'l': openParagraph,
 
   '[': goBfsBack,
