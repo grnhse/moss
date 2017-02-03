@@ -10,7 +10,8 @@ function SectionElementTree(paragraphNode, level) {
       paragraph.appendChild(element);
     });
 
-    paragraph.appendChild(document.createElement('br'));
+    // paragraph.appendChild(document.createElement('br'));
+    paragraph.appendChild(document.createTextNode(' '));
   });
 
   paragraphNode.children.forEach(function(childParagraphNode) {
