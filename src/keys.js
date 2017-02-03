@@ -64,14 +64,14 @@ var keyNames = {
 var shortcutMovements = {
   'down': call(goDown).with({ cycle: true, collapse: false }),
   'up': call(goUp).with({ cycle: false, collapse: true }),
-  'right': openParagraph,
+  'right': call(openParagraph).with({ skipIc: true }),
   'left': closeParagraph,
 
   'h': closeParagraph,
   'j': call(goDown).with({ cycle: true, collapse: false }),
   'k': call(goUp).with({ cycle: false, collapse: true }),
-  'l': openParagraph,
-  ';': goToBottom,
+  'l': call(openParagraph).with({ skipIc: false }),
+  ';': call(openParagraph).with({ skipIc: true }),
 
   '[': goBfsBack,
   ']': goBfsForward,

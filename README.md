@@ -36,11 +36,11 @@ Every paragraph has its own fragment identifier, so if you navigate to a particu
 
 | Key  | Action |
 | ---- | ------ |
+| left, h | Close paragraph |
 | down, j | Go down, cycling if at bottom |
 | up, k | Go up, collapsing if at top |
-| right, l | Open paragraph |
-| left, h | Close paragraph |
-| ; | Go to bottom of current paragraph |
+| right, l | Open paragraph and go to first child |
+| ; | Open paragraph and go to IC |
 ||
 | \ | Open new tab to root |
 | ' | Duplicate current tab |

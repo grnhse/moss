@@ -52,9 +52,11 @@ function closeParagraph() {
   }
 }
 
-function openParagraph() {
+function openParagraph(options) {
+  var skipIc = (options || {}).skipIc || true;
+
   setFragmentToHashOfLink(
-    linkAfter(firstChildLinkOf(currentLink())) ||
+    (skipIc ? linkAfter(firstChildLinkOf(currentLink())) : null) ||
     firstChildLinkOf(currentLink()) ||
     linkAfter(currentLink()) ||
     currentLink()
