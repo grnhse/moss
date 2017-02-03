@@ -263,8 +263,9 @@ var keyNames = {
   75: 'k',
   74: 'j',
   76: 'l',
-
   186: ';',
+
+  220: '\\',
   222: '\'',
 
   85: 'u',
@@ -326,6 +327,7 @@ var shortcutMovements = {
   'j': call(goDown).with({ cycle: true, collapse: false }),
   'k': call(goUp).with({ cycle: false, collapse: true }),
   'l': openParagraph,
+  ';': goToBottom,
 
   '[': goBfsBack,
   ']': goBfsForward,
@@ -342,8 +344,8 @@ var shortcutMovements = {
   'escape': goToRoot,
   'backspace': unburrow,
 
-  '\'': openTabToRoot,
-  ';': duplicateTab,
+  '\'': duplicateTab,
+  '\\': openTabToRoot,
 
   'y': goToParentsParent,
   'u': goToParentsIc,
@@ -710,7 +712,10 @@ function goToParentsParent() {
 }
 
 function goToParentsIc() {
-  setFragmentToHashOfLink(icLinkOf(parentLinkOf(currentLink())));
+  setFragmentToHashOfLink(
+    icLinkOf(parentLinkOf(currentLink())) ||
+    icLinkOf(currentLink())
+  );
 }
 
 function goToTop() {

@@ -280,7 +280,10 @@ function goToParentsParent() {
 }
 
 function goToParentsIc() {
-  setFragmentToHashOfLink(icLinkOf(parentLinkOf(currentLink())));
+  setFragmentToHashOfLink(
+    icLinkOf(parentLinkOf(currentLink())) ||
+    icLinkOf(currentLink())
+  );
 }
 
 function goToTop() {

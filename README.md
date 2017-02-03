@@ -40,9 +40,10 @@ Every paragraph has its own fragment identifier, so if you navigate to a particu
 | up, k | Go up, collapsing if at top |
 | right, l | Open paragraph |
 | left, h | Close paragraph |
+| ; | Go to bottom of current paragraph |
 ||
-| ' | Open new tab to root |
-| ; | Duplicate current tab |
+| \ | Open new tab to root |
+| ' | Duplicate current tab |
 ||
 | n | IC of current paragraph |
 | m | First parent link of current paragraph |
