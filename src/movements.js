@@ -53,10 +53,9 @@ function closeParagraph() {
 }
 
 function openParagraph(options) {
-  var skipIc = (options || {}).skipIc || true;
+  var skipIc = (options || {}).skipIc || false;
 
   setFragmentToHashOfLink(
-    (skipIc ? linkAfter(firstChildLinkOf(currentLink())) : null) ||
     firstChildLinkOf(currentLink()) ||
     linkAfter(currentLink()) ||
     currentLink()
@@ -255,7 +254,6 @@ function burrow(options) {
     openInNewTab(currentLink().href)
   } else {
     var nextLink =
-      linkAfter(firstChildLinkOf(currentLink())) ||
       firstChildLinkOf(currentLink()) ||
       linkAfter(currentLink());
 
