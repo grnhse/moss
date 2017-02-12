@@ -18,7 +18,7 @@ Moss is a Javascript framework for creating explanation trees, interactive webpa
   - [Running the Moss linter](#running-the-moss-linter)
 - [Acknowledgements](#acknowledgements)
 
-## How to use a Moss website ##
+## How to use a Moss explanation tree website ##
 
 The page initializes to a paragraph.
 
