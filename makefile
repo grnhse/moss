@@ -1,4 +1,9 @@
-all: assets/moss.js assets/moss.css docs/data.txt docs/index.html docs/moss.js docs/moss.css
+all: assets/moss.js \
+	assets/moss.css \
+	docs/index.html \
+	docs/data.txt \
+	docs/moss.js \
+	docs/moss.css
 
 assets:
 	mkdir assets
@@ -16,7 +21,7 @@ docs/data.txt: build_docs
 
 docs/index.txt: build_docs
 
-docs/moss.js: build_docs
+docs/moss.js:	build_docs
 
 docs/moss.css: build_docs
 
@@ -26,4 +31,5 @@ build_docs:
 	cd docs && \
 	moss build && \
 	cp assets/* . && \
-	rm -rf assets
+	rm -f docs.html && \
+	rm -r assets
