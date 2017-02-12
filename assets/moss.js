@@ -259,15 +259,18 @@ var keyNames = {
   39: 'right',
   38: 'up',
   40: 'down',
+
+  71: 'g',
   72: 'h',
   75: 'k',
   74: 'j',
   76: 'l',
   186: ';',
-
-  220: '\\',
   222: '\'',
 
+  220: '\\',
+
+  89: 'y',
   85: 'u',
   73: 'i',
   79: 'o',
@@ -288,25 +291,31 @@ var keyNames = {
   190: '.',
   191: '/',
 
+  192: '`',
+
   49: '1',
   50: '2',
   51: '3',
   52: '4',
+  53: '5',
 
   81: 'q',
   87: 'w',
   69: 'e',
   82: 'r',
+  84: 't',
 
   65: 'a',
   83: 's',
   68: 'd',
   70: 'f',
+  71: 'g',
 
   90: 'z',
   88: 'x',
   67: 'c',
   86: 'v',
+  66: 'b',
 
   55: '7',
   56: '8',
@@ -318,19 +327,10 @@ var keyNames = {
 }
 
 var shortcutMovements = {
-  'down': call(goDown).with({ cycle: true, collapse: false }),
-  'up': call(goUp).with({ cycle: false, collapse: true }),
-  'right': call(openParagraph).with({ skipIc: false }),
-  'left': closeParagraph,
-
-  'h': closeParagraph,
-  'j': call(goDown).with({ cycle: true, collapse: false }),
-  'k': call(goUp).with({ cycle: false, collapse: true }),
-  'l': call(openParagraph).with({ skipIc: false }),
-  ';': call(openParagraph).with({ skipIc: false }),
-
-  '[': goBfsBack,
-  ']': goBfsForward,
+  'left': call(goLeft).with({ cycle: true, collapse: false }),
+  'right': call(goRight).with({ cycle: true, collapse: false }),
+  'up': closeParagraph,
+  'down': call(openParagraph).with({ skipIc: false }),
 
   'space': call(goDfsForward).with({ skipChildren: true }),
   'shift-space': call(goDfsBackward).with({ skipChildren: true }),
@@ -344,14 +344,25 @@ var shortcutMovements = {
   'escape': goToRoot,
   'backspace': unburrow,
 
-  '\'': duplicateTab,
-  '\\': openTabToRoot,
+  'alt-[': goBfsBack,
+  'alt-]': goBfsForward,
 
-  'y': goToParentsParent,
-  'u': goToParentsIc,
-  'i': unburrow,
-  'o': goToTop,
-  'p': goToBottom,
+  '\\': duplicateTab,
+
+  'y': call(goToLinkInParent).with({ number: 0 }),
+  'u': call(goToLinkInParent).with({ number: 1 }),
+  'i': call(goToLinkInParent).with({ number: 2 }),
+  'o': call(goToLinkInParent).with({ number: 3 }),
+  'p': call(goToLinkInParent).with({ number: 4 }),
+  '[': call(goToLinkInParent).with({ number: 5 }),
+  ']': call(goToLinkInParent).with({ number: 6 }),
+
+  'h': call(goToSibling).with({ number: 0 }),
+  'j': call(goToSibling).with({ number: 1 }),
+  'k': call(goToSibling).with({ number: 2 }),
+  'l': call(goToSibling).with({ number: 3 }),
+  ';': call(goToSibling).with({ number: 4 }),
+  '\'': call(goToSibling).with({ number: 5 }),
 
   'n': call(goToChild).with({ number: 0 }),
   'm': call(goToChild).with({ number: 1 }),
@@ -359,24 +370,51 @@ var shortcutMovements = {
   '.': call(goToChild).with({ number: 3 }),
   '/': call(goToChild).with({ number: 4 }),
 
-  '1': call(goToAnIcLink).with({ level: 3 }),
-  '2': call(goToAnIcLink).with({ level: 2 }),
-  '3': call(goToAnIcLink).with({ level: 1 }),
-  '4': call(goToAnIcLink).with({ level: 0 }),
+  'shift-y': call(goToLinkInParent).with({ number: 0, firstChild: true }),
+  'shift-u': call(goToLinkInParent).with({ number: 1, firstChild: true }),
+  'shift-i': call(goToLinkInParent).with({ number: 2, firstChild: true }),
+  'shift-o': call(goToLinkInParent).with({ number: 3, firstChild: true }),
+  'shift-p': call(goToLinkInParent).with({ number: 4, firstChild: true }),
+  'shift-[': call(goToLinkInParent).with({ number: 5, firstChild: true }),
+  'shift-]': call(goToLinkInParent).with({ number: 6, firstChild: true }),
 
-  'q': call(goToAPreviousLink).with({ level: 3 }),
-  'w': call(goToAPreviousLink).with({ level: 2 }),
-  'e': call(goToAPreviousLink).with({ level: 1 }),
-  'r': call(goToAPreviousLink).with({ level: 0 }),
-  'a': call(goToASelectedLink).with({ level: 3 }),
-  's': call(goToASelectedLink).with({ level: 2 }),
-  'd': call(goToASelectedLink).with({ level: 1 }),
-  'f': call(goToASelectedLink).with({ level: 0 }),
+  'shift-h': call(goToSibling).with({ number: 0, firstChild: true }),
+  'shift-j': call(goToSibling).with({ number: 1, firstChild: true }),
+  'shift-k': call(goToSibling).with({ number: 2, firstChild: true }),
+  'shift-l': call(goToSibling).with({ number: 3, firstChild: true }),
+  'shift-;': call(goToSibling).with({ number: 4, firstChild: true }),
+  'shift-\'': call(goToSibling).with({ number: 5, firstChild: true }),
 
-  'z': call(goToANextLink).with({ level: 3 }),
-  'x': call(goToANextLink).with({ level: 2 }),
-  'c': call(goToANextLink).with({ level: 1 }),
-  'v': call(goToANextLink).with({ level: 0 }),
+  'shift-n': call(goToChild).with({ number: 0, firstChild: true }),
+  'shift-m': call(goToChild).with({ number: 1, firstChild: true }),
+  'shift-,': call(goToChild).with({ number: 2, firstChild: true }),
+  'shift-.': call(goToChild).with({ number: 3, firstChild: true }),
+  'shift-/': call(goToChild).with({ number: 4, firstChild: true }),
+
+
+  '1': call(goToAnIcLink).with({ level: 4 }),
+  '2': call(goToAnIcLink).with({ level: 3 }),
+  '3': call(goToAnIcLink).with({ level: 2 }),
+  '4': call(goToAnIcLink).with({ level: 1 }),
+  '5': call(goToAnIcLink).with({ level: 0 }),
+
+  'q': call(goToAPreviousLink).with({ level: 4 }),
+  'w': call(goToAPreviousLink).with({ level: 3 }),
+  'e': call(goToAPreviousLink).with({ level: 2 }),
+  'r': call(goToAPreviousLink).with({ level: 1 }),
+  't': call(goToAPreviousLink).with({ level: 0 }),
+
+  'a': call(goToASelectedLink).with({ level: 4 }),
+  's': call(goToASelectedLink).with({ level: 3 }),
+  'd': call(goToASelectedLink).with({ level: 2 }),
+  'f': call(goToASelectedLink).with({ level: 1 }),
+  'g': call(goToASelectedLink).with({ level: 0 }),
+
+  'z': call(goToANextLink).with({ level: 4 }),
+  'x': call(goToANextLink).with({ level: 3 }),
+  'c': call(goToANextLink).with({ level: 2 }),
+  'v': call(goToANextLink).with({ level: 1 }),
+  'b': call(goToANextLink).with({ level: 0 }),
 
   'shift-q': call(goToAPreviousLink).with({ level: 3, firstChild: true }),
   'shift-w': call(goToAPreviousLink).with({ level: 2, firstChild: true }),
@@ -451,7 +489,7 @@ function openInNewTab(url) {
   );
 }
 
-function goUp(options) {
+function goLeft(options) {
   var collapse = (options||{}).collapse || false;
   var cycle = (options||{}).cycle || false;
 
@@ -464,7 +502,7 @@ function goUp(options) {
   setFragmentToHashOfLink(nextLink);
 }
 
-function goDown(options) {
+function goRight(options) {
   var collapse = (options||{}).collapse || false;
   var cycle = (options||{}).cycle || false;
 
@@ -641,22 +679,48 @@ function goToANextLink(options) {
   );
 }
 
-function goToChild(options) {
+function goToLinkInParent(options) {
   var number = (options||{}).number || 0;
-  var link = firstChildLinkOf(currentLink()) || currentLink();
+  var firstChild = (options||{}).firstChild || false;
+
+  var link = icLinkOf(parentLinkOf(currentLink()));
+
   for (var i = 0; i < number; i++) {
     link = linkAfter(link) || link;
   }
-  openLink(link || currentLink());
+
+  openLink(
+    firstChild ? firstChildLinkOf(link) : link
+  );
+}
+
+function goToChild(options) {
+  var number = (options||{}).number || 0;
+  var firstChild = (options||{}).firstChild || false;
+  var link = firstChildLinkOf(currentLink()) || currentLink();
+
+  for (var i = 0; i < number; i++) {
+    link = linkAfter(link) || link;
+  }
+
+  openLink(
+    firstChild ? firstChildLinkOf(linkAfter(link)) : linkAfter(link)
+  );
 }
 
 function goToSibling(options) {
   var number = (options||{}).number || 0;
+  var firstChild = (options||{}).firstChild || false;
   var link = icLinkOf(currentLink());
+
   for (var i = 0; i < number; i++) {
     link = linkAfter(link) || link;
   }
-  openLink(link || icLinkOf(currentLink()));
+
+  openLink(
+    (firstChild ? firstChildLinkOf(link) : link) ||
+      icLinkOf(currentLink())
+  );
 }
 
 function scrollTo(options) {
@@ -686,7 +750,6 @@ function burrow(options) {
     openInNewTab(currentLink().href)
   } else {
     var nextLink =
-      linkAfter(firstChildLinkOf(currentLink())) ||
       firstChildLinkOf(currentLink()) ||
       linkAfter(currentLink());
 
@@ -719,11 +782,7 @@ function goToParentsIc() {
   );
 }
 
-function goToTop() {
-  setFragmentToHashOfLink(icLinkOf(currentLink()));
-}
-
-function goToTopOrCollapse() {
+function goToIcOrParent() {
   if (isIcLink(currentLink())) {
     setFragmentToHashOfLink(parentLinkOf(currentLink()));
   } else {
@@ -731,7 +790,19 @@ function goToTopOrCollapse() {
   }
 }
 
-function goToBottom() {
+function goToIc() {
+  setFragmentToHashOfLink(icLinkOf(currentLink()));
+}
+
+function goToIcOrCollapse() {
+  if (isIcLink(currentLink())) {
+    setFragmentToHashOfLink(parentLinkOf(currentLink()));
+  } else {
+    setFragmentToHashOfLink(icLinkOf(currentLink()));
+  }
+}
+
+function goToEnd() {
   setFragmentToHashOfLink(lastSiblingOf(currentLink()));
 }
 

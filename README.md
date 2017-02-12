@@ -36,25 +36,15 @@ Every paragraph has its own fragment identifier, so if you navigate to a particu
 
 | Key  | Action |
 | ---- | ------ |
-| left, h | Close paragraph |
-| down, j | Go down, cycling if at bottom |
-| up, k | Go up, collapsing if at top |
-| right, l | Open paragraph and go to first child |
-| ; | Open paragraph and go to IC |
-||
-| \ | Open new tab to root |
-| ' | Duplicate current tab |
-||
-| n | IC of current paragraph |
-| m | First parent link of current paragraph |
-| , | second parent link of current paragraph |
-| . | third parent link of current paragraph |
-| / | fourth parent link of current paragraph |
+| left | Go left in links of paragaph |
+| right |  Go left in links of paragaph |
+| down | Open child of link |
+| up | Go up, closing paragraph if at top |
 ||
 | tab | Depth-first search forward |
 | shift-tab | Depth-first search backward |
-| space | Exit depth first search forward |
-| shift-space | Exit depth first search backward |
+| space | Unwind first search forward |
+| shift-space | Unwind first search backward |
 | return | Burrow, open links |
 | shift-return | Go to parent |
 | backspace | Go to parent |
@@ -63,14 +53,31 @@ Every paragraph has its own fragment identifier, so if you navigate to a particu
 | ctrl-return | Burrow with new tab |
 | command-shift-return | Go to parent with new tab |
 ||
-| y | Go to parent's parent |
-| u | Go to parent's IC |
-| i | Go to parent |
-| o | Go to top of current paragraph |
-| p | Go to bottom of current paragraph |
+| alt-[ | Breath first search forward |
+| alt-] | Breath first search backwards |
 ||
-| [ | Breath first search forward |
-| ] | Breath first search backwards |
+| \ | Duplicate tab |
+||
+| y | Go to first link of parent paragraph |
+| u | Go to second link of parent paragraph |
+| i | Go to third link of parent paragraph |
+| o | Go to fourth link of parent paragraph |
+| p | Go to fifth link of parent paragraph |
+| [ | Go to sixth link of parent paragraph |
+| ] | Go to seventh link of parent paragraph |
+||
+| h | Go to first link of current paragraph |
+| j | Go to second link of current paragraph |
+| k | Go to third link of current paragraph |
+| l | Go to fourth link of current paragraph |
+| ; | Go to fifth link of current paragraph |
+| ' | Go to fifth link of current paragraph |
+||
+| n | Go to first link of current parapgrah |
+| m | Go to second link of current paragraph |
+| , | Go to third link of current paragraph |
+| . | Go to fourth link of current paragraph |
+| / | Go to fifth link of current paragraph |
 ||
 | 1 | Go to IC of current link's great-grandparent |
 | 2 | Go to IC of current link's grandparent |
@@ -81,19 +88,21 @@ Every paragraph has its own fragment identifier, so if you navigate to a particu
 | w | Go to link before current link's grandparent |
 | e | Go to link before current link's parent |
 | r | Go to link before current link |
-| shift-[q/w/e/r] | Go to first child of given link |
+| r | Go to link before current link |
 ||
 | a | Go to current link's great grandparent |
 | s | Go to current link's grandparent |
 | d | Go to current link's parent |
 | f | Go to current link (no-op) |
-| shift-[a/s/d/f] | Go to first child of given link |
+| f | Go to current link (no-op) |
 ||
 | z | Go to link after current link's great grandparent |
 | x | Go to link after current link's grandparent |
 | c | Go to link after current link's parent |
 | v | Go to link after current link |
-| shift-[z/x/c/v] | Go to first child of given link |
+| v | Go to link after current link |
+||
+| shift-[key] | Go to first child of given link |
 ||
 | 7 | Scroll to top of page |
 | 8 | Scroll to first third of page |
@@ -223,4 +232,4 @@ Run the tests by opening `moss/spec/index.html` in your browser.
 
 ## Acknowledgements ##
 
-Moss was vastly improved by the code changes suggested by Tharsan Bhuvanendran, Aaron Gibralter, Bradley Griffith, Mike O'Neil, Dana Pieluszczak, and Rob Rosenbaum, the infrastructure support of Elena Washington, and the participation of the Greenhouse team.
+Moss was vastly improved by the suggestions of Tharsan Bhuvanendran, Aaron Gibralter, Bradley Griffith, Mark McDonald, Mike O'Neil, Dana Pieluszczak, and Rob Rosenbaum, the infrastructure support of Elena Washington, and the participation of the Greenhouse team.

@@ -19,7 +19,7 @@ function openInNewTab(url) {
   );
 }
 
-function goUp(options) {
+function goLeft(options) {
   var collapse = (options||{}).collapse || false;
   var cycle = (options||{}).cycle || false;
 
@@ -32,7 +32,7 @@ function goUp(options) {
   setFragmentToHashOfLink(nextLink);
 }
 
-function goDown(options) {
+function goRight(options) {
   var collapse = (options||{}).collapse || false;
   var cycle = (options||{}).cycle || false;
 
@@ -209,22 +209,48 @@ function goToANextLink(options) {
   );
 }
 
-function goToChild(options) {
+function goToLinkInParent(options) {
   var number = (options||{}).number || 0;
-  var link = firstChildLinkOf(currentLink()) || currentLink();
+  var firstChild = (options||{}).firstChild || false;
+
+  var link = icLinkOf(parentLinkOf(currentLink()));
+
   for (var i = 0; i < number; i++) {
     link = linkAfter(link) || link;
   }
-  openLink(link || currentLink());
+
+  openLink(
+    firstChild ? firstChildLinkOf(link) : link
+  );
+}
+
+function goToChild(options) {
+  var number = (options||{}).number || 0;
+  var firstChild = (options||{}).firstChild || false;
+  var link = firstChildLinkOf(currentLink()) || currentLink();
+
+  for (var i = 0; i < number; i++) {
+    link = linkAfter(link) || link;
+  }
+
+  openLink(
+    firstChild ? firstChildLinkOf(linkAfter(link)) : linkAfter(link)
+  );
 }
 
 function goToSibling(options) {
   var number = (options||{}).number || 0;
+  var firstChild = (options||{}).firstChild || false;
   var link = icLinkOf(currentLink());
+
   for (var i = 0; i < number; i++) {
     link = linkAfter(link) || link;
   }
-  openLink(link || icLinkOf(currentLink()));
+
+  openLink(
+    (firstChild ? firstChildLinkOf(link) : link) ||
+      icLinkOf(currentLink())
+  );
 }
 
 function scrollTo(options) {
@@ -286,11 +312,7 @@ function goToParentsIc() {
   );
 }
 
-function goToTop() {
-  setFragmentToHashOfLink(icLinkOf(currentLink()));
-}
-
-function goToTopOrCollapse() {
+function goToIcOrParent() {
   if (isIcLink(currentLink())) {
     setFragmentToHashOfLink(parentLinkOf(currentLink()));
   } else {
@@ -298,7 +320,19 @@ function goToTopOrCollapse() {
   }
 }
 
-function goToBottom() {
+function goToIc() {
+  setFragmentToHashOfLink(icLinkOf(currentLink()));
+}
+
+function goToIcOrCollapse() {
+  if (isIcLink(currentLink())) {
+    setFragmentToHashOfLink(parentLinkOf(currentLink()));
+  } else {
+    setFragmentToHashOfLink(icLinkOf(currentLink()));
+  }
+}
+
+function goToEnd() {
   setFragmentToHashOfLink(lastSiblingOf(currentLink()));
 }
 
