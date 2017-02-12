@@ -1,0 +1,56 @@
+#_moss {
+  padding-top: 25px;
+}
+
+#_moss > section:first-child {
+  padding-top: 5px;
+}
+
+#_moss > section {
+  padding-top: 5px;
+}
+
+#_moss p {
+  padding-bottom: 20px;
+  font-size: 32px;
+  width: 550px;
+  margin: auto;
+}
+
+#_moss a {
+  text-decoration: none;
+  color: black;
+}
+
+#_moss a:hover {
+  text-decoration: underline;
+}
+
+#_moss .moss-alias-link:hover {
+  color: #4078c0;
+}
+
+#_moss .moss-url-link {
+  word-break: break-all;
+}
+
+#_moss .moss-url-link:hover {
+  color: #4078c0;
+}
+
+#_moss .moss-selected-link.moss-alias-link {
+  color: #4078c0;
+}
+
+#_moss .moss-selected-link.moss-url-link {
+  color: #4078c0;
+}
+
+#_moss .moss-selected-link {
+  text-decoration: underline;
+  text-shadow: .6px 0px 0px black;
+}
+
+a:focus {
+  outline:0;
+}
