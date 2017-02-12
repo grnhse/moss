@@ -48,7 +48,7 @@
 
 #_moss .moss-selected-link {
   text-decoration: underline;
-  text-shadow: .6px 0px 0px black;
+  /*text-shadow: .6px 0px 0px black;*/
 }
 
 a:focus {
