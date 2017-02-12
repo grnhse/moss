@@ -28,9 +28,9 @@ The first link of each paragraph is called the 'IC' or independent clause link, 
 
 Click a parent link to open its child paragraph. The open paragraphs form a path, similar to a directory structure.
 
-Some links are blue, these are alias links and URL links. Clicking an alias link will navigate to a different point in the tree. Clicking a URL link will open that URL.
+Some links are blue, these are alias links and URL links. Clicking an alias link will navigate to a different point in the tree. Clicking a URL link will open that URL in a new tab.
 
-Every paragraph has its own fragment identifier, so if you navigate to a particular path and share your URL, another user can be directed to the same path you are viewing. Every link has a unique fragment id -- for this reason, alias links must occur in unique clauses because these are used as fragment identifiers.
+Every paragraph has its own fragment identifier, so if you navigate to a particular path and share your URL, another user can be directed to the same path you are viewing. Every link has a unique fragment id -- (for this reason, alias links must occur in unique clauses because these are used as fragment identifiers, and there can only be one alias link per clause.)
 
 #### Keyboard Shortcuts ####
 
@@ -103,7 +103,7 @@ Every paragraph has its own fragment identifier, so if you navigate to a particu
 | v | Go to link after current link's parent |
 | b | Go to link after current link |
 ||
-| shift-[key] | Go to first child of link for [key] |
+| shift-[key] | Go to first child of link given by [key] |
 ||
 | 7 | Scroll to top of page |
 | 8 | Scroll to first third of page |
