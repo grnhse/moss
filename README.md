@@ -24,7 +24,7 @@ The page initializes to a paragraph.
 
 The paragraph contains black links.
 
-The first link of each paragraph is called the 'ic' link, the other black links are called 'parent links.'
+The first link of each paragraph is called the 'IC' or independent clause link, the other black links are called 'parent links.'
 
 Click a parent link to open its child paragraph. The open paragraphs form a path, similar to a directory structure.
 
