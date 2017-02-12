@@ -79,30 +79,31 @@ Every paragraph has its own fragment identifier, so if you navigate to a particu
 | . | Go to fourth link of current paragraph |
 | / | Go to fifth link of current paragraph |
 ||
-| 1 | Go to IC of current link's great-grandparent |
-| 2 | Go to IC of current link's grandparent |
-| 3 | Go to IC of current link's parent |
-| 4 | Go to IC of current link |
+| 1 | Go to IC of current link's great-great-grandparent |
+| 2 | Go to IC of current link's great-grandparent |
+| 3 | Go to IC of current link's grandparent |
+| 4 | Go to IC of current link's parent |
+| 5 | Go to IC of current link |
 ||
-| q | Go to link before current link's great grandparent |
-| w | Go to link before current link's grandparent |
-| e | Go to link before current link's parent |
-| r | Go to link before current link |
-| r | Go to link before current link |
+| q | Go to link before current link's great-great-grandparent |
+| w | Go to link before current link's great grandparent |
+| e | Go to link before current link's grandparent |
+| r | Go to link before current link's parent |
+| t | Go to link before current link |
 ||
-| a | Go to current link's great grandparent |
-| s | Go to current link's grandparent |
-| d | Go to current link's parent |
-| f | Go to current link (no-op) |
-| f | Go to current link (no-op) |
+| a | Go to current link's great-great-grandparent |
+| s | Go to current link's great-grandparent |
+| d | Go to current link's grandparent |
+| f | Go to current link's parent |
+| g | Go to current link (no-op) |
 ||
-| z | Go to link after current link's great grandparent |
-| x | Go to link after current link's grandparent |
-| c | Go to link after current link's parent |
-| v | Go to link after current link |
-| v | Go to link after current link |
+| z | Go to link after current link's great-great-grandparent |
+| x | Go to link after current link's great-grandparent |
+| c | Go to link after current link's grandparent |
+| v | Go to link after current link's parent |
+| b | Go to link after current link |
 ||
-| shift-[key] | Go to first child of given link |
+| shift-[key] | Go to first child of link for [key] |
 ||
 | 7 | Scroll to top of page |
 | 8 | Scroll to first third of page |

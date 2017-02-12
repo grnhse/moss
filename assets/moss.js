@@ -391,7 +391,6 @@ var shortcutMovements = {
   'shift-.': call(goToChild).with({ number: 3, firstChild: true }),
   'shift-/': call(goToChild).with({ number: 4, firstChild: true }),
 
-
   '1': call(goToAnIcLink).with({ level: 4 }),
   '2': call(goToAnIcLink).with({ level: 3 }),
   '3': call(goToAnIcLink).with({ level: 2 }),
