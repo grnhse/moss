@@ -147,9 +147,11 @@ Each file should contain a series of double newline seperated paragraphs.
 
 Paragraphs contain a series of newline seperated lines.
 
-The "IC" or independent clause of a paragraph is its first delimited clause (ie one ending in [.,:;?!]).
+The "IC" or independent clause of a paragraph is its first delimited clause (ie one ending in clause-terminating punctuation like `.,:;?!`).
 
-Every paragraph should have one parent, an earlier paragraph which contains a reference to that paragraph's IC. If there are multiple references to an IC, the closest one becomes the parent, and others will become alias references.
+Every paragraph should have one parent, an earlier paragraph which contains a reference to that paragraph's IC. Parent references do not have to be delimited, they can occur anywhere in the parent paragraph that isn't already a link, and multiple parent links can occur in the same clause.
+
+If there are multiple references to an IC in different parent paragraphs, the closest one becomes the parent, and others will become alias references.
 
 For example:
 
@@ -170,7 +172,7 @@ Urls beginning in http(s) will become linkified and behave like alias links exce
 
 ### The Moss content directory structure ###
 
-Text files will be concatinated in a depth-first search, so references should be structured so that the first paragraph of each file has its parent reference in an earlier paragraph of that file or a file at a higher level in the tree, so that the parser will have visited the parent before the child.
+Text files will be concatinated in a depth-first traversal, so references should be structured so that each paragraph has its parent in an earlier paragraph of that file or a file at a higher level in the tree, so that the parser will have visited the parent before the child.
 
 Running `moss build` from your project directory will generate an `assets` directory based on the files in your `content` directory, which is deployable with a static assets server. It will also create a preview asset called `your_project_name.html` in the project directory which you can view locally.
 
