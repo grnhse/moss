@@ -14,6 +14,7 @@ Moss is a Javascript framework for creating explanation trees, interactive webpa
   - [Watching for changes](#watching-for-changes)
   - [Building assets manually](#building-assets-manually)
   - [Using debug information](#using-debug-information)
+  - [Deploying with Github pages and Travis](#deploying-with-github-pages-and-travis)
   - [Running the Moss specs](#running-the-moss-specs)
   - [Running the Moss linter](#running-the-moss-linter)
 - [Acknowledgements](#acknowledgements)
@@ -228,6 +229,27 @@ The above will generate a simple stand-alone website, but you can also put Moss 
 ### Using debug information ###
 
 You can use the concatinated html file in your project directory to get useful information to help you debug your content files. For example, the program will print an 'orphan list' of all the paragraphs that never got subsumed by a parent reference. It will also log other useful errors and warnings.
+
+### Deploying with Github pages and Travis ###
+
+Follow these instructions for setting up Github pages and Travis CI generally: https://github.com/steveklabnik/automatically_update_github_pages_with_travis_example
+
+For an example of a .travis.yml file for a Moss project, see:
+```
+env:
+  global:
+    secure: [Your generated value]
+install:
+- git clone https://github.com/grnhse/moss.git
+- cd moss
+- make
+- cd ..
+script:
+- /bin/bash -x ./moss/script/moss build moss/assets
+- /bin/bash -x deploy.sh
+```
+
+(For an example `deploy.sh` script see the instructions at the link above.)
 
 ### Running the Tests ###
 
