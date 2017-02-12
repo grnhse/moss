@@ -43,15 +43,15 @@ Every paragraph has its own fragment identifier, so if you navigate to a particu
 ||
 | tab | Depth-first search forward |
 | shift-tab | Depth-first search backward |
-| space | Unwind first search forward |
-| shift-space | Unwind first search backward |
+| space | Unwind depth first search forward |
+| shift-space | Unwind depth first search backward |
 | return | Burrow, open links |
 | shift-return | Go to parent |
+| command-shift-return | Go to parent with new tab |
 | backspace | Go to parent |
 | escape | Go to root |
 | command-return | Burrow with new tab |
 | ctrl-return | Burrow with new tab |
-| command-shift-return | Go to parent with new tab |
 ||
 | alt-[ | Breath first search forward |
 | alt-] | Breath first search backwards |
