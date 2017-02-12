@@ -36,10 +36,10 @@ Every paragraph has its own fragment identifier, so if you navigate to a particu
 
 | Key  | Action |
 | ---- | ------ |
-| left | Go left in links of paragaph |
-| right |  Go left in links of paragaph |
-| down | Open child of link |
-| up | Go up, closing paragraph if at top |
+| left | Go left in links of paragaph, cycling |
+| right |  Go left in links of paragaph, cycling |
+| down | Open child paragraph of link |
+| up | Close paragraph and go to parent link |
 ||
 | tab | Depth-first search forward |
 | shift-tab | Depth-first search backward |
