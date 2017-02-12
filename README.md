@@ -234,7 +234,7 @@ You can use the concatinated html file in your project directory to get useful i
 
 Follow these instructions for setting up Github pages and Travis CI generally: https://github.com/steveklabnik/automatically_update_github_pages_with_travis_example
 
-For an example of a .travis.yml file for a Moss project, see:
+For an example of a `.travis.yml` file for a Moss project, see:
 ```
 env:
   global:
