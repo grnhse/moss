@@ -3,12 +3,13 @@ function show(linkElement) {
   deselectAllLinks();
   showPathTo(linkElement);
   showPreviewIfParentLink(linkElement);
+  linkElement.classList.add('moss-selected-link');
   window.scrollTo(0, mossContainer().scrollHeight);
 }
 
 function showPathTo(linkElement) {
   showSectionElementOfLink(linkElement);
-  boldLink(linkElement);
+  underlineLink(linkElement);
 
   if (isInRootSection(linkElement)) {
     return;
@@ -26,6 +27,7 @@ function hideAllSectionElements() {
 function deselectAllLinks() {
   forEach(document.getElementsByTagName("a"), function(linkElement) {
     linkElement.classList.remove('moss-selected-link');
+    linkElement.classList.remove('moss-open-link');
   });
 }
 
@@ -53,6 +55,6 @@ function showPreviewIfParentLink(linkElement) {
   }
 }
 
-function boldLink(linkElement) {
-  linkElement.classList.add('moss-selected-link');
+function underlineLink(linkElement) {
+  linkElement.classList.add('moss-open-link');
 }

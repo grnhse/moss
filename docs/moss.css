@@ -46,9 +46,12 @@
   color: #4078c0;
 }
 
-#_moss .moss-selected-link {
+#_moss .moss-open-link {
   text-decoration: underline;
-  /*text-shadow: .6px 0px 0px black;*/
+}
+
+#_moss .moss-selected-link {
+  text-shadow: .6px 0px 0px black;
 }
 
 a:focus {
