@@ -234,7 +234,7 @@ function goToChild(options) {
   }
 
   openLink(
-    firstChild ? firstChildLinkOf(linkAfter(link)) : linkAfter(link)
+    firstChild ? firstChildLinkOf(link) : link
   );
 }
 
@@ -249,7 +249,7 @@ function goToSibling(options) {
 
   openLink(
     (firstChild ? firstChildLinkOf(link) : link) ||
-      icLinkOf(currentLink())
+    icLinkOf(currentLink())
   );
 }
 
