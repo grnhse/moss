@@ -442,7 +442,7 @@ var shortcutMovements = {
   '=': scrollDown,
 }
 
-document.onkeydown = function(e) {
+window.addEventListener('keydown', function(e) {
   var modifiers =
     (e.metaKey ? 'command-' : '') +
     (e.altKey ? 'alt-' : '') +
@@ -458,7 +458,22 @@ document.onkeydown = function(e) {
   }
 
   (shortcutMovements[shortcutName]||function(){})();
-}
+});
+
+window.addEventListener('keydown', function(e) {
+  if (e.altKey){
+    forEach(document.getElementsByTagName("a"), function(linkElement) {
+      linkElement.classList.add('moss-open-link');
+    });
+  }
+});
+
+window.addEventListener('keyup', function(e) {
+  var ALT_KEY_CODE = 18;
+  if (e.keyCode === ALT_KEY_CODE){
+    show(currentLink(), { scroll: false });
+  }
+});
 
 function call(fcn) {
   return {
@@ -1319,24 +1334,38 @@ window.addEventListener('wheel', function(e) {
     }
   }
 });
-function show(linkElement) {
-  hideAllSectionElements();
-  deselectAllLinks();
+function show(linkElement, options) {
+  var options = options || {};
+
+  resetPage();
   showPathTo(linkElement);
-  showPreviewIfParentLink(linkElement);
-  linkElement.classList.add('moss-selected-link');
-  window.scrollTo(0, mossContainer().scrollHeight);
+
+  if (options.scroll !== false) {
+    window.scrollTo(0, mossContainer().scrollHeight);
+  }
 }
 
 function showPathTo(linkElement) {
-  showSectionElementOfLink(linkElement);
-  underlineLink(linkElement);
+  showPathToRecursive(linkElement);
 
-  if (isInRootSection(linkElement)) {
-    return;
-  } else {
-    showPathTo(parentLinkOf(linkElement));
+  showPreviewIfParentLink(linkElement);
+  linkElement.classList.add('moss-selected-link');
+
+  function showPathToRecursive(linkElement) {
+    showSectionElementOfLink(linkElement);
+    underlineLink(linkElement);
+
+    if (isInRootSection(linkElement)) {
+      return;
+    } else {
+      showPathToRecursive(parentLinkOf(linkElement));
+    }
   }
+}
+
+function resetPage() {
+  hideAllSectionElements();
+  deselectAllLinks();
 }
 
 function hideAllSectionElements() {

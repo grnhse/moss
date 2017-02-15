@@ -1,21 +1,35 @@
-function show(linkElement) {
-  hideAllSectionElements();
-  deselectAllLinks();
+function show(linkElement, options) {
+  var options = options || {};
+
+  resetPage();
   showPathTo(linkElement);
-  showPreviewIfParentLink(linkElement);
-  linkElement.classList.add('moss-selected-link');
-  window.scrollTo(0, mossContainer().scrollHeight);
+
+  if (options.scroll !== false) {
+    window.scrollTo(0, mossContainer().scrollHeight);
+  }
 }
 
 function showPathTo(linkElement) {
-  showSectionElementOfLink(linkElement);
-  underlineLink(linkElement);
+  showPathToRecursive(linkElement);
 
-  if (isInRootSection(linkElement)) {
-    return;
-  } else {
-    showPathTo(parentLinkOf(linkElement));
+  showPreviewIfParentLink(linkElement);
+  linkElement.classList.add('moss-selected-link');
+
+  function showPathToRecursive(linkElement) {
+    showSectionElementOfLink(linkElement);
+    underlineLink(linkElement);
+
+    if (isInRootSection(linkElement)) {
+      return;
+    } else {
+      showPathToRecursive(parentLinkOf(linkElement));
+    }
   }
+}
+
+function resetPage() {
+  hideAllSectionElements();
+  deselectAllLinks();
 }
 
 function hideAllSectionElements() {
