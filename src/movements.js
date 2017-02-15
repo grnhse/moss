@@ -213,7 +213,8 @@ function goToLinkInParent(options) {
   var number = (options||{}).number || 0;
   var firstChild = (options||{}).firstChild || false;
 
-  var link = icLinkOf(parentLinkOf(currentLink()));
+  var link = icLinkOf(parentLinkOf(currentLink())) ||
+    icLinkOf(currentLink());
 
   for (var i = 0; i < number; i++) {
     link = linkAfter(link) || link;
