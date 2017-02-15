@@ -56,6 +56,8 @@ Every paragraph has its own fragment identifier, so if you navigate to a particu
 | command-return | Burrow with new tab |
 | ctrl-return | Burrow with new tab |
 ||
+| alt | See links |
+||
 | alt-[ | Breath first search forward |
 | alt-] | Breath first search backwards |
 ||
