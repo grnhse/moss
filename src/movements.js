@@ -181,77 +181,27 @@ function goToAnIcLink(options) {
 }
 
 function goToAPreviousLink(options) {
-  var level = (options||{}).level || 0;
-  var firstChild = (options||{}).firstChild || false;
-  var link = getNthAncestor(level);
-  openLink(
-    firstChild ? firstChildLinkOf(linkBefore(link)) : linkBefore(link)
-  );
+  openLink(getAPreviousLink(options));
 }
 
 function goToASelectedLink(options) {
-  var level = (options||{}).level || 0;
-  var link = getNthAncestor(level);
-  var firstChild = (options||{}).firstChild || false;
-
-  openLink(
-    firstChild ? firstChildLinkOf(link) : link
-  );
+  openLink(getASelectedLink(options));
 }
 
 function goToANextLink(options) {
-  var level = (options||{}).level || 0;
-  var link = getNthAncestor(level);
-  var firstChild = (options||{}).firstChild || false;
-
-  openLink(
-    firstChild ? firstChildLinkOf(linkAfter(link)) : linkAfter(link)
-  );
+  openLink(getANextLink(options));
 }
 
 function goToLinkInParent(options) {
-  var number = (options||{}).number || 0;
-  var firstChild = (options||{}).firstChild || false;
-
-  var link = icLinkOf(parentLinkOf(currentLink())) ||
-    icLinkOf(currentLink());
-
-  for (var i = 0; i < number; i++) {
-    link = linkAfter(link) || link;
-  }
-
-  openLink(
-    firstChild ? firstChildLinkOf(link) : link
-  );
+  openLink(getALinkInParent(options));
 }
 
 function goToChild(options) {
-  var number = (options||{}).number || 0;
-  var firstChild = (options||{}).firstChild || false;
-  var link = firstChildLinkOf(currentLink()) || currentLink();
-
-  for (var i = 0; i < number; i++) {
-    link = linkAfter(link) || link;
-  }
-
-  openLink(
-    firstChild ? firstChildLinkOf(link) : link
-  );
+  openLink(getALinkInChild(options));
 }
 
 function goToSibling(options) {
-  var number = (options||{}).number || 0;
-  var firstChild = (options||{}).firstChild || false;
-  var link = icLinkOf(currentLink());
-
-  for (var i = 0; i < number; i++) {
-    link = linkAfter(link) || link;
-  }
-
-  openLink(
-    (firstChild ? firstChildLinkOf(link) : link) ||
-    icLinkOf(currentLink())
-  );
+  openLink(getASiblingLink(options));
 }
 
 function scrollTo(options) {
