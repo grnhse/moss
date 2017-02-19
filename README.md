@@ -39,6 +39,8 @@ Every paragraph has its own fragment identifier, so if you navigate to a particu
 
 | Key  | Action |
 | ---- | ------ |
+| alt | See links and avaliable shortcuts |
+||
 | left | Go left in links of paragaph, cycling |
 | right |  Go left in links of paragaph, cycling |
 | down | Open child paragraph of link |
@@ -48,20 +50,13 @@ Every paragraph has its own fragment identifier, so if you navigate to a particu
 | shift-tab | Depth-first search backward |
 | space | Unwind depth first search forward |
 | shift-space | Unwind depth first search backward |
-| return | Burrow, open links |
+| return | Open child, open links |
 | shift-return | Go to parent |
-| command-shift-return | Go to parent with new tab |
 | backspace | Go to parent |
 | escape | Go to root |
-| command-return | Burrow with new tab |
-| ctrl-return | Burrow with new tab |
 ||
-| alt | See links |
-||
-| alt-[ | Breath first search forward |
-| alt-] | Breath first search backwards |
-||
-| \ | Duplicate tab |
+| alt-left | Breath-first-search backwards |
+| alt-right | Breath-first-search forwards |
 ||
 | y | Go to first link of parent paragraph |
 | u | Go to second link of parent paragraph |
