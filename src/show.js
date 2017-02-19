@@ -3,6 +3,7 @@ function show(linkElement, options) {
 
   resetPage();
   showPathTo(linkElement);
+  removeShortcutOverlay();
 
   if (options.scroll !== false) {
     window.scrollTo(0, mossContainer().scrollHeight);

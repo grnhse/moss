@@ -70,6 +70,7 @@ function AliasLinkElement(token, level) {
   linkElement.id = htmlIdFor(token.clause);
   linkElement.dataset.displayHash = displayHashFor(capitalize(token.clause));
   linkElement.href = '#' + displayHashFor(capitalize(token.text));
+  linkElement.dataset.targetDisplayHash = displayHashFor(capitalize(token.text));
   linkElement.dataset.type = 'alias';
   linkElement.dataset.level = level;
   linkElement.classList.add('moss-alias-link');

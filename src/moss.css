@@ -21,6 +21,12 @@
   font-weight: 400;
 }
 
+#_moss .keys-helper {
+  font-variant: small-caps;
+  font-size: 18px;
+  text-decoration: none;
+}
+
 #_moss a {
   text-decoration: none;
   color: black;
@@ -35,7 +41,8 @@
 }
 
 #_moss .moss-url-link {
-  word-break: break-all;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 #_moss .moss-url-link:hover {
@@ -55,7 +62,7 @@
 }
 
 #_moss .moss-selected-link {
-  text-shadow: .6px 0px 0px black;
+  text-shadow: .8px 0px 0px black;
 }
 
 a:focus {
