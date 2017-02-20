@@ -104,7 +104,7 @@ function parentLinkOf(linkElement) {
 function getNthAncestor(level) {
   var link = currentLink();
   for (var i = 0; i < level; i++) {
-    link = parentLinkOf(link) || link;
+    link = parentLinkOf(link);
   }
   return link;
 }
@@ -337,7 +337,7 @@ function getALinkInParent(options) {
     icLinkOf(currentLink());
 
   for (var i = 0; i < number; i++) {
-    link = linkAfter(link) || link;
+    link = linkAfter(link);
   }
 
   return firstChild ? firstChildLinkOf(link) : link;
@@ -346,10 +346,10 @@ function getALinkInParent(options) {
 function getALinkInChild(options) {
   var number = (options||{}).number || 0;
   var firstChild = (options||{}).firstChild || false;
-  var link = firstChildLinkOf(currentLink()) || currentLink();
+  var link = firstChildLinkOf(currentLink());
 
   for (var i = 0; i < number; i++) {
-    link = linkAfter(link) || link;
+    link = linkAfter(link);
   }
 
   return firstChild ? firstChildLinkOf(link) : link
@@ -361,9 +361,8 @@ function getASiblingLink(options) {
   var link = icLinkOf(currentLink());
 
   for (var i = 0; i < number; i++) {
-    link = linkAfter(link) || link;
+    link = linkAfter(link);
   }
 
-  return (firstChild ? firstChildLinkOf(link) : link) ||
-    icLinkOf(currentLink());
+  return firstChild ? firstChildLinkOf(link) : link;
 }

@@ -87,8 +87,8 @@ var shortcutRelationships = {
   'backspace': upwardLink,
   'escape': rootLink,
 
-  'alt-left': goBfsBack,
-  'alt-right': goBfsForward,
+  'shift-left': getBfsPrevious,
+  'shift-right': getBfsNext,
 
   'y': call(getALinkInParent).with({ number: 0 }),
   'u': call(getALinkInParent).with({ number: 1 }),

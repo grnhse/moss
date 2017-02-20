@@ -55,8 +55,8 @@ Every paragraph has its own fragment identifier, so if you navigate to a particu
 | backspace | Go to parent |
 | escape | Go to root |
 ||
-| alt-left | Breath-first-search backwards |
-| alt-right | Breath-first-search forwards |
+| shift-left | Breath-first-search backwards |
+| shift-right | Breath-first-search forwards |
 ||
 | y | Go to first link of parent paragraph |
 | u | Go to second link of parent paragraph |
