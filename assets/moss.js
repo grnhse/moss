@@ -643,7 +643,7 @@ function openTabToRoot() {
   );
 }
 window.addEventListener('keydown', function(e) {
-  if (e.altKey){
+  if (e.altKey && document.getElementsByClassName('keys-helper').length === 0){
     forEach(document.getElementsByClassName("moss-open-link"), function(linkElement) {
       linkElement.classList.add('moss-selected-link');
     });
@@ -678,26 +678,6 @@ function addShortcutOverlay() {
   }
 
   paintOverlay(lettersById);
-}
-
-function addLeftHandShortcuts(lettersById) {
-  lettersById[currentLink().id] = ['g'];
-
-  // ['1', '2', '3', '4', '5'].forEach(function(key, index){
-  //   push(lettersById, getAnIcLink({ level: 4 - index }).id, key);
-  // });
-
-  // ['q', 'w', 'e', 'r', 't'].forEach(function(key, index){
-  //   push(lettersById, getAPreviousLink({ level: 4 - index }).id, key);
-  // });
-
-  // ['a', 's', 'd', 'f', 'g'].forEach(function(key, index){
-  //   push(lettersById, getASelectedLink({ level: 4 - index }).id, key);
-  // });
-
-  // ['z', 'x', 'c', 'v', 'b'].forEach(function(key, index){
-  //   push(lettersById, getANextLink({ level: 4 - index }).id, key);
-  // });
 }
 
 function paintOverlay(lettersById) {
