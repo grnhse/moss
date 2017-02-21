@@ -308,9 +308,14 @@ function getAnIcLink(options) {
 function getAPreviousLink(options) {
   var level = (options||{}).level || 0;
   var firstChild = (options||{}).firstChild || false;
-  var link = getNthAncestor(level);
 
-  return firstChild ? firstChildLinkOf(linkBefore(link)) : linkBefore(link);
+  var link = getNthAncestor(level);
+  link = linkBefore(link) || lastSiblingOf(link);
+  if (firstChild) {
+    link = firstChildLinkOf(link)
+  }
+
+  return link;
 }
 
 function getASelectedLink(options) {
@@ -323,18 +328,22 @@ function getASelectedLink(options) {
 
 function getANextLink(options) {
   var level = (options||{}).level || 0;
-  var link = getNthAncestor(level);
   var firstChild = (options||{}).firstChild || false;
 
-  return firstChild ? firstChildLinkOf(linkAfter(link)) : linkAfter(link)
+  var link = getNthAncestor(level);
+  link = linkAfter(link) || icLinkOf(link);
+  if (firstChild) {
+    link = firstChildLinkOf(link);
+  }
+
+  return link;
 }
 
 function getALinkInParent(options) {
   var number = (options||{}).number || 0;
   var firstChild = (options||{}).firstChild || false;
 
-  var link = icLinkOf(parentLinkOf(currentLink())) ||
-    icLinkOf(currentLink());
+  var link = icLinkOf(parentLinkOf(currentLink()));
 
   for (var i = 0; i < number; i++) {
     link = linkAfter(link);

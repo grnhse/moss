@@ -36,7 +36,14 @@ function addLeftHandShortcuts(lettersById) {
 
 function paintOverlay(lettersById) {
   for (var id in lettersById) {
-    var letters = lettersById[id];
+    var letters = lettersById[id].sort(function(a, b){
+      if (a.length !== b.length) {
+        return a.length - b.length;
+      } else {
+        return a > b ? 1 : -1;
+      }
+    });
+
     var link = document.getElementById(id);
 
     var prettyKeysList = ' (' + letters.join(' ') + ')';

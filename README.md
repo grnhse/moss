@@ -41,8 +41,8 @@ Every paragraph has its own fragment identifier, so if you navigate to a particu
 | ---- | ------ |
 | alt | See links and avaliable shortcuts |
 ||
-| left | Go left in links of paragaph, cycling |
-| right |  Go left in links of paragaph, cycling |
+| left | Go left in links of paragaph, wrapping |
+| right |  Go left in links of paragaph, wrapping |
 | down | Open child paragraph of link |
 | up | Close paragraph and go to parent link |
 ||
@@ -85,11 +85,11 @@ Every paragraph has its own fragment identifier, so if you navigate to a particu
 | 4 | Go to IC of current link's parent |
 | 5 | Go to IC of current link |
 ||
-| q | Go to link before current link's great-great-grandparent |
-| w | Go to link before current link's great grandparent |
-| e | Go to link before current link's grandparent |
-| r | Go to link before current link's parent |
-| t | Go to link before current link |
+| q | Go to link before current link's great-great-grandparent (wrapping) |
+| w | Go to link before current link's great grandparent (wrapping) |
+| e | Go to link before current link's grandparent (wrapping) |
+| r | Go to link before current link's parent (wrapping) |
+| t | Go to link before current link (wrapping) |
 ||
 | a | Go to current link's great-great-grandparent |
 | s | Go to current link's great-grandparent |
@@ -97,11 +97,11 @@ Every paragraph has its own fragment identifier, so if you navigate to a particu
 | f | Go to current link's parent |
 | g | Go to current link (no-op) |
 ||
-| z | Go to link after current link's great-great-grandparent |
-| x | Go to link after current link's great-grandparent |
-| c | Go to link after current link's grandparent |
-| v | Go to link after current link's parent |
-| b | Go to link after current link |
+| z | Go to link after current link's great-great-grandparent (wrapping) |
+| x | Go to link after current link's great-grandparent (wrapping) |
+| c | Go to link after current link's grandparent (wrapping) |
+| v | Go to link after current link's parent (wrapping) |
+| b | Go to link after current link (wrapping) |
 ||
 | shift-[key] | Go to first child of link given by [key] |
 ||
