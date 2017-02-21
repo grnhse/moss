@@ -207,28 +207,6 @@ window.addEventListener('keydown', function(e) {
   openLink(link, newTab);
 });
 
-window.addEventListener('keydown', function(e) {
-  if (e.altKey){
-    forEach(document.getElementsByClassName("moss-open-link"), function(linkElement) {
-      // linkElement.classList.add('moss-selected-link');
-    });
-
-    forEach(document.getElementsByTagName("a"), function(linkElement) {
-      // linkElement.classList.add('moss-open-link');
-    });
-
-    removeShortcutOverlay();
-    addShortcutOverlay();
-  }
-});
-
-window.addEventListener('keyup', function(e) {
-  var ALT_KEY_CODE = 18;
-  if (e.keyCode === ALT_KEY_CODE){
-    show(currentLink(), { scroll: false });
-  }
-});
-
 function call(fcn) {
   return {
     with: function (){
