@@ -644,15 +644,6 @@ function openTabToRoot() {
 }
 window.addEventListener('keydown', function(e) {
   if (e.altKey && document.getElementsByClassName('keys-helper').length === 0){
-    forEach(document.getElementsByClassName("moss-open-link"), function(linkElement) {
-      linkElement.classList.add('moss-selected-link');
-    });
-
-    forEach(document.getElementsByTagName("a"), function(linkElement) {
-      linkElement.classList.add('moss-open-link');
-    });
-
-    removeShortcutOverlay();
     addShortcutOverlay();
   }
 });
