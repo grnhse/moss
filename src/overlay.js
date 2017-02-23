@@ -39,7 +39,7 @@ function paintOverlay(lettersById) {
 
     var link = document.getElementById(id);
 
-    var prettyKeysList = ' (' + letters.join(' ') + ')';
+    var prettyKeysList = ' (' + letters.join(', ') + ')';
     var keysElement = document.createElement('span');
     keysElement.classList.add('keys-helper');
     keysElement.appendChild(document.createTextNode(prettyKeysList));
