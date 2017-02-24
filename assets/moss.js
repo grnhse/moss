@@ -685,8 +685,10 @@ function paintOverlay(lettersById) {
 
     var prettyKeysList = ' (' + letters.join(', ') + ')';
     var keysElement = document.createElement('span');
+    var innerSpan = document.createElement('span');
     keysElement.classList.add('keys-helper');
-    keysElement.appendChild(document.createTextNode(prettyKeysList));
+    innerSpan.appendChild(document.createTextNode(prettyKeysList));
+    keysElement.appendChild(innerSpan);
 
     link.parentNode.insertBefore(keysElement, link.nextSibling);
   }
