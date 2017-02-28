@@ -2,3 +2,4 @@ bower_components
 **/.DS_Store
 docs/assets
 docs/*.pid
+docs/docs.html
