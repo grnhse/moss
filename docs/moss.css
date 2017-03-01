@@ -11,10 +11,20 @@
 }
 
 #_moss p {
-  padding-bottom: 20px;
-  font-size: 32px;
-  width: 550px;
+  padding-bottom: 24px;
+  font-size: 25px;
+  width: 700px;
   margin: auto;
+
+  line-height: 1.3;
+  letter-spacing: -.003em;
+  font-weight: 400;
+}
+
+#_moss .keys-helper {
+  font-variant: small-caps;
+  font-size: 20px;
+  text-decoration: none;
 }
 
 #_moss a {
@@ -31,7 +41,8 @@
 }
 
 #_moss .moss-url-link {
-  word-break: break-all;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 #_moss .moss-url-link:hover {
@@ -51,7 +62,7 @@
 }
 
 #_moss .moss-selected-link {
-  text-shadow: .6px 0px 0px black;
+  text-shadow: .8px 0px 0px black;
 }
 
 a:focus {

@@ -326,109 +326,109 @@ var keyNames = {
   187: '='
 }
 
-var shortcutMovements = {
-  'left': call(goLeft).with({ cycle: true, collapse: false }),
-  'right': call(goRight).with({ cycle: true, collapse: false }),
-  'up': closeParagraph,
-  'down': call(openParagraph).with({ skipIc: false }),
+var shortcutRelationships = {
+  'left': leftwardLink,
+  'right': rightwardLink,
+  'up': upwardLink,
+  'down': downwardLink,
 
-  'space': call(goDfsForward).with({ skipChildren: true }),
-  'shift-space': call(goDfsBackward).with({ skipChildren: true }),
-  'return': burrow,
-  'shift-return': unburrow,
-  'command-return': call(burrow).with({ newTab: true }),
-  'ctrl-return': call(burrow).with({ newTab: true }),
-  'command-shift-return': call(unburrow).with({ newTab: true }),
-  'tab': goDfsForward,
-  'shift-tab': goDfsBackward,
-  'escape': goToRoot,
-  'backspace': unburrow,
+  'tab': getDfsNext,
+  'shift-tab': getDfsPrevious,
+  'space': getDfsNextSkipChildren,
+  'shift-space': getDfsPreviousSkipChildren,
+  'ctrl-tab': getBfsPrevious,
+  'ctrl-shift-tab': getBfsNext,
+  'return': downwardOrOpenLink,
+  'shift-return': upwardLink,
+  'backspace': upwardLink,
+  'escape': rootLink,
 
-  'alt-[': goBfsBack,
-  'alt-]': goBfsForward,
+  'shift-left': getBfsPrevious,
+  'shift-right': getBfsNext,
 
-  '\\': duplicateTab,
+  'y': call(getALinkInParent).with({ number: 0 }),
+  'u': call(getALinkInParent).with({ number: 1 }),
+  'i': call(getALinkInParent).with({ number: 2 }),
+  'o': call(getALinkInParent).with({ number: 3 }),
+  'p': call(getALinkInParent).with({ number: 4 }),
+  '[': call(getALinkInParent).with({ number: 5 }),
+  ']': call(getALinkInParent).with({ number: 6 }),
 
-  'y': call(goToLinkInParent).with({ number: 0 }),
-  'u': call(goToLinkInParent).with({ number: 1 }),
-  'i': call(goToLinkInParent).with({ number: 2 }),
-  'o': call(goToLinkInParent).with({ number: 3 }),
-  'p': call(goToLinkInParent).with({ number: 4 }),
-  '[': call(goToLinkInParent).with({ number: 5 }),
-  ']': call(goToLinkInParent).with({ number: 6 }),
+  'h': call(getASiblingLink).with({ number: 0 }),
+  'j': call(getASiblingLink).with({ number: 1 }),
+  'k': call(getASiblingLink).with({ number: 2 }),
+  'l': call(getASiblingLink).with({ number: 3 }),
+  ';': call(getASiblingLink).with({ number: 4 }),
+  '\'': call(getASiblingLink).with({ number: 5 }),
 
-  'h': call(goToSibling).with({ number: 0 }),
-  'j': call(goToSibling).with({ number: 1 }),
-  'k': call(goToSibling).with({ number: 2 }),
-  'l': call(goToSibling).with({ number: 3 }),
-  ';': call(goToSibling).with({ number: 4 }),
-  '\'': call(goToSibling).with({ number: 5 }),
+  'n': call(getALinkInChild).with({ number: 0 }),
+  'm': call(getALinkInChild).with({ number: 1 }),
+  ',': call(getALinkInChild).with({ number: 2 }),
+  '.': call(getALinkInChild).with({ number: 3 }),
+  '/': call(getALinkInChild).with({ number: 4 }),
 
-  'n': call(goToChild).with({ number: 0 }),
-  'm': call(goToChild).with({ number: 1 }),
-  ',': call(goToChild).with({ number: 2 }),
-  '.': call(goToChild).with({ number: 3 }),
-  '/': call(goToChild).with({ number: 4 }),
+  'shift-y': call(getALinkInParent).with({ number: 0, firstChild: true }),
+  'shift-u': call(getALinkInParent).with({ number: 1, firstChild: true }),
+  'shift-i': call(getALinkInParent).with({ number: 2, firstChild: true }),
+  'shift-o': call(getALinkInParent).with({ number: 3, firstChild: true }),
+  'shift-p': call(getALinkInParent).with({ number: 4, firstChild: true }),
+  'shift-[': call(getALinkInParent).with({ number: 5, firstChild: true }),
+  'shift-]': call(getALinkInParent).with({ number: 6, firstChild: true }),
 
-  'shift-y': call(goToLinkInParent).with({ number: 0, firstChild: true }),
-  'shift-u': call(goToLinkInParent).with({ number: 1, firstChild: true }),
-  'shift-i': call(goToLinkInParent).with({ number: 2, firstChild: true }),
-  'shift-o': call(goToLinkInParent).with({ number: 3, firstChild: true }),
-  'shift-p': call(goToLinkInParent).with({ number: 4, firstChild: true }),
-  'shift-[': call(goToLinkInParent).with({ number: 5, firstChild: true }),
-  'shift-]': call(goToLinkInParent).with({ number: 6, firstChild: true }),
+  'shift-h': call(getASiblingLink).with({ number: 0, firstChild: true }),
+  'shift-j': call(getASiblingLink).with({ number: 1, firstChild: true }),
+  'shift-k': call(getASiblingLink).with({ number: 2, firstChild: true }),
+  'shift-l': call(getASiblingLink).with({ number: 3, firstChild: true }),
+  'shift-;': call(getASiblingLink).with({ number: 4, firstChild: true }),
+  'shift-\'': call(getASiblingLink).with({ number: 5, firstChild: true }),
 
-  'shift-h': call(goToSibling).with({ number: 0, firstChild: true }),
-  'shift-j': call(goToSibling).with({ number: 1, firstChild: true }),
-  'shift-k': call(goToSibling).with({ number: 2, firstChild: true }),
-  'shift-l': call(goToSibling).with({ number: 3, firstChild: true }),
-  'shift-;': call(goToSibling).with({ number: 4, firstChild: true }),
-  'shift-\'': call(goToSibling).with({ number: 5, firstChild: true }),
+  'shift-n': call(getALinkInChild).with({ number: 0, firstChild: true }),
+  'shift-m': call(getALinkInChild).with({ number: 1, firstChild: true }),
+  'shift-,': call(getALinkInChild).with({ number: 2, firstChild: true }),
+  'shift-.': call(getALinkInChild).with({ number: 3, firstChild: true }),
+  'shift-/': call(getALinkInChild).with({ number: 4, firstChild: true }),
 
-  'shift-n': call(goToChild).with({ number: 0, firstChild: true }),
-  'shift-m': call(goToChild).with({ number: 1, firstChild: true }),
-  'shift-,': call(goToChild).with({ number: 2, firstChild: true }),
-  'shift-.': call(goToChild).with({ number: 3, firstChild: true }),
-  'shift-/': call(goToChild).with({ number: 4, firstChild: true }),
+  '1': call(getAnIcLink).with({ level: 4 }),
+  '2': call(getAnIcLink).with({ level: 3 }),
+  '3': call(getAnIcLink).with({ level: 2 }),
+  '4': call(getAnIcLink).with({ level: 1 }),
+  '5': call(getAnIcLink).with({ level: 0 }),
 
-  '1': call(goToAnIcLink).with({ level: 4 }),
-  '2': call(goToAnIcLink).with({ level: 3 }),
-  '3': call(goToAnIcLink).with({ level: 2 }),
-  '4': call(goToAnIcLink).with({ level: 1 }),
-  '5': call(goToAnIcLink).with({ level: 0 }),
+  'q': call(getAPreviousLink).with({ level: 4 }),
+  'w': call(getAPreviousLink).with({ level: 3 }),
+  'e': call(getAPreviousLink).with({ level: 2 }),
+  'r': call(getAPreviousLink).with({ level: 1 }),
+  't': call(getAPreviousLink).with({ level: 0 }),
 
-  'q': call(goToAPreviousLink).with({ level: 4 }),
-  'w': call(goToAPreviousLink).with({ level: 3 }),
-  'e': call(goToAPreviousLink).with({ level: 2 }),
-  'r': call(goToAPreviousLink).with({ level: 1 }),
-  't': call(goToAPreviousLink).with({ level: 0 }),
+  'a': call(getASelectedLink).with({ level: 4 }),
+  's': call(getASelectedLink).with({ level: 3 }),
+  'd': call(getASelectedLink).with({ level: 2 }),
+  'f': call(getASelectedLink).with({ level: 1 }),
+  'g': call(getASelectedLink).with({ level: 0 }),
 
-  'a': call(goToASelectedLink).with({ level: 4 }),
-  's': call(goToASelectedLink).with({ level: 3 }),
-  'd': call(goToASelectedLink).with({ level: 2 }),
-  'f': call(goToASelectedLink).with({ level: 1 }),
-  'g': call(goToASelectedLink).with({ level: 0 }),
+  'z': call(getANextLink).with({ level: 4 }),
+  'x': call(getANextLink).with({ level: 3 }),
+  'c': call(getANextLink).with({ level: 2 }),
+  'v': call(getANextLink).with({ level: 1 }),
+  'b': call(getANextLink).with({ level: 0 }),
 
-  'z': call(goToANextLink).with({ level: 4 }),
-  'x': call(goToANextLink).with({ level: 3 }),
-  'c': call(goToANextLink).with({ level: 2 }),
-  'v': call(goToANextLink).with({ level: 1 }),
-  'b': call(goToANextLink).with({ level: 0 }),
+  'shift-q': call(getAPreviousLink).with({ level: 4, firstChild: true }),
+  'shift-w': call(getAPreviousLink).with({ level: 3, firstChild: true }),
+  'shift-e': call(getAPreviousLink).with({ level: 2, firstChild: true }),
+  'shift-r': call(getAPreviousLink).with({ level: 1, firstChild: true }),
+  'shift-t': call(getAPreviousLink).with({ level: 0, firstChild: true }),
 
-  'shift-q': call(goToAPreviousLink).with({ level: 3, firstChild: true }),
-  'shift-w': call(goToAPreviousLink).with({ level: 2, firstChild: true }),
-  'shift-e': call(goToAPreviousLink).with({ level: 1, firstChild: true }),
-  'shift-r': call(goToAPreviousLink).with({ level: 0, firstChild: true }),
+  'shift-a': call(getASelectedLink).with({ level: 4, firstChild: true }),
+  'shift-s': call(getASelectedLink).with({ level: 3, firstChild: true }),
+  'shift-d': call(getASelectedLink).with({ level: 2, firstChild: true }),
+  'shift-f': call(getASelectedLink).with({ level: 1, firstChild: true }),
+  'shift-g': call(getASelectedLink).with({ level: 0, firstChild: true }),
 
-  'shift-a': call(goToASelectedLink).with({ level: 3, firstChild: true }),
-  'shift-s': call(goToASelectedLink).with({ level: 2, firstChild: true }),
-  'shift-d': call(goToASelectedLink).with({ level: 1, firstChild: true }),
-  'shift-f': call(goToASelectedLink).with({ level: 0, firstChild: true }),
-
-  'shift-z': call(goToANextLink).with({ level: 3, firstChild: true }),
-  'shift-x': call(goToANextLink).with({ level: 2, firstChild: true }),
-  'shift-c': call(goToANextLink).with({ level: 1, firstChild: true }),
-  'shift-v': call(goToANextLink).with({ level: 0, firstChild: true }),
+  'shift-z': call(getANextLink).with({ level: 4, firstChild: true }),
+  'shift-x': call(getANextLink).with({ level: 3, firstChild: true }),
+  'shift-c': call(getANextLink).with({ level: 2, firstChild: true }),
+  'shift-v': call(getANextLink).with({ level: 1, firstChild: true }),
+  'shift-b': call(getANextLink).with({ level: 0, firstChild: true }),
 
   '7': call(scrollTo).with({ location: 0 }),
   '8': call(scrollTo).with({ location: 1 }),
@@ -439,7 +439,7 @@ var shortcutMovements = {
   '=': scrollDown,
 }
 
-document.onkeydown = function(e) {
+window.addEventListener('keydown', function(e) {
   var modifiers =
     (e.metaKey ? 'command-' : '') +
     (e.altKey ? 'alt-' : '') +
@@ -454,15 +454,21 @@ document.onkeydown = function(e) {
     e.preventDefault();
   }
 
-  (shortcutMovements[shortcutName]||function(){})();
-}
+  // var newTab = e.metaKey || e.ctrlKey;
+  var newTab = false;
+
+  var link = (shortcutRelationships[shortcutName]||function(){})() ||
+    currentLink();
+
+  openLink(link, newTab);
+});
 
 function call(fcn) {
   return {
     with: function (){
       var originalArguments = Array.prototype.slice.call(arguments);
       return function () {
-        fcn.apply(this, originalArguments);
+        return fcn.apply(this, originalArguments);
       }
     }
   }
@@ -488,238 +494,32 @@ function openInNewTab(url) {
   );
 }
 
-function goLeft(options) {
-  var collapse = (options||{}).collapse || false;
-  var cycle = (options||{}).cycle || false;
-
-  var nextLink =
-    linkBefore(currentLink()) ||
-    (collapse ? parentLinkOf(currentLink()) : null) ||
-    (collapse ? rootLink() : null) ||
-    (cycle ? lastSiblingOf(currentLink()) : null);
-
-  setFragmentToHashOfLink(nextLink);
-}
-
-function goRight(options) {
-  var collapse = (options||{}).collapse || false;
-  var cycle = (options||{}).cycle || false;
-
-  var nextLink =
-    linkAfter(currentLink()) ||
-    (collapse ? parentLinkOf(currentLink()) : null) ||
-    (cycle ? icLinkOf(currentLink()) : null);
-
-  setFragmentToHashOfLink(nextLink);
-}
-
-function closeParagraph() {
-  if (isInRootSection(currentLink())) {
-    setFragmentToHashOfLink(icLinkOfSection(rootSection()));
-  } else {
-    setFragmentToHashOfLink(parentLinkOf(currentLink()));
-  }
-}
-
-function openParagraph(options) {
-  var skipIc = (options || {}).skipIc || false;
-
-  setFragmentToHashOfLink(
-    firstChildLinkOf(currentLink()) ||
-    linkAfter(currentLink()) ||
-    currentLink()
-  );
-}
-
-function goToNextSubject() {
-  setFragmentToHashOfLink(
-    linkAfter(parentLinkOf(currentLink())) ||
-    parentLinkOf(currentLink()) ||
-    linkAfter(currentLink())
-  );
-}
-
-function goToPreviousSubject() {
-  setFragmentToHashOfLink(
-    linkBefore(parentLinkOf(currentLink())) ||
-    parentLinkOf(currentLink()) ||
-    linkBefore(currentLink())
-  );
-}
-
-function goDfsForward(options) {
-  var newTab = (options||{}).newTab;
-  var skipChildren = (options||{}).skipChildren;
-
-  if (isLastIcChildOfParagraph(currentLink())) {
-    return openLink(
-      icLinkOf(parentLinkOf(currentLink())),
-      newTab
-    );
-  }
-
-  if (isIcLink(currentLink())) {
-    return openLink(
-      nextCousinOf(currentLink()) ||
-      icLinkOf(parentLinkOf(currentLink())) ||
-      linkAfter(currentLink()),
-      newTab
-    );
-  }
-
-  openLink(
-    (!skipChildren ? linkAfter(firstChildLinkOf(currentLink())) : null) ||
-    (!skipChildren ? firstChildLinkOf(currentLink()) : null) ||
-    linkAfter(currentLink()) ||
-    icLinkOf(currentLink()),
-    newTab
-  );
-}
-
-function goDfsBackward(options) {
-  var newTab = (options||{}).newTab;
-  var skipChildren = (options||{}).skipChildren;
-
-  if (currentLink() === rootLink()) {
-    openLink(
-      (!skipChildren ? firstChildLinkOf(lastSiblingOf(rootLink())) : null) ||
-      lastSiblingOf(rootLink())
-    , newTab);
-  } else if (isIcLink(currentLink())) {
-    openLink(
-      (isLastChild(currentLink()) ? parentLinkOf(currentLink()): null) ||
-      firstChildLinkOf(lastSiblingOf(currentLink())) ||
-      lastSiblingOf(currentLink()),
-      newTab
-    );
-  } else if(isFirstChild(currentLink())) {
-    openLink(
-      parentLinkOf(currentLink()) ||
-      rootLink(),
-      newTab
-    );
-  } else {
-    openLink(
-      (!skipChildren ? firstChildLinkOf(linkBefore(currentLink())) : null) ||
-      (!skipChildren ? lastChildLinkOf(linkBefore(parentLinkOf(currentLink()))) : null) ||
-      (skipChildren ? linkBefore(currentLink()) : null) ||
-      linkBefore(parentLinkOf(currentLink())) ||
-      linkBefore(currentLink()),
-      newTab
-    );
-  }
-}
-
-function goBfsForward(options) {
-  var newTab = (options||{}).newTab;
-  var level = currentLink().dataset.level;
-  var levelArray = Array.prototype.slice.call(document.getElementsByClassName('level-' + level));
-  var nextLevelArray = Array.prototype.slice.call(document.getElementsByClassName('level-' + (Number(level) + 1)));
-  var index = levelArray.indexOf(currentLink());
-
-  openLink(
-    levelArray[index + 1] ||
-    nextLevelArray[0] ||
-    rootLink(),
-    newTab
-  );
-}
-
-function goBfsBack(options) {
-  var newTab = (options||{}).newTab;
-  var level = currentLink().dataset.level;
-  var levelArray = Array.prototype.slice.call(document.getElementsByClassName('level-' + level));
-  var levelCount = levelArray.length - 1;
-  var previousLevelArray = Array.prototype.slice.call(document.getElementsByClassName('level-' + (Number(level - 1))));
-  var previousLevelCount = previousLevelArray.length - 1;
-  var index = levelArray.indexOf(currentLink());
-
-  openLink(
-    levelArray[index - 1] ||
-    previousLevelArray[previousLevelCount] ||
-    deepestLink(),
-    newTab
-  );
-}
-
-
 function goToAnIcLink(options) {
-  var level = (options||{}).level || 0;
-  var link = getNthAncestor(level);
-  openLink(icLinkOf(link));
+  openLink(getAnIcLink(options));
 }
 
 function goToAPreviousLink(options) {
-  var level = (options||{}).level || 0;
-  var firstChild = (options||{}).firstChild || false;
-  var link = getNthAncestor(level);
-  openLink(
-    firstChild ? firstChildLinkOf(linkBefore(link)) : linkBefore(link)
-  );
+  openLink(getAPreviousLink(options));
 }
 
 function goToASelectedLink(options) {
-  var level = (options||{}).level || 0;
-  var link = getNthAncestor(level);
-  var firstChild = (options||{}).firstChild || false;
-
-  openLink(
-    firstChild ? firstChildLinkOf(link) : link
-  );
+  openLink(getASelectedLink(options));
 }
 
 function goToANextLink(options) {
-  var level = (options||{}).level || 0;
-  var link = getNthAncestor(level);
-  var firstChild = (options||{}).firstChild || false;
-
-  openLink(
-    firstChild ? firstChildLinkOf(linkAfter(link)) : linkAfter(link)
-  );
+  openLink(getANextLink(options));
 }
 
 function goToLinkInParent(options) {
-  var number = (options||{}).number || 0;
-  var firstChild = (options||{}).firstChild || false;
-
-  var link = icLinkOf(parentLinkOf(currentLink()));
-
-  for (var i = 0; i < number; i++) {
-    link = linkAfter(link) || link;
-  }
-
-  openLink(
-    firstChild ? firstChildLinkOf(link) : link
-  );
+  openLink(getALinkInParent(options));
 }
 
 function goToChild(options) {
-  var number = (options||{}).number || 0;
-  var firstChild = (options||{}).firstChild || false;
-  var link = firstChildLinkOf(currentLink()) || currentLink();
-
-  for (var i = 0; i < number; i++) {
-    link = linkAfter(link) || link;
-  }
-
-  openLink(
-    firstChild ? firstChildLinkOf(linkAfter(link)) : linkAfter(link)
-  );
+  openLink(getALinkInChild(options));
 }
 
 function goToSibling(options) {
-  var number = (options||{}).number || 0;
-  var firstChild = (options||{}).firstChild || false;
-  var link = icLinkOf(currentLink());
-
-  for (var i = 0; i < number; i++) {
-    link = linkAfter(link) || link;
-  }
-
-  openLink(
-    (firstChild ? firstChildLinkOf(link) : link) ||
-      icLinkOf(currentLink())
-  );
+  openLink(getASiblingLink(options));
 }
 
 function scrollTo(options) {
@@ -738,32 +538,6 @@ function scrollDown(options) {
 
 function goToRoot() {
   setFragmentToHashOfLink(rootLink());
-}
-
-function burrow(options) {
-  var newTab = (options||{}).newTab || false;
-
-  if (isAliasLink(currentLink())) {
-    window.location = currentLink().href;
-  } else if (isUrlLink(currentLink())) {
-    openInNewTab(currentLink().href)
-  } else {
-    var nextLink =
-      firstChildLinkOf(currentLink()) ||
-      linkAfter(currentLink());
-
-    openLink(nextLink, newTab);
-  }
-}
-
-function unburrow(options) {
-  var newTab = (options||{}).newTab || false;
-
-  var nextLink =
-    parentLinkOf(currentLink()) ||
-    icLinkOf(currentLink());
-
-  openLink(nextLink, newTab);
 }
 
 function goToParentsParent() {
@@ -867,6 +641,76 @@ function openTabToRoot() {
     window.location.href.split('#')[0],
     '_blank'
   );
+}
+window.addEventListener('keydown', function(e) {
+  if (e.altKey && document.getElementsByClassName('keys-helper').length === 0){
+    addShortcutOverlay();
+  }
+});
+
+window.addEventListener('keyup', function(e) {
+  var ALT_KEY_CODE = 18;
+  if (e.keyCode === ALT_KEY_CODE){
+    show(currentLink(), { scroll: false });
+  }
+});
+
+function addShortcutOverlay() {
+  var lettersById = {};
+
+  for (var key in shortcutRelationships) {
+    var relationship = shortcutRelationships[key];
+    var result = shortcutRelationships[key]();
+    var resultId = (shortcutRelationships[key]()||{}).id;
+
+    if (resultId) {
+      addToObject(lettersById, resultId, key);
+    }
+  }
+
+  paintOverlay(lettersById);
+}
+
+function paintOverlay(lettersById) {
+  for (var id in lettersById) {
+    var letters = lettersById[id].sort(function(a, b){
+      if (a.length !== b.length) {
+        return a.length - b.length;
+      } else {
+        return a > b ? 1 : -1;
+      }
+    });
+
+    var link = document.getElementById(id);
+
+    var prettyKeysList = ' (' + letters.join(', ') + ')';
+    var keysElement = document.createElement('span');
+    var innerSpan = document.createElement('span');
+    keysElement.classList.add('keys-helper');
+    innerSpan.appendChild(document.createTextNode(prettyKeysList));
+    keysElement.appendChild(innerSpan);
+
+    link.parentNode.insertBefore(keysElement, link.nextSibling);
+  }
+}
+
+function removeShortcutOverlay() {
+  var elements = Array.prototype.slice.call(document.getElementsByClassName("keys-helper"));
+  for (var i = 0; i < elements.length; i++) {
+    elements[i].parentNode.removeChild(elements[i]);
+  }
+}
+
+function addToObject(lettersById, id, key) {
+  pushOrCreate(lettersById, id, key);
+}
+
+function pushOrCreate(object, key, item) {
+  if (Array.isArray(object[key])) {
+    object[key].push(item);
+  } else {
+    object[key] = [item];
+  }
 }
 function parseClause(clause, currentIc, ics, callbacks) {
   var tokens = [];
@@ -1053,6 +897,27 @@ function isLastChild(linkElement) {
   return linkElement === lastSiblingOf(linkElement);
 }
 
+function leftwardLink() {
+  return linkBefore(currentLink()) ||
+    lastSiblingOf(currentLink());
+}
+
+function rightwardLink() {
+  return linkAfter(currentLink()) ||
+    icLinkOf(currentLink());
+}
+
+function upwardLink() {
+  return parentLinkOf(currentLink()) ||
+    icLinkOfSection(rootSection());
+}
+
+function downwardLink() {
+  return firstChildLinkOf(currentLink()) ||
+    linkAfter(currentLink()) ||
+    currentLink();
+}
+
 function firstChildLinkOf(linkElement) {
   if (linkElement === null){
     return null;
@@ -1090,7 +955,7 @@ function parentLinkOf(linkElement) {
 function getNthAncestor(level) {
   var link = currentLink();
   for (var i = 0; i < level; i++) {
-    link = parentLinkOf(link) || link;
+    link = parentLinkOf(link);
   }
   return link;
 }
@@ -1193,6 +1058,174 @@ function lastDescendantLinkOf(linkElement) {
 
   return lastDescendantLinkOf(lastChildLinkOf(linkElement));
 }
+
+function getDfsNext(options) {
+  var newTab = (options||{}).newTab;
+  var skipChildren = (options||{}).skipChildren;
+
+  if (isLastIcChildOfParagraph(currentLink())) {
+    return icLinkOf(parentLinkOf(currentLink()));
+  }
+
+  if (isIcLink(currentLink())) {
+    return nextCousinOf(currentLink()) ||
+      icLinkOf(parentLinkOf(currentLink())) ||
+      linkAfter(currentLink());
+  }
+
+  return (!skipChildren ? linkAfter(firstChildLinkOf(currentLink())) : null) ||
+    (!skipChildren ? firstChildLinkOf(currentLink()) : null) ||
+    linkAfter(currentLink()) ||
+    icLinkOf(currentLink())
+}
+
+function getDfsPrevious(options) {
+  var newTab = (options||{}).newTab;
+  var skipChildren = (options||{}).skipChildren;
+
+  if (currentLink() === rootLink()) {
+    return (!skipChildren ? firstChildLinkOf(lastSiblingOf(rootLink())) : null) ||
+      lastSiblingOf(rootLink());
+  } else if (isIcLink(currentLink())) {
+    return (isLastChild(currentLink()) ? parentLinkOf(currentLink()): null) ||
+      firstChildLinkOf(lastSiblingOf(currentLink())) ||
+      lastSiblingOf(currentLink());
+  } else if(isFirstChild(currentLink())) {
+      return parentLinkOf(currentLink()) ||
+      rootLink();
+  } else {
+    return (!skipChildren ? firstChildLinkOf(linkBefore(currentLink())) : null) ||
+      (!skipChildren ? lastChildLinkOf(linkBefore(parentLinkOf(currentLink()))) : null) ||
+      (skipChildren ? linkBefore(currentLink()) : null) ||
+      linkBefore(parentLinkOf(currentLink())) ||
+      linkBefore(currentLink());
+  }
+}
+
+function getDfsNextSkipChildren(){
+  return getDfsNext({ skipChildren: true });
+}
+
+function getDfsPreviousSkipChildren(){
+  return getDfsPrevious({ skipChildren: true });
+}
+
+function getBfsNext(options) {
+  var newTab = (options||{}).newTab;
+  var level = currentLink().dataset.level;
+  var levelArray = Array.prototype.slice.call(document.getElementsByClassName('level-' + level));
+  var nextLevelArray = Array.prototype.slice.call(document.getElementsByClassName('level-' + (Number(level) + 1)));
+  var index = levelArray.indexOf(currentLink());
+
+  return levelArray[index + 1] ||
+    nextLevelArray[0] ||
+    rootLink();
+}
+
+function getBfsPrevious(options) {
+  var newTab = (options||{}).newTab;
+  var level = currentLink().dataset.level;
+  var levelArray = Array.prototype.slice.call(document.getElementsByClassName('level-' + level));
+  var levelCount = levelArray.length - 1;
+  var previousLevelArray = Array.prototype.slice.call(document.getElementsByClassName('level-' + (Number(level - 1))));
+  var previousLevelCount = previousLevelArray.length - 1;
+  var index = levelArray.indexOf(currentLink());
+
+  return levelArray[index - 1] ||
+    previousLevelArray[previousLevelCount] ||
+    deepestLink();
+}
+
+function downwardOrOpenLink(options) {
+  var newTab = (options||{}).newTab || false;
+
+  if (isAliasLink(currentLink())) {
+    return linkWithDisplayHash(currentLink().dataset.targetDisplayHash);
+  } else if (isUrlLink(currentLink())) {
+    openInNewTab(currentLink().href);
+    return currentLink();
+  } else {
+    return firstChildLinkOf(currentLink()) ||
+      linkAfter(currentLink());
+  }
+}
+
+function getAnIcLink(options) {
+  var level = (options||{}).level || 0;
+  var link = getNthAncestor(level);
+  return icLinkOf(link);
+}
+
+function getAPreviousLink(options) {
+  var level = (options||{}).level || 0;
+  var firstChild = (options||{}).firstChild || false;
+
+  var link = getNthAncestor(level);
+  link = linkBefore(link) || lastSiblingOf(link);
+  if (firstChild) {
+    link = firstChildLinkOf(link)
+  }
+
+  return link;
+}
+
+function getASelectedLink(options) {
+  var level = (options||{}).level || 0;
+  var link = getNthAncestor(level);
+  var firstChild = (options||{}).firstChild || false;
+
+  return  firstChild ? firstChildLinkOf(link) : link
+}
+
+function getANextLink(options) {
+  var level = (options||{}).level || 0;
+  var firstChild = (options||{}).firstChild || false;
+
+  var link = getNthAncestor(level);
+  link = linkAfter(link) || icLinkOf(link);
+  if (firstChild) {
+    link = firstChildLinkOf(link);
+  }
+
+  return link;
+}
+
+function getALinkInParent(options) {
+  var number = (options||{}).number || 0;
+  var firstChild = (options||{}).firstChild || false;
+
+  var link = icLinkOf(parentLinkOf(currentLink()));
+
+  for (var i = 0; i < number; i++) {
+    link = linkAfter(link);
+  }
+
+  return firstChild ? firstChildLinkOf(link) : link;
+}
+
+function getALinkInChild(options) {
+  var number = (options||{}).number || 0;
+  var firstChild = (options||{}).firstChild || false;
+  var link = firstChildLinkOf(currentLink());
+
+  for (var i = 0; i < number; i++) {
+    link = linkAfter(link);
+  }
+
+  return firstChild ? firstChildLinkOf(link) : link
+}
+
+function getASiblingLink(options) {
+  var number = (options||{}).number || 0;
+  var firstChild = (options||{}).firstChild || false;
+  var link = icLinkOf(currentLink());
+
+  for (var i = 0; i < number; i++) {
+    link = linkAfter(link);
+  }
+
+  return firstChild ? firstChildLinkOf(link) : link;
+}
 function SectionElementTree(paragraphNode, level) {
   var section = document.createElement('section');
   var paragraph = document.createElement('p');
@@ -1265,6 +1298,7 @@ function AliasLinkElement(token, level) {
   linkElement.id = htmlIdFor(token.clause);
   linkElement.dataset.displayHash = displayHashFor(capitalize(token.clause));
   linkElement.href = '#' + displayHashFor(capitalize(token.text));
+  linkElement.dataset.targetDisplayHash = displayHashFor(capitalize(token.text));
   linkElement.dataset.type = 'alias';
   linkElement.dataset.level = level;
   linkElement.classList.add('moss-alias-link');
@@ -1315,23 +1349,39 @@ window.addEventListener('wheel', function(e) {
     }
   }
 });
-function show(linkElement) {
-  hideAllSectionElements();
-  deselectAllLinks();
+function show(linkElement, options) {
+  var options = options || {};
+
+  resetPage();
   showPathTo(linkElement);
-  showPreviewIfParentLink(linkElement);
-  window.scrollTo(0, mossContainer().scrollHeight);
+  removeShortcutOverlay();
+
+  if (options.scroll !== false) {
+    window.scrollTo(0, mossContainer().scrollHeight);
+  }
 }
 
 function showPathTo(linkElement) {
-  showSectionElementOfLink(linkElement);
-  boldLink(linkElement);
+  showPathToRecursive(linkElement);
 
-  if (isInRootSection(linkElement)) {
-    return;
-  } else {
-    showPathTo(parentLinkOf(linkElement));
+  showPreviewIfParentLink(linkElement);
+  linkElement.classList.add('moss-selected-link');
+
+  function showPathToRecursive(linkElement) {
+    showSectionElementOfLink(linkElement);
+    underlineLink(linkElement);
+
+    if (isInRootSection(linkElement)) {
+      return;
+    } else {
+      showPathToRecursive(parentLinkOf(linkElement));
+    }
   }
+}
+
+function resetPage() {
+  hideAllSectionElements();
+  deselectAllLinks();
 }
 
 function hideAllSectionElements() {
@@ -1343,6 +1393,7 @@ function hideAllSectionElements() {
 function deselectAllLinks() {
   forEach(document.getElementsByTagName("a"), function(linkElement) {
     linkElement.classList.remove('moss-selected-link');
+    linkElement.classList.remove('moss-open-link');
   });
 }
 
@@ -1370,8 +1421,8 @@ function showPreviewIfParentLink(linkElement) {
   }
 }
 
-function boldLink(linkElement) {
-  linkElement.classList.add('moss-selected-link');
+function underlineLink(linkElement) {
+  linkElement.classList.add('moss-open-link');
 }
 function splitOnDoubleNewline(dataString) {
   return dataString.trim().split(/\n\n+(?=.)/);
