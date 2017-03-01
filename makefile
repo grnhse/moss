@@ -20,7 +20,6 @@ docs/data.txt: $(shell find docs/content -type f -name '*.txt')
 	cd docs && \
 		moss build && \
 		cp assets/* . && \
-		rm -f docs.html && \
 		rm -r assets
 
 docs/moss.js: src/*.js
