@@ -5,12 +5,25 @@ function SectionElementTree(paragraphNode, level) {
   hideSectionElement(section);
 
   paragraphNode.lines.forEach(function(line) {
+    var parentElements = [paragraph];
+
     line.tokens.forEach(function(token) {
-      var element = linkConstructorForTokenType[token.type](token, level);
-      paragraph.appendChild(element);
+      if (token.type === 'open-italics'){
+        parentElements.unshift(document.createElement('I'));
+      } else if (token.type === 'close-italics') {
+        parentElements[1].appendChild(parentElements[0]);
+        parentElements.shift();
+      } else if (token.type === 'open-snippet') {
+        parentElements.unshift(document.createElement('CODE'));
+      } else if (token.type === 'close-snippet') {
+        parentElements[1].appendChild(parentElements[0]);
+        parentElements.shift();
+      } else {
+        var element = linkConstructorForTokenType[token.type](token, level);
+        parentElements[0].appendChild(element);
+      }
     });
 
-    // paragraph.appendChild(document.createElement('br'));
     paragraph.appendChild(document.createTextNode(' '));
   });
 

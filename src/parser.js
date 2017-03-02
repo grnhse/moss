@@ -10,7 +10,7 @@ function parseClause(clause, currentIc, ics, callbacks) {
       tokens.push(createTokenForMatch(match, currentIc, clause, tokens, callbacks));
       units.splice(0, matchEndIndex);
     } else {
-      tokens.push(createTokenForFirstUnit(units[0], clause, tokens));
+      tokens.push(createTokenForFirstUnit(units, tokens, clause));
       units.shift();
     }
   }
@@ -49,9 +49,18 @@ function createTokenForMatch(match, currentIc, clause, tokens, callbacks) {
   }
 }
 
-function createTokenForFirstUnit(string, clause) {
+function createTokenForFirstUnit(units, tokens, clause) {
+  var string = units[0];
   if (isURL(string)) {
     return new UrlToken(string, clause);
+  } else if (isCloseItalicsToken(units, tokens)) {
+    return new CloseItalicsToken();
+  } else if (isOpenItalicsToken(units, tokens)) {
+    return new OpenItalicsToken();
+  } else if (isCloseSnippetToken(units, tokens)) {
+    return new CloseSnippetToken();
+  } else if(isOpenSnippetToken(units, tokens)) {
+    return new OpenSnippetToken();
   } else {
     return new TextToken(string);
   }
@@ -61,9 +70,65 @@ function isURL(string){
   return (/[a-z]{2,256}:\/\/.*/).test(string);
 }
 
+function isCloseItalicsToken(units, tokens) {
+  return units[0] === '_' && hasOpenItalic(tokens);
+}
+
+function isOpenItalicsToken(units, tokens) {
+  return units[0] === '_' && units.slice(1).indexOf('_') !== -1;
+}
+
+function isCloseSnippetToken(units, tokens) {
+  return units[0] === '`' && hasOpenSnippet(tokens);
+}
+
+function isOpenSnippetToken(units, tokens) {
+  return units[0] === '`' && units.slice(1).indexOf('`') !== -1;
+}
+
+function hasOpenItalic(tokens) {
+  var numberOpen = tokens.filter(function(token){
+    return token.type === 'open-italics' }
+  ).length
+
+  var numberClosed = tokens.filter(function(token){
+    return token.type === 'close-italics' }
+  ).length
+
+  return numberOpen === numberClosed + 1;
+}
+
+function hasOpenSnippet(tokens) {
+  var numberOpen = tokens.filter(function(token){
+    return token.type === 'open-snippet' }
+  ).length
+
+  var numberClosed = tokens.filter(function(token){
+    return token.type === 'close-snippet' }
+  ).length
+
+  return numberOpen === numberClosed + 1;
+}
+
 function TextToken(text) {
   this.text = text;
   this.type = 'text';
+}
+
+function OpenSnippetToken() {
+  this.type = 'open-snippet';
+}
+
+function CloseSnippetToken() {
+  this.type = 'close-snippet';
+}
+
+function OpenItalicsToken() {
+  this.type = 'open-italics';
+}
+
+function CloseItalicsToken() {
+  this.type = 'close-italics';
 }
 
 function IcToken(text) {

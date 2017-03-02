@@ -170,6 +170,8 @@ would produce a tree with two parent references in the first paragraph and one a
 
 Urls beginning in http(s) will become linkified and behave like alias links except that they navigate off the page when selected.
 
+Content within a clause betwee underscores will become italicized, and content within a clause betwen backticks will become a code html element.
+
 ### The Moss content directory structure ###
 
 Text files will be concatinated in a depth-first traversal, so references should be structured so that each paragraph has its parent in an earlier paragraph of that file or a file at a higher level in the tree, so that the parser will have visited the parent before the child.

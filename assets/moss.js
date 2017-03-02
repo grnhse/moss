@@ -724,7 +724,7 @@ function parseClause(clause, currentIc, ics, callbacks) {
       tokens.push(createTokenForMatch(match, currentIc, clause, tokens, callbacks));
       units.splice(0, matchEndIndex);
     } else {
-      tokens.push(createTokenForFirstUnit(units[0], clause, tokens));
+      tokens.push(createTokenForFirstUnit(units, tokens, clause));
       units.shift();
     }
   }
@@ -763,9 +763,18 @@ function createTokenForMatch(match, currentIc, clause, tokens, callbacks) {
   }
 }
 
-function createTokenForFirstUnit(string, clause) {
+function createTokenForFirstUnit(units, tokens, clause) {
+  var string = units[0];
   if (isURL(string)) {
     return new UrlToken(string, clause);
+  } else if (isCloseItalicsToken(units, tokens)) {
+    return new CloseItalicsToken();
+  } else if (isOpenItalicsToken(units, tokens)) {
+    return new OpenItalicsToken();
+  } else if (isCloseSnippetToken(units, tokens)) {
+    return new CloseSnippetToken();
+  } else if(isOpenSnippetToken(units, tokens)) {
+    return new OpenSnippetToken();
   } else {
     return new TextToken(string);
   }
@@ -775,9 +784,65 @@ function isURL(string){
   return (/[a-z]{2,256}:\/\/.*/).test(string);
 }
 
+function isCloseItalicsToken(units, tokens) {
+  return units[0] === '_' && hasOpenItalic(tokens);
+}
+
+function isOpenItalicsToken(units, tokens) {
+  return units[0] === '_' && units.slice(1).indexOf('_') !== -1;
+}
+
+function isCloseSnippetToken(units, tokens) {
+  return units[0] === '`' && hasOpenSnippet(tokens);
+}
+
+function isOpenSnippetToken(units, tokens) {
+  return units[0] === '`' && units.slice(1).indexOf('`') !== -1;
+}
+
+function hasOpenItalic(tokens) {
+  var numberOpen = tokens.filter(function(token){
+    return token.type === 'open-italics' }
+  ).length
+
+  var numberClosed = tokens.filter(function(token){
+    return token.type === 'close-italics' }
+  ).length
+
+  return numberOpen === numberClosed + 1;
+}
+
+function hasOpenSnippet(tokens) {
+  var numberOpen = tokens.filter(function(token){
+    return token.type === 'open-snippet' }
+  ).length
+
+  var numberClosed = tokens.filter(function(token){
+    return token.type === 'close-snippet' }
+  ).length
+
+  return numberOpen === numberClosed + 1;
+}
+
 function TextToken(text) {
   this.text = text;
   this.type = 'text';
+}
+
+function OpenSnippetToken() {
+  this.type = 'open-snippet';
+}
+
+function CloseSnippetToken() {
+  this.type = 'close-snippet';
+}
+
+function OpenItalicsToken() {
+  this.type = 'open-italics';
+}
+
+function CloseItalicsToken() {
+  this.type = 'close-italics';
 }
 
 function IcToken(text) {
@@ -850,7 +915,16 @@ function secondAliasMatchInClause(isParentMatch, tokens, match, clause) {
   return secondAliasMatch;
 }
 function sectionElementOfLink(linkElement) {
-  return linkElement.parentNode.parentNode;
+  if (linkElement === null) { return null; }
+
+  var node;
+  for (
+    node = linkElement;
+    node.tagName !== 'SECTION';
+    node = node.parentNode
+  ){}
+
+  return node;
 }
 
 function icLinkOfSection(sectionElement) {
@@ -1233,12 +1307,25 @@ function SectionElementTree(paragraphNode, level) {
   hideSectionElement(section);
 
   paragraphNode.lines.forEach(function(line) {
+    var parentElements = [paragraph];
+
     line.tokens.forEach(function(token) {
-      var element = linkConstructorForTokenType[token.type](token, level);
-      paragraph.appendChild(element);
+      if (token.type === 'open-italics'){
+        parentElements.unshift(document.createElement('I'));
+      } else if (token.type === 'close-italics') {
+        parentElements[1].appendChild(parentElements[0]);
+        parentElements.shift();
+      } else if (token.type === 'open-snippet') {
+        parentElements.unshift(document.createElement('CODE'));
+      } else if (token.type === 'close-snippet') {
+        parentElements[1].appendChild(parentElements[0]);
+        parentElements.shift();
+      } else {
+        var element = linkConstructorForTokenType[token.type](token, level);
+        parentElements[0].appendChild(element);
+      }
     });
 
-    // paragraph.appendChild(document.createElement('br'));
     paragraph.appendChild(document.createTextNode(' '));
   });
 
@@ -1440,7 +1527,7 @@ function icsOfParagraphStrings(paragraphStrings) {
 function unitsOf(string) {
   var units = [];
   var stops = ['.', '!', '?', ',', ';', ':'];
-  var seperatingPunctuation = ['"', "'", '[', ']', '(', ')', '{', '}', '<', '>'];
+  var seperatingPunctuation = ['"', "'", '[', ']', '(', ')', '{', '}', '<', '>', '_', '`'];
 
   var start = 0;
   for (var i = 0; i < string.length; i++) {
@@ -1452,7 +1539,12 @@ function unitsOf(string) {
       units.push(string.slice(i, i + 1));
       start = i + 1;
     } else if (seperatingPunctuation.indexOf(string[i]) !== -1) {
-      if (string[i - 1] === ' ' || (string[i + 1] === ' ' || string[i + 1] === undefined)) {
+      if (
+        string[i - 1] === ' ' ||
+        (string[i + 1] === ' ' || string[i + 1] === undefined) ||
+        seperatingPunctuation.indexOf(string[i + 1]) !== -1 ||
+        seperatingPunctuation.indexOf(string[i - 1]) !== -1
+      ) {
         if (start !== i) {
           units.push(string.slice(start, i));
         }

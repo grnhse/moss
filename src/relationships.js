@@ -1,5 +1,14 @@
 function sectionElementOfLink(linkElement) {
-  return linkElement.parentNode.parentNode;
+  if (linkElement === null) { return null; }
+
+  var node;
+  for (
+    node = linkElement;
+    node.tagName !== 'SECTION';
+    node = node.parentNode
+  ){}
+
+  return node;
 }
 
 function icLinkOfSection(sectionElement) {

@@ -850,7 +850,14 @@ function secondAliasMatchInClause(isParentMatch, tokens, match, clause) {
   return secondAliasMatch;
 }
 function sectionElementOfLink(linkElement) {
-  return linkElement.parentNode.parentNode;
+  var node;
+  for (
+    node = linkElement;
+    node.tag !== 'SECTION';
+    node = node.parentNode
+  ){}
+
+  return node;
 }
 
 function icLinkOfSection(sectionElement) {
