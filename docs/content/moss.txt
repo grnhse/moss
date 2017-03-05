@@ -1,7 +1,27 @@
-Moss is a library for creating explanation trees.
-How do you use Moss?
-What are explanation trees?
+Moss is a library for storing explanations as trees. Why would you want that?
+Well first, explanations are trees.
+Because of this, there are benefits to storing explanations as trees.
+But, it is currently prohibitive to store explanations as trees.
+So, Moss is intended to make it practical to store explanations as trees.
 
-How do you use Moss?
+Explanations are trees.
+What does it mean to say that explanations are trees?
+Why would it matter if explanations were trees?
+What is the evidence for seeing explanations as trees?
 
-What are explanation trees?
+It is currently prohibitive to store explanations as trees.
+
+Moss is intended to make it practical to store explanations as trees.
+
+There are benefits to storing explanations as trees.
+First, what does it mean to store explanations?
+Second, what does it mean to store explanations as trees?
+Finally, when might storing explanations as trees be preferable?
+
+What does it mean to store explanations?
+What are the common methods of storing explanations?
+How do the different methods of explanation storage compare?
+
+What does it mean to store explanations as trees?
+
+When might storing explanations as trees be preferable?
