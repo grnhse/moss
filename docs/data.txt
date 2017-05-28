@@ -10,7 +10,8 @@ Moss is intended to make it practical to store explanations as trees.
 There can be benefits to storing explanations as trees but it is currently difficult to do so.
 First, what does it mean to store explanations?
 Second, what does it mean to store explanations as trees?
-Third, when might storing explanations as trees be desirable?
+Third, why might storing explanations as trees be desirable?
+Fourth, when might storing explanations be desirable?
 Finally, what are the difficulties in storing explanations as trees?
 
 What does it mean to store explanations?
@@ -20,6 +21,9 @@ How do the different methods of explanation storage compare?
 What does it mean to store explanations as trees?
 In the first place, what does it mean to refer to explanations as trees?
 What is the difference between storing explanations as trees and storing them with trees?
+
+Why might storing explanations as trees be desirable?
+Well, if explanations _are_ trees, then there would be predictible drawbacks to storing them not as trees.
 
 When might storing explanations as trees be desirable?
 
