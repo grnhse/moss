@@ -1,0 +1,31 @@
+#!/usr/bin/env ruby
+
+require 'csv'
+
+source_file_path = ARGV[0]
+destination_file_path = "#{File.dirname(ARGV[0])}/#{File.basename(ARGV[0],'.*')}.txt"
+last_txt_build_path = "#{File.dirname(ARGV[0])}/.last_txt_build"
+last_txt_build_time = begin
+    File.read(last_txt_build_path)
+  rescue Errno::ENOENT
+    (DateTime.now - 10_000).to_s
+  end
+
+grid = CSV.read(source_file_path)
+moss_text_string = grid.
+  transpose.
+  map { |block_array| block_array.compact }.
+  map { |block_array| block_array.join("\n") }.
+  join("\n\n")
+
+if DateTime.parse(last_txt_build_time) < DateTime.now - 10
+  File.open(destination_file_path,'w') do |f|
+    f << moss_text_string
+  end
+
+  File.open(last_txt_build_path,'w') do |f|
+    f << DateTime.now.to_s
+  end
+
+  puts "Converted #{source_file_path} to #{destination_file_path}"
+end

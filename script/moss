@@ -91,6 +91,7 @@ init)
   echo "assets" >> .gitignore
   echo "*.html" >> .gitignore
   echo "*.pid" >> .gitignore
+  echo "*.csv" >> .gitignore
   git init
   touch "content/$PROJECT_NAME.txt"
   git add .
@@ -130,6 +131,27 @@ watch)
 unwatch)
   kill $(cat .moss_watch.pid) > /dev/null 2>&1;
   exit 1;;
+build_csvs)
+  find -L content -name '*.txt' | xargs /usr/local/lib/moss/script/moss_text_to_csv
+  ;;
+update_txt_from_csvs)
+  find -L content -name '*.csv' | xargs /usr/local/lib/moss/script/csv_to_moss_text
+  ;;
+watch_csvs)
+  fswatch -r content | grep --line-buffered .txt$ | while read file; do /usr/local/lib/moss/script/moss_text_to_csv $file; done &
+  fswatch -r content | grep --line-buffered .csv$ | while read file; do /usr/local/lib/moss/script/csv_to_moss_text $file; done &
+  echo "Watching txt and csv files"
+  ;;
+?|usage)
+echo  "Usage:"
+echo  "  moss build [<asset-path>]"
+echo  "  moss update"
+echo  "  moss init"
+echo  "  moss watch [<asset-path>]"
+echo  "  moss unwatch"
+echo  "  moss build_csvs"
+echo  "  moss update_text_from_csvs"
+echo  "  moss watch_and_convert_csvs";;
 *)
   echo unknown command;;
 esac

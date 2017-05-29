@@ -15,6 +15,11 @@ Moss docs written in Moss are being developed [here.](http://grnhse.github.io/mo
   - [Updating moss build tools](#updating-moss-build-tools)
   - [Watching for changes](#watching-for-changes)
   - [Building assets manually](#building-assets-manually)
+  - [
+### Building CSVs ###
+
+It is sometimes helpful to take all the blog
+  Building csvs](#building-csvs)
   - [Using debug information](#using-debug-information)
   - [Deploying with Github pages and Travis](#deploying-with-github-pages-and-travis)
   - [Running the Moss specs](#running-the-moss-specs)
@@ -226,6 +231,24 @@ The above will generate a simple stand-alone website, but you can also put Moss 
     - If the data-source attribute exists, Moss will make a GET request to its value and expect a data string.
   - If no data-source attribute is found, Moss will look for text in the \_moss element and use this for its data string, clearing the element before rendering.
     - If providing Moss the data string via text in the element, it is recommended to use a single `pre` tag inside your `_moss` element. Otherwise, Moss will get a string without newline characters, which it needs to determine where the paragraphs break.
+
+### Building CSVs ###
+
+It is sometimes helpful to take all the paragraphs of a file and transpose them on to a grid so that one can more easily merge and divide them.
+
+For this use-case the following command line functionality is provided.
+
+Run `moss build_csvs` at your project root directory and all text files will have a corresponding csv file built with their same name in their same directory with the `.csv` file extension.
+
+Run `moss update_txt_from_csvs` at your project root directory and all text files will be updated to reflect the contents of their csv file.
+
+Run `moss watch_csvs` to watch all the text files and all the csv files in your project content folder and when either changes, update the other.
+
+Individual text files and CSVs can be build by calling directly to the underlying helper scripts.
+
+`/usr/local/lib/moss/script/moss_text_to_csv <moss-txt-file-path>` will build a CSV for that file in the same directory.
+
+`/usr/local/lib/moss/script/csv_to_moss_text <csv-text-file-path>` will update the text file of that CSV.
 
 ### Using debug information ###
 

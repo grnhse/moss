@@ -1,0 +1,45 @@
+#!/usr/bin/env ruby
+
+require 'csv'
+
+source_file_path = ARGV[0]
+destination_file_path = "#{File.dirname(ARGV[0])}/#{File.basename(ARGV[0],'.*')}.csv"
+last_csv_build_path = "#{File.dirname(ARGV[0])}/.last_csv_build"
+last_csv_build_time = begin
+    File.read(last_csv_build_path)
+  rescue Errno::ENOENT
+    (DateTime.now - 10_000).to_s
+  end
+
+moss_text = File.read(source_file_path)
+block_lines = moss_text.
+  split("\n\n").
+  map { |line| line.split("\n") }
+
+number_of_blocks = block_lines.length
+length_of_longest_block = block_lines.
+  reduce { |memo, block| memo.length > block.length ? memo : block}.
+  length
+
+block_lines_padded = block_lines.
+  map do |block|
+    block.fill(
+      nil,
+      block.length,
+      length_of_longest_block - block.length
+    )
+  end
+
+csv_rows = block_lines_padded.transpose
+
+if DateTime.parse(last_csv_build_time) < DateTime.now - 10
+  File.open(destination_file_path,'w') do |f|
+    csv_rows.each { |row| f << row.to_csv }
+  end
+
+  File.open(last_csv_build_path,'w') do |f|
+    f << DateTime.now.to_s
+  end
+
+  puts "Converted #{source_file_path} to #{destination_file_path}"
+end
