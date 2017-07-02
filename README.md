@@ -15,11 +15,7 @@ Moss docs written in Moss are being developed [here.](http://grnhse.github.io/mo
   - [Updating moss build tools](#updating-moss-build-tools)
   - [Watching for changes](#watching-for-changes)
   - [Building assets manually](#building-assets-manually)
-  - [
-### Building CSVs ###
-
-It is sometimes helpful to take all the blog
-  Building csvs](#building-csvs)
+  - [Building csvs](#building-csvs)
   - [Using debug information](#using-debug-information)
   - [Deploying with Github pages and Travis](#deploying-with-github-pages-and-travis)
   - [Running the Moss specs](#running-the-moss-specs)
